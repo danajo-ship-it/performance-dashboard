@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>비즈넵 환급 · 퍼포먼스 매체 최적화 대시보드</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  :root {
+    --brand:        #5A2EEA;
+    --brand-hover:  #4823BD;
+    --brand-lighter:#8B6BF0;
+    --brand-pale:   #E5DEFC;
+    --brand-50:     #F4F1FE;
+    --brand-25:     #FAF8FF;
+
+    --bg: #FAFAFB;
+    --bg-card: #FFFFFF;
+    --bg-elev: #F6F4FB;
+    --bg-hover: #F4F1FE;
+    --line: #ECE9F2;
+    --line-soft: #F1EEF5;
+    --line-strong: #D9D4E5;
+    --ink: #14122A;
+    --ink-soft: #4A4B65;
+    --ink-mute: #7C7D95;
+    --ink-dim: #A5A6BB;
+
+    --scale: #10B981;       --scale-bg: #ECFDF5;     --scale-border: #A7F3D0;
+    --keep:  #5A2EEA;       --keep-bg:  #F4F1FE;     --keep-border:  #C9BEFB;
+    --opt:   #F59E0B;       --opt-bg:   #FFFBEB;     --opt-border:   #FCD34D;
+    --off:   #E11D48;       --off-bg:   #FFF1F2;     --off-border:   #FECDD3;
+    --brand-chan: #6366F1;  --brand-chan-bg: #EEF2FF; --brand-chan-border: #C7D2FE;
+    --gray-chip: #94A3B8;   --gray-chip-bg: #F1F5F9; --gray-chip-border: #CBD5E1;
+
+    --up: #E11D48; --down: #10B981;
+
+    /* Section accent colors for nav buttons */
+    --s01: #5A2EEA; --s02: #F59E0B; --s03: #4F46E5; --s04: #10B981;
+    --s05: #EA580C; --s06: #0EA5E9; --s07: #EC4899; --s08: #14B8A6;
+    --s09: #E11D48; --s10: #475569;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    background: var(--bg); color: var(--ink); line-height: 1.5; font-size: 14px;
+    font-weight: 400; -webkit-font-smoothing: antialiased; letter-spacing: -0.01em;
+  }
+  .num { font-variant-numeric: tabular-nums; font-feature-settings: 'tnum' 1; letter-spacing: -0.02em; }
+
+  /* Header */
+  header {
+    background: var(--bg-card); padding: 84px 56px 56px;
+    border-bottom: 1px solid var(--line); position: relative; overflow: hidden;
+  }
+  header::before {
+    content: ''; position: absolute; top: -200px; right: -100px;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(90,46,234,.10) 0%, rgba(90,46,234,.04) 30%, transparent 65%);
+    pointer-events: none;
+  }
+  header::after {
+    content: ''; position: absolute; bottom: -150px; left: -100px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(139,107,240,.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .header-content { max-width: 1400px; margin: 0 auto; position: relative; }
+  .brand-mark { display: inline-flex; align-items: center; gap: 12px; margin-bottom: 28px; }
+  .brand-logo {
+    width: 32px; height: 32px; background: var(--brand); border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-weight: 800; font-size: 14px;
+    box-shadow: 0 4px 12px rgba(90,46,234,.25);
+  }
+  .brand-name { font-size: 14px; font-weight: 700; color: var(--ink); }
+  .brand-name span { color: var(--brand); font-weight: 700; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--brand-50); border: 1px solid var(--brand-pale);
+    padding: 7px 14px; border-radius: 100px;
+    font-size: 11.5px; color: var(--brand); font-weight: 600;
+    letter-spacing: 0.08em; margin-bottom: 24px; text-transform: uppercase;
+  }
+  .eyebrow .dot {
+    width: 6px; height: 6px; background: var(--brand); border-radius: 50%;
+    box-shadow: 0 0 0 3px rgba(90,46,234,.15);
+    animation: pulse 2.2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.6;transform:scale(.85)} }
+  header h1 {
+    font-size: 64px; line-height: 1.05; font-weight: 800;
+    letter-spacing: -0.035em; margin-bottom: 20px; color: var(--ink);
+  }
+  header h1 .accent {
+    background: linear-gradient(135deg, var(--brand) 0%, var(--brand-lighter) 60%, #B5A1F6 100%);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  header .sub {
+    font-size: 17px; color: var(--ink-soft); font-weight: 400;
+    max-width: 760px; margin-bottom: 36px; line-height: 1.6;
+  }
+  .header-meta { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .meta-item {
+    background: var(--bg-elev); border: 1px solid var(--line);
+    padding: 16px 18px; border-radius: 12px;
+  }
+  .meta-item .k { font-size: 11.5px; color: var(--ink-mute); font-weight: 500; margin-bottom: 8px; }
+  .meta-item .v { color: var(--ink); font-size: 15px; font-weight: 700; }
+
+  /* === COLORED NAV === */
+  nav {
+    position: sticky; top: 0;
+    background: rgba(255,255,255,.92);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid var(--line); z-index: 100; padding: 14px 56px;
+  }
+  nav ul {
+    max-width: 1400px; margin: 0 auto; list-style: none;
+    display: flex; gap: 6px; flex-wrap: wrap;
+  }
+  nav a {
+    text-decoration: none; font-size: 12.5px; font-weight: 600;
+    transition: all 0.18s ease; display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 12px; border-radius: 100px; border: 1px solid;
+  }
+  nav a .step { font-size: 10px; font-weight: 700; font-variant-numeric: tabular-nums; opacity: 0.7; }
+  nav a.n01 { color: var(--s01); background: rgba(90,46,234,.08); border-color: rgba(90,46,234,.25); }
+  nav a.n01:hover { background: var(--s01); color: white; border-color: var(--s01); }
+  nav a.n02 { color: var(--s02); background: rgba(245,158,11,.10); border-color: rgba(245,158,11,.30); }
+  nav a.n02:hover { background: var(--s02); color: white; border-color: var(--s02); }
+  nav a.n03 { color: var(--s03); background: rgba(79,70,229,.08); border-color: rgba(79,70,229,.25); }
+  nav a.n03:hover { background: var(--s03); color: white; border-color: var(--s03); }
+  nav a.n04 { color: var(--s04); background: rgba(16,185,129,.10); border-color: rgba(16,185,129,.30); }
+  nav a.n04:hover { background: var(--s04); color: white; border-color: var(--s04); }
+  nav a.n05 { color: var(--s05); background: rgba(234,88,12,.10); border-color: rgba(234,88,12,.30); }
+  nav a.n05:hover { background: var(--s05); color: white; border-color: var(--s05); }
+  nav a.n06 { color: var(--s06); background: rgba(14,165,233,.10); border-color: rgba(14,165,233,.30); }
+  nav a.n06:hover { background: var(--s06); color: white; border-color: var(--s06); }
+  nav a.n07 { color: var(--s07); background: rgba(236,72,153,.10); border-color: rgba(236,72,153,.30); }
+  nav a.n07:hover { background: var(--s07); color: white; border-color: var(--s07); }
+  nav a.n08 { color: var(--s08); background: rgba(20,184,166,.10); border-color: rgba(20,184,166,.30); }
+  nav a.n08:hover { background: var(--s08); color: white; border-color: var(--s08); }
+  nav a.n09 { color: var(--s09); background: rgba(225,29,72,.10); border-color: rgba(225,29,72,.30); }
+  nav a.n09:hover { background: var(--s09); color: white; border-color: var(--s09); }
+  nav a.n10 { color: var(--s10); background: rgba(71,85,105,.10); border-color: rgba(71,85,105,.30); }
+  nav a.n10:hover { background: var(--s10); color: white; border-color: var(--s10); }
+
+  main { max-width: 1400px; margin: 0 auto; padding: 64px 56px; }
+  section { margin-bottom: 88px; scroll-margin-top: 84px; }
+  .section-header {
+    margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--line);
+    display: flex; align-items: flex-end; justify-content: space-between;
+    flex-wrap: wrap; gap: 24px;
+  }
+  .section-num {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 4px 12px; border-radius: 100px;
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    font-weight: 700; margin-bottom: 10px;
+  }
+  #kpi .section-num         { background: rgba(90,46,234,.10);  color: var(--s01); }
+  #issues .section-num      { background: rgba(245,158,11,.12); color: var(--s02); }
+  #priority .section-num    { background: rgba(79,70,229,.10);  color: var(--s03); }
+  #framework .section-num   { background: rgba(16,185,129,.12); color: var(--s04); }
+  #thresholds .section-num  { background: rgba(234,88,12,.12);  color: var(--s05); }
+  #channels .section-num    { background: rgba(14,165,233,.12); color: var(--s06); }
+  #compare .section-num     { background: rgba(236,72,153,.12); color: var(--s07); }
+  #matrix .section-num      { background: rgba(20,184,166,.12); color: var(--s08); }
+  #diagnosis .section-num   { background: rgba(225,29,72,.10);  color: var(--s09); }
+  #method .section-num      { background: rgba(71,85,105,.10);  color: var(--s10); }
+  .section-title { font-size: 40px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; color: var(--ink); }
+  .section-title .accent {
+    background: linear-gradient(135deg, var(--brand) 0%, var(--brand-lighter) 100%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .section-sub { color: var(--ink-soft); font-size: 13.5px; max-width: 520px; font-weight: 400; line-height: 1.6; }
+
+  /* KPI */
+  .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .kpi-card {
+    background: var(--bg-card); border: 1px solid var(--line);
+    padding: 24px 22px; border-radius: 14px;
+    transition: all 0.25s ease; position: relative; overflow: hidden;
+  }
+  .kpi-card:hover { border-color: var(--brand-pale); transform: translateY(-2px); box-shadow: 0 12px 28px -10px rgba(90,46,234,.15); }
+  .kpi-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, transparent, var(--brand), transparent);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .kpi-card:hover::before { opacity: 1; }
+  .kpi-rank {
+    display: inline-block; font-size: 10px; color: var(--brand);
+    background: var(--brand-50); border: 1px solid var(--brand-pale);
+    padding: 2px 7px; border-radius: 4px; margin-right: 8px;
+    font-weight: 700; letter-spacing: 0.04em;
+  }
+  .kpi-label { font-size: 12px; color: var(--ink-mute); margin-bottom: 16px; font-weight: 500; }
+  .kpi-value { font-size: 32px; font-weight: 800; color: var(--ink); line-height: 1; letter-spacing: -0.035em; }
+  .kpi-value .unit { font-size: 14px; color: var(--ink-soft); margin-left: 4px; font-weight: 600; }
+  .kpi-delta {
+    margin-top: 14px; font-size: 12px; color: var(--ink-mute);
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  }
+  .delta-pill {
+    font-size: 11px; padding: 3px 8px; border-radius: 5px;
+    font-weight: 700; font-variant-numeric: tabular-nums; border: 1px solid;
+  }
+  .delta-pill.good { color: var(--down); background: #ECFDF5; border-color: #A7F3D0; }
+  .delta-pill.bad  { color: var(--up);   background: #FFF1F2; border-color: #FECDD3; }
+  .delta-pill.flat { color: var(--ink-mute); background: var(--bg-elev); border-color: var(--line); }
+
+  /* Outlier note */
+  .outlier-note {
+    background: linear-gradient(135deg, var(--brand-25), var(--bg-card));
+    border: 1px solid var(--brand-pale); border-left: 3px solid var(--brand);
+    padding: 18px 22px; margin-bottom: 28px; border-radius: 10px;
+    font-size: 13px; color: var(--ink-soft); line-height: 1.65;
+  }
+  .outlier-note strong { color: var(--brand); font-weight: 700; }
+  .outlier-note .num { color: var(--ink); font-weight: 700; }
+
+  /* Known Issues */
+  .issues-summary {
+    background: linear-gradient(135deg, rgba(245,158,11,.06), var(--bg-card));
+    border: 1px solid rgba(245,158,11,.25);
+    border-radius: 14px; padding: 24px 28px; margin-bottom: 24px;
+  }
+  .issues-summary-title {
+    font-size: 15px; font-weight: 700; color: var(--s02); margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .issues-summary-text { font-size: 13px; color: var(--ink-soft); line-height: 1.75; }
+  .issues-summary-text strong { color: var(--ink); font-weight: 700; }
+  .issues-summary-text .recent-c { color: var(--s09); font-weight: 700; }
+  .issues-summary-text .prior-c  { color: var(--s06); font-weight: 700; }
+  .issues-summary-text .yoy-c    { color: var(--s10); font-weight: 700; }
+
+  .issues-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .issue-card {
+    background: var(--bg-card); border: 1px solid var(--line);
+    border-radius: 12px; padding: 18px 20px; transition: all 0.2s;
+    border-left: 4px solid var(--ink-dim);
+  }
+  .issue-card:hover { border-color: var(--line-strong); transform: translateY(-1px); }
+  .issue-card.in-recent { border-left-color: var(--s09); background: linear-gradient(90deg, rgba(225,29,72,.03), var(--bg-card)); }
+  .issue-card.in-prior  { border-left-color: var(--s06); background: linear-gradient(90deg, rgba(14,165,233,.03), var(--bg-card)); }
+  .issue-card.in-yoy    { border-left-color: var(--s10); background: linear-gradient(90deg, rgba(71,85,105,.03), var(--bg-card)); }
+  .issue-card.in-none   { opacity: 0.62; }
+  .issue-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+  .issue-date { font-size: 11.5px; color: var(--ink-mute); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .issue-period-badge {
+    font-size: 10px; padding: 3px 9px; border-radius: 100px;
+    font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+    border: 1px solid; white-space: nowrap;
+  }
+  .issue-period-badge.recent { color: var(--s09); background: rgba(225,29,72,.08); border-color: rgba(225,29,72,.25); }
+  .issue-period-badge.prior  { color: var(--s06); background: rgba(14,165,233,.08); border-color: rgba(14,165,233,.25); }
+  .issue-period-badge.yoy    { color: var(--s10); background: rgba(71,85,105,.08); border-color: rgba(71,85,105,.25); }
+  .issue-period-badge.none   { color: var(--ink-mute); background: var(--bg-elev); border-color: var(--line); }
+  .issue-name { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+  .issue-impact { font-size: 12px; color: var(--ink-soft); }
+  .issue-impact .ic {
+    display: inline-block; font-size: 10.5px; padding: 2px 8px;
+    border-radius: 4px; font-weight: 700; margin-left: 4px;
+  }
+  .issue-impact .ic.전반 { background: var(--off-bg); color: var(--off); }
+  .issue-impact .ic.신청율 { background: var(--opt-bg); color: var(--opt); }
+  .issue-impact .ic.조회완료율 { background: rgba(245,158,11,.12); color: #B45309; }
+
+  /* Priority */
+  .prio-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .prio-card {
+    background: var(--bg-card); border: 1px solid var(--line);
+    border-radius: 14px; padding: 26px 24px; position: relative; overflow: hidden;
+    transition: all 0.25s ease;
+  }
+  .prio-card:hover { border-color: var(--brand-pale); transform: translateY(-2px); box-shadow: 0 12px 28px -10px rgba(90,46,234,.12); }
+  .prio-card::after {
+    content: ''; position: absolute; top: -20px; right: -20px;
+    width: 100px; height: 100px; border-radius: 50%;
+    filter: blur(40px); opacity: 0.25; pointer-events: none;
+  }
+  .prio-card.p1::after { background: var(--off); }
+  .prio-card.p2::after { background: var(--opt); }
+  .prio-card.p3::after { background: var(--scale); }
+  .prio-card.p4::after { background: var(--brand); }
+  .prio-rank {
+    font-size: 56px; font-weight: 800; line-height: 1; color: transparent;
+    -webkit-text-stroke: 1.5px var(--line-strong); position: absolute;
+    top: 20px; right: 22px; letter-spacing: -0.05em; z-index: 2;
+  }
+  .prio-label { font-size: 10.5px; color: var(--ink-dim); margin-bottom: 6px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; position: relative; z-index: 1; }
+  .prio-name { font-size: 22px; font-weight: 700; margin-bottom: 14px; letter-spacing: -0.02em; position: relative; z-index: 1; color: var(--ink); }
+  .prio-formula {
+    font-size: 11.5px; color: var(--brand);
+    background: var(--brand-50); border: 1px solid var(--brand-pale);
+    padding: 7px 11px; margin-bottom: 16px; display: inline-block;
+    border-radius: 6px; font-weight: 600; font-variant-numeric: tabular-nums;
+  }
+  .prio-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.7; font-weight: 400; }
+  .prio-desc strong { color: var(--ink); font-weight: 700; }
+  .prio-impact {
+    margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 11.5px; color: var(--ink-mute); font-weight: 500;
+  }
+  .prio-impact .stars { color: var(--brand); letter-spacing: 3px; font-size: 14px; }
+
+  /* Action */
+  .action-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .action-card {
+    border: 1px solid; border-radius: 14px; padding: 28px 24px;
+    position: relative; overflow: hidden; min-height: 360px;
+    display: flex; flex-direction: column; transition: all 0.25s ease;
+    background: var(--bg-card);
+  }
+  .action-card:hover { transform: translateY(-2px); box-shadow: 0 12px 28px -10px rgba(20,18,42,.10); }
+  .action-card.scale { background: linear-gradient(180deg, var(--scale-bg), var(--bg-card)); border-color: var(--scale-border); }
+  .action-card.keep  { background: linear-gradient(180deg, var(--keep-bg), var(--bg-card)); border-color: var(--keep-border); }
+  .action-card.opt   { background: linear-gradient(180deg, var(--opt-bg), var(--bg-card)); border-color: var(--opt-border); }
+  .action-card.off   { background: linear-gradient(180deg, var(--off-bg), var(--bg-card)); border-color: var(--off-border); }
+  .action-icon {
+    width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+    font-weight: 700; margin-bottom: 20px; font-size: 20px; border-radius: 12px; color: white;
+  }
+  .scale .action-icon { background: var(--scale); box-shadow: 0 6px 16px -4px rgba(16,185,129,.4); }
+  .keep  .action-icon { background: var(--keep);  box-shadow: 0 6px 16px -4px rgba(90,46,234,.4); }
+  .opt   .action-icon { background: var(--opt);   box-shadow: 0 6px 16px -4px rgba(245,158,11,.4); }
+  .off   .action-icon { background: var(--off);   box-shadow: 0 6px 16px -4px rgba(225,29,72,.4); }
+  .action-title { font-size: 26px; font-weight: 800; letter-spacing: -0.025em; margin-bottom: 14px; }
+  .scale .action-title { color: var(--scale); }
+  .keep .action-title { color: var(--keep); }
+  .opt .action-title { color: var(--opt); }
+  .off .action-title { color: var(--off); }
+  .action-cond { font-size: 13px; line-height: 1.75; margin-bottom: 22px; flex-grow: 1; color: var(--ink-soft); }
+  .action-cond strong { font-weight: 700; color: var(--ink); }
+  .action-cond .v {
+    display: inline-block; background: var(--bg-card); border: 1px solid var(--line);
+    padding: 2px 7px; font-weight: 600; color: var(--ink); border-radius: 5px;
+    font-size: 12px; font-variant-numeric: tabular-nums;
+  }
+  .action-meta {
+    border-top: 1px solid var(--line); padding-top: 18px; font-size: 11px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+  }
+  .action-meta .k { color: var(--ink-dim); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; margin-bottom: 6px; }
+  .action-meta .v2 { font-weight: 700; font-size: 14px; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .action-meta .v2.kr { font-size: 13px; }
+
+  /* Thresholds */
+  .threshold-section { background: var(--bg-card); border: 1px solid var(--line); border-radius: 14px; padding: 36px; }
+  .threshold-row { margin-bottom: 32px; }
+  .threshold-row:last-child { margin-bottom: 0; }
+  .threshold-row-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px; flex-wrap: wrap; gap: 8px; }
+  .threshold-row-title { font-weight: 700; font-size: 16px; color: var(--ink); }
+  .threshold-row-title .badge {
+    display: inline-block; color: var(--brand);
+    background: var(--brand-50); border: 1px solid var(--brand-pale);
+    font-size: 10px; padding: 2px 7px; margin-right: 10px;
+    font-weight: 700; border-radius: 4px; letter-spacing: 0.04em;
+  }
+  .threshold-row-bench { font-size: 12px; color: var(--ink-mute); font-weight: 500; }
+  .threshold-row-bench strong { color: var(--ink); font-weight: 700; }
+  .threshold-bar { display: flex; height: 42px; overflow: hidden; border-radius: 8px; gap: 2px; }
+  .tb-seg { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; }
+  .tb-seg.scale { background: var(--scale-bg); color: var(--scale); border: 1px solid var(--scale-border); }
+  .tb-seg.keep  { background: var(--keep-bg);  color: var(--keep);  flex: 1.5; border: 1px solid var(--keep-border); }
+  .tb-seg.opt   { background: var(--opt-bg);   color: var(--opt);   border: 1px solid var(--opt-border); }
+  .tb-seg.off   { background: var(--off-bg);   color: var(--off);   border: 1px solid var(--off-border); }
+  .threshold-bar-labels { display: flex; margin-top: 8px; font-size: 10.5px; color: var(--ink-mute); gap: 2px; font-variant-numeric: tabular-nums; font-weight: 500; }
+  .tbl-seg { flex: 1; text-align: center; }
+  .tbl-seg.keep { flex: 1.5; }
+
+  /* Channel */
+  .channel-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+  .ch-card { background: var(--bg-card); border: 1px solid var(--line); border-radius: 14px; padding: 22px 20px; transition: all 0.25s ease; }
+  .ch-card:hover { border-color: var(--brand-pale); transform: translateY(-2px); box-shadow: 0 8px 20px -8px rgba(90,46,234,.10); }
+  .ch-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
+  .ch-name { font-size: 12px; font-weight: 700; color: var(--brand); }
+  .ch-name-sub { font-size: 11px; color: var(--ink-mute); margin-top: 4px; font-weight: 500; }
+  .ch-spend { text-align: right; font-size: 10px; color: var(--ink-dim); font-weight: 500; letter-spacing: 0.04em; }
+  .ch-spend strong { display: block; color: var(--ink); font-size: 14px; font-weight: 800; margin-top: 4px; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+  .ch-stat { display: grid; grid-template-columns: 1fr auto auto; align-items: baseline; padding: 9px 0; gap: 10px; }
+  .ch-stat:not(:last-child) { border-bottom: 1px solid var(--line-soft); }
+  .ch-stat-key { color: var(--ink-mute); font-size: 11px; font-weight: 500; }
+  .ch-stat-val { font-weight: 700; color: var(--ink); font-size: 13px; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+  .ch-stat-delta { font-size: 10.5px; padding: 2px 6px; border-radius: 4px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .ch-stat-delta.good { color: var(--down); background: #ECFDF5; }
+  .ch-stat-delta.bad  { color: var(--up); background: #FFF1F2; }
+  .ch-stat-delta.flat { color: var(--ink-mute); }
+  .ch-tag { display: inline-block; font-size: 10.5px; padding: 4px 12px; border-radius: 100px; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 16px; font-weight: 700; border: 1px solid; }
+  .ch-tag.best { color: var(--scale); border-color: var(--scale-border); background: var(--scale-bg); }
+  .ch-tag.good { color: var(--keep); border-color: var(--keep-border); background: var(--keep-bg); }
+  .ch-tag.warn { color: var(--opt); border-color: var(--opt-border); background: var(--opt-bg); }
+  .ch-tag.bad  { color: var(--off); border-color: var(--off-border); background: var(--off-bg); }
+
+  /* Compare */
+  .compare-block { margin-bottom: 48px; }
+  .compare-title { font-size: 22px; font-weight: 800; color: var(--ink); margin-bottom: 6px; letter-spacing: -0.025em; }
+  .compare-title .accent { background: linear-gradient(135deg, var(--brand), var(--brand-lighter)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .compare-sub { font-size: 13px; color: var(--ink-mute); margin-bottom: 18px; font-weight: 400; }
+  .integrated-compare { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .ic-cell { background: var(--bg-card); padding: 20px 18px; border-radius: 12px; border: 1px solid var(--line); transition: all 0.2s; }
+  .ic-cell:hover { border-color: var(--brand-pale); transform: translateY(-1px); }
+  .ic-h-label { font-size: 11px; color: var(--ink-mute); font-weight: 500; letter-spacing: 0.04em; margin-bottom: 12px; }
+  .ic-val { font-size: 20px; color: var(--ink); font-weight: 800; margin-bottom: 8px; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+  .ic-compare-rows { font-size: 11px; color: var(--ink-mute); font-variant-numeric: tabular-nums; font-weight: 500; }
+  .ic-compare-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 3px 0; }
+  .ic-compare-row .lbl { font-weight: 600; color: var(--ink-soft); font-size: 10.5px; }
+  .ic-compare-row .prev-val { color: var(--ink-dim); font-size: 11px; }
+
+  /* YoY note */
+  .yoy-note {
+    background: linear-gradient(135deg, rgba(71,85,105,.05), var(--bg-card));
+    border: 1px solid #CBD5E1; border-left: 3px solid var(--s10);
+    padding: 16px 20px; border-radius: 10px; margin-bottom: 20px;
+    font-size: 12.5px; color: var(--ink-soft); line-height: 1.7;
+  }
+  .yoy-note strong { color: var(--s10); font-weight: 700; }
+  .yoy-note .warn { color: var(--off); font-weight: 700; }
+
+  /* May totals panel */
+  .may-panel {
+    margin-top: 24px;
+    background: linear-gradient(135deg, var(--brand-25), var(--bg-card));
+    border: 1px solid var(--brand-pale);
+    border-radius: 14px;
+    padding: 28px 28px;
+  }
+  .may-panel-header {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px; margin-bottom: 18px;
+    padding-bottom: 16px; border-bottom: 1px solid var(--brand-pale);
+  }
+  .may-panel-title {
+    font-size: 18px; font-weight: 800; color: var(--ink);
+    letter-spacing: -0.02em; display: flex; align-items: center; gap: 10px;
+  }
+  .may-panel-title .badge {
+    background: var(--brand); color: white;
+    font-size: 10px; padding: 3px 10px; border-radius: 100px;
+    font-weight: 700; letter-spacing: 0.06em;
+  }
+  .may-panel-title .accent {
+    background: linear-gradient(135deg, var(--brand), var(--brand-lighter));
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .may-panel-meta { font-size: 12px; color: var(--ink-mute); font-weight: 500; }
+  .may-panel-meta .num { color: var(--ink); font-weight: 700; }
+  .may-grid {
+    display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px;
+    background: var(--brand-pale); border: 1px solid var(--brand-pale);
+    border-radius: 10px; overflow: hidden;
+  }
+  .may-cell { background: var(--bg-card); padding: 16px 14px; }
+  .may-cell .k {
+    font-size: 10.5px; color: var(--ink-mute); font-weight: 600;
+    letter-spacing: 0.04em; margin-bottom: 8px;
+  }
+  .may-cell .v {
+    font-size: 18px; color: var(--ink); font-weight: 800;
+    letter-spacing: -0.025em; font-variant-numeric: tabular-nums;
+  }
+  .may-cell .v .unit { font-size: 11px; color: var(--ink-soft); margin-left: 2px; font-weight: 600; }
+  .may-cell .sub { font-size: 10.5px; color: var(--ink-dim); margin-top: 4px; font-weight: 500; font-variant-numeric: tabular-nums; }
+  .may-note {
+    margin-top: 14px; font-size: 11.5px; color: var(--ink-mute);
+    padding-top: 12px; border-top: 1px dashed var(--line);
+    line-height: 1.6;
+  }
+  .may-note strong { color: var(--s02); font-weight: 700; }
+  @media (max-width: 1100px) {
+    .may-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 700px) {
+    .may-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* Period legend */
+  .period-legend {
+    display: flex; gap: 10px; flex-wrap: wrap;
+    margin-bottom: 14px; padding: 14px 18px;
+    background: var(--bg-card); border: 1px solid var(--line);
+    border-radius: 12px;
+  }
+  .period-tag {
+    display: flex; align-items: center; gap: 10px;
+    padding: 6px 14px; border-radius: 100px;
+    font-size: 12px; font-weight: 600; border: 1px solid;
+  }
+  .period-tag.recent { color: var(--brand); background: var(--brand-50); border-color: var(--brand-pale); }
+  .period-tag.prior  { color: var(--s06); background: rgba(14,165,233,.08); border-color: rgba(14,165,233,.25); }
+  .period-tag.yoy    { color: var(--s10); background: rgba(71,85,105,.08); border-color: rgba(71,85,105,.25); }
+  .period-tag .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .period-tag.recent .dot { background: var(--brand); }
+  .period-tag.prior .dot  { background: var(--s06); }
+  .period-tag.yoy .dot    { background: var(--s10); }
+  .period-tag .lbl { font-weight: 700; }
+  .period-tag .date {
+    font-variant-numeric: tabular-nums; font-weight: 500;
+    color: var(--ink); letter-spacing: -0.01em;
+    padding-left: 8px; border-left: 1px solid currentColor;
+    opacity: 0.85;
+  }
+
+  /* Tables */
+  .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; background: var(--bg-card); }
+  table.cmp, table.matrix, table.diag { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  table.cmp th, table.matrix th, table.diag th {
+    background: var(--bg-elev); color: var(--brand);
+    padding: 14px 12px; text-align: left; font-weight: 700; font-size: 10.5px;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    border-bottom: 1px solid var(--line); white-space: nowrap;
+  }
+  table.cmp th.num-h, table.diag th.num-h { text-align: right; }
+  table.cmp td, table.matrix td, table.diag td {
+    padding: 13px 12px; border-bottom: 1px solid var(--line-soft);
+    vertical-align: middle; color: var(--ink-soft);
+  }
+  table.cmp tr:last-child td, table.matrix tr:last-child td, table.diag tr:last-child td { border-bottom: none; }
+  table.cmp td.num, table.diag td.num { text-align: right; font-size: 12.5px; color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+  table.cmp tr:hover td, table.diag tr:hover td, table.matrix tr:hover td { background: var(--brand-25); }
+  td.yoy-col { color: var(--ink-mute); }
+
+  /* === Grouped table headers (channel comparison) === */
+  table.cmp thead.grouped tr.group-row th {
+    text-align: center; font-size: 12px; font-weight: 800;
+    background: var(--brand-50); color: var(--brand);
+    padding: 12px 12px; letter-spacing: 0.04em; text-transform: none;
+    border-bottom: 1px solid var(--brand-pale);
+  }
+  table.cmp thead.grouped tr.group-row th.g-cost  { background: rgba(90,46,234,.10);  color: var(--s01); }
+  table.cmp thead.grouped tr.group-row th.g-cac   { background: rgba(234,88,12,.10);  color: var(--s05); }
+  table.cmp thead.grouped tr.group-row th.g-rate  { background: rgba(16,185,129,.10); color: var(--s04); }
+  table.cmp thead.grouped tr.group-row th.g-roas  { background: rgba(14,165,233,.10); color: var(--s06); }
+  table.cmp thead.grouped tr.sub-row th {
+    text-align: right; font-size: 10px; font-weight: 600;
+    padding: 8px 12px; color: var(--ink-mute);
+    text-transform: uppercase; letter-spacing: 0.06em;
+    background: var(--bg-card);
+  }
+  table.cmp thead.grouped tr.sub-row th.ch-h {
+    text-align: left;
+  }
+  /* Group dividers — strong vertical separators */
+  table.cmp.grouped th.group-end,
+  table.cmp.grouped td.group-end {
+    border-right: 2px solid var(--line-strong);
+  }
+  table.cmp.grouped td.group-start {
+    /* Optional: slightly elevated background to mark group start */
+  }
+  /* Period color hints in body cells (subtle) */
+  table.cmp.grouped td.p-recent { /* default */ }
+  table.cmp.grouped td.p-prior  { background: rgba(248,250,252,.5); }
+  table.cmp.grouped td.p-yoy    { background: rgba(241,245,249,.6); color: var(--ink-soft); }
+  table.cmp.grouped tr:hover td.p-prior { background: var(--brand-25); }
+  table.cmp.grouped tr:hover td.p-yoy   { background: var(--brand-25); }
+  table.cmp.grouped td.p-delta {
+    background: rgba(248,247,255,.6);
+    border-left: 1px dashed var(--line);
+  }
+  table.cmp.grouped tr:hover td.p-delta { background: var(--brand-25); }
+
+  .case-id { font-weight: 800; color: var(--brand); font-variant-numeric: tabular-nums; }
+  .sig { display: inline-block; font-size: 11px; padding: 3px 9px; font-weight: 700; border: 1px solid; border-radius: 5px; font-variant-numeric: tabular-nums; }
+  .sig.green { color: var(--scale); border-color: var(--scale-border); background: var(--scale-bg); }
+  .sig.blue  { color: var(--keep); border-color: var(--keep-border); background: var(--keep-bg); }
+  .sig.yellow { color: var(--opt); border-color: var(--opt-border); background: var(--opt-bg); }
+  .sig.red { color: var(--off); border-color: var(--off-border); background: var(--off-bg); }
+  .verdict { font-weight: 700; color: var(--ink); }
+
+  .ch-chip { font-size: 10.5px; color: var(--ink-mute); font-weight: 600; background: var(--bg-elev); border: 1px solid var(--line); padding: 2px 8px; border-radius: 5px; display: inline-block; }
+  .media-name { color: var(--ink); font-weight: 700; font-size: 12.5px; }
+  .verdict-chip { display: inline-block; font-size: 10.5px; font-weight: 700; padding: 4px 12px; border: 1px solid; text-transform: uppercase; letter-spacing: 0.05em; border-radius: 100px; }
+  .verdict-chip.scale { color: var(--scale); border-color: var(--scale-border); background: var(--scale-bg); }
+  .verdict-chip.keep  { color: var(--keep);  border-color: var(--keep-border);  background: var(--keep-bg); }
+  .verdict-chip.opt   { color: var(--opt);   border-color: var(--opt-border);   background: var(--opt-bg); }
+  .verdict-chip.off   { color: var(--off);   border-color: var(--off-border);   background: var(--off-bg); }
+  .verdict-chip.brand { color: var(--brand-chan); border-color: var(--brand-chan-border); background: var(--brand-chan-bg); }
+  .verdict-chip.gray  { color: var(--gray-chip); border-color: var(--gray-chip-border); background: var(--gray-chip-bg); }
+  .verdict-chip.paused { color: var(--ink-dim); border-color: var(--line); background: var(--bg-elev); }
+  .verdict-chip.single { color: #C026D3; border-color: #F5D0FE; background: #FAF5FF; font-size: 9.5px; padding: 3px 8px; margin-left: 4px; }
+
+  .delta-up { color: var(--up); font-weight: 700; }
+  .delta-down { color: var(--down); font-weight: 700; }
+  .delta-flat { color: var(--ink-mute); }
+
+  td.action-cell { font-size: 12px; color: var(--ink-soft); max-width: 280px; line-height: 1.6; font-weight: 400; }
+
+  /* Filter */
+  .diag-controls { display: flex; gap: 8px; margin-bottom: 18px; flex-wrap: wrap; align-items: center; }
+  .filter-btn {
+    background: var(--bg-card); border: 1px solid var(--line);
+    padding: 8px 16px; font-size: 12.5px; cursor: pointer; font-family: inherit;
+    color: var(--ink-soft); transition: all 0.18s ease; font-weight: 600; border-radius: 100px;
+  }
+  .filter-btn .count { margin-left: 8px; font-size: 10.5px; color: var(--ink-mute); font-variant-numeric: tabular-nums; font-weight: 700; }
+  .filter-btn:hover { border-color: var(--brand-pale); color: var(--brand); background: var(--brand-50); }
+  .filter-btn.active { background: var(--brand); color: white; border-color: var(--brand); box-shadow: 0 6px 16px -4px rgba(90,46,234,.35); }
+  .filter-btn.active .count { color: white; opacity: 0.8; }
+  .filter-btn.scale.active { background: var(--scale); border-color: var(--scale); color: white; }
+  .filter-btn.keep.active  { background: var(--keep);  border-color: var(--keep);  color: white; }
+  .filter-btn.opt.active   { background: var(--opt);   border-color: var(--opt);   color: white; }
+  .filter-btn.off.active   { background: var(--off);   border-color: var(--off);   color: white; }
+  .filter-btn.brand.active { background: var(--brand-chan); border-color: var(--brand-chan); color: white; }
+
+  /* Methodology */
+  .method-section {
+    background: linear-gradient(180deg, rgba(71,85,105,.05), var(--bg-card));
+    border: 1px solid #CBD5E1; padding: 44px 40px; border-radius: 14px;
+  }
+  .method-section h3 { font-size: 28px; font-weight: 800; margin-bottom: 28px; color: var(--ink); letter-spacing: -0.025em; }
+  .method-section h3 .accent { color: var(--s10); }
+  .method-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .method-item .k { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--s10); margin-bottom: 10px; font-weight: 800; }
+  .method-item .v { font-size: 13px; line-height: 1.75; color: var(--ink-soft); font-weight: 400; }
+  .method-item .v strong { color: var(--ink); font-weight: 700; }
+
+  footer { background: var(--bg-card); color: var(--ink-mute); padding: 44px 56px; text-align: center; font-size: 11.5px; margin-top: 80px; border-top: 1px solid var(--line); font-weight: 500; }
+  footer .signature { color: var(--brand); font-size: 15px; margin-bottom: 8px; font-weight: 800; letter-spacing: -0.02em; }
+
+  @media (max-width: 1100px) {
+    .kpi-row { grid-template-columns: repeat(2, 1fr); }
+    .prio-grid, .action-grid { grid-template-columns: repeat(2, 1fr); }
+    .channel-grid { grid-template-columns: repeat(2, 1fr); }
+    .method-grid { grid-template-columns: 1fr; }
+    .integrated-compare { grid-template-columns: repeat(2, 1fr); }
+    .header-meta { grid-template-columns: repeat(2, 1fr); }
+    .issues-grid { grid-template-columns: 1fr; }
+    header h1 { font-size: 48px; }
+  }
+  @media (max-width: 700px) {
+    header { padding: 44px 24px 36px; }
+    header h1 { font-size: 36px; }
+    nav { padding: 12px 24px; }
+    nav ul { gap: 6px; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; }
+    nav a { white-space: nowrap; padding: 6px 10px; font-size: 11.5px; }
+    main { padding: 36px 24px; }
+    .section-title { font-size: 28px; }
+    .kpi-row, .prio-grid, .action-grid, .channel-grid { grid-template-columns: 1fr; }
+    .integrated-compare { grid-template-columns: 1fr; }
+    .header-meta { grid-template-columns: 1fr; }
+    table.cmp, table.matrix, table.diag { font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-content">
+    <div class="brand-mark">
+      <div class="brand-logo">B</div>
+      <div class="brand-name">비즈넵 <span>환급</span></div>
+    </div>
+    <div class="eyebrow"><span class="dot"></span>Performance Marketing Dashboard</div>
+    <h1>매체 최적화 <span class="accent">대시보드</span></h1>
+    <div class="sub">우선순위 레버 기반 의사결정 프레임 · 동요일 60일 동기간 비교 · 작년 동기간(YoY) 참고 · 알려진 이슈 자동 제외 · CAC 절대 상한 35,000원 적용</div>
+    <div class="header-meta">
+      <div class="meta-item"><div class="k">최근 60일 (Recent)</div><div class="v num">2026.04.02 — 05.31</div></div>
+      <div class="meta-item"><div class="k">이전 60일 (Prior, -63일)</div><div class="v num">2026.01.29 — 03.29</div></div>
+      <div class="meta-item"><div class="k">작년 동기간 (YoY, -364일)</div><div class="v num">2025.04.03 — 06.01</div></div>
+      <div class="meta-item"><div class="k">분석 매체 / CAC 상한</div><div class="v num"><span id="m-count">—</span> · 35,000원</div></div>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <ul>
+    <li><a href="#kpi" class="n01"><span class="step">01</span>핵심 지표</a></li>
+    <li><a href="#issues" class="n02"><span class="step">02</span>특이사항 히스토리</a></li>
+    <li><a href="#priority" class="n03"><span class="step">03</span>우선순위 레버</a></li>
+    <li><a href="#framework" class="n04"><span class="step">04</span>액션 프레임</a></li>
+    <li><a href="#thresholds" class="n05"><span class="step">05</span>임계치</a></li>
+    <li><a href="#channels" class="n06"><span class="step">06</span>채널 벤치마크</a></li>
+    <li><a href="#compare" class="n07"><span class="step">07</span>동기간 비교</a></li>
+    <li><a href="#matrix" class="n08"><span class="step">08</span>의사결정 매트릭스</a></li>
+    <li><a href="#diagnosis" class="n09"><span class="step">09</span>현황 진단</a></li>
+  </ul>
+</nav>
+
+<main>
+
+<section id="kpi">
+  <div class="section-header">
+    <div>
+      <div class="section-num">01 · Core Metrics</div>
+      <h2 class="section-title">통합 <span class="accent">핵심</span> 지표</h2>
+    </div>
+    <div class="section-sub">최근 60일 (특이값 자동 제외) · vs 이전 60일 / 작년 동기간 비교</div>
+  </div>
+  <div class="outlier-note" id="outlier-note"></div>
+  <div class="kpi-row" id="kpiRow"></div>
+  <div class="may-panel" id="mayPanel"></div>
+</section>
+
+<section id="issues">
+  <div class="section-header">
+    <div>
+      <div class="section-num">02 · Known Issues History</div>
+      <h2 class="section-title">특이사항 <span class="accent">히스토리</span></h2>
+    </div>
+    <div class="section-sub">서비스 이슈 / 정책 변경 기록 · 발생 일자는 평균 산정에서 자동 제외</div>
+  </div>
+  <div class="issues-summary">
+    <div class="issues-summary-title">⚠ 이슈 기간 분포 요약</div>
+    <div class="issues-summary-text" id="issuesSummary"></div>
+  </div>
+  <div class="issues-grid" id="issuesGrid"></div>
+</section>
+
+<section id="priority">
+  <div class="section-header">
+    <div>
+      <div class="section-num">03 · Priority Levers</div>
+      <h2 class="section-title">우선순위 <span class="accent">4 레버</span></h2>
+    </div>
+    <div class="section-sub">의사결정은 위에서 아래로. 1순위 위반은 단독으로도 OFF 가능.</div>
+  </div>
+  <div class="prio-grid">
+    <div class="prio-card p1">
+      <div class="prio-rank">01</div>
+      <div class="prio-label">Priority 1</div>
+      <div class="prio-name">조회완료 CAC</div>
+      <div class="prio-formula">광고비 ÷ 조회완료</div>
+      <div class="prio-desc">획득 효율의 <strong>선행지표</strong>. <strong>절대값 35,000원 이하</strong>까지 허용 — 채널 평균 대비 비율과 함께 판단.</div>
+      <div class="prio-impact"><span>영향력</span><span class="stars">★★★★★</span></div>
+    </div>
+    <div class="prio-card p2">
+      <div class="prio-rank">02</div>
+      <div class="prio-label">Priority 2</div>
+      <div class="prio-name">신청율</div>
+      <div class="prio-formula">신청완료 ÷ 조회완료</div>
+      <div class="prio-desc">트래픽 <strong>품질의 지표</strong>. CAC 양호해도 품질 낮으면 매출 효율 하락.</div>
+      <div class="prio-impact"><span>영향력</span><span class="stars">★★★★☆</span></div>
+    </div>
+    <div class="prio-card p3">
+      <div class="prio-rank">03</div>
+      <div class="prio-label">Priority 3</div>
+      <div class="prio-name">예상결제액 볼륨</div>
+      <div class="prio-formula">예상결제액 합계</div>
+      <div class="prio-desc"><strong>규모의 지표</strong>. CAC·신청율 양호 매체 중 상위 25%를 SCALE 후보로.</div>
+      <div class="prio-impact"><span>영향력</span><span class="stars">★★★☆☆</span></div>
+    </div>
+    <div class="prio-card p4">
+      <div class="prio-rank">04</div>
+      <div class="prio-label">Priority 4</div>
+      <div class="prio-name">ROAS</div>
+      <div class="prio-formula">예상결제액 ÷ 광고비</div>
+      <div class="prio-desc"><strong>후행 효율</strong>. ROAS < 100% (손익분기 미만) 시 즉시 OPTIMIZE 트리거.</div>
+      <div class="prio-impact"><span>영향력</span><span class="stars">★★★☆☆</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="framework">
+  <div class="section-header">
+    <div>
+      <div class="section-num">04 · Action Framework</div>
+      <h2 class="section-title">의사결정 <span class="accent">4단계</span> 액션</h2>
+    </div>
+    <div class="section-sub">vs 채널 평균 + <strong>절대값 35,000원 CAC 상한</strong> 적용</div>
+  </div>
+  <div class="action-grid">
+    <div class="action-card scale">
+      <div class="action-icon">↑</div>
+      <div class="action-title">SCALE</div>
+      <div class="action-cond">
+        <strong>CAC ≤ 채널 평균 × 80%</strong><br>
+        <strong>AND 신청율 ≥ 평균 × 110%</strong><br>
+        <strong>AND CAC ≤ 35,000원</strong><br><br>
+        예: 통합 → CAC <span class="v" id="t-scale-cac"></span> AND 신청율 <span class="v" id="t-scale-rate"></span>
+      </div>
+      <div class="action-meta">
+        <div><div class="k">광고비</div><div class="v2">+20~30%</div></div>
+        <div><div class="k">관찰</div><div class="v2 kr">주 1회</div></div>
+        <div><div class="k">운영</div><div class="v2 kr">유사 타겟 확장</div></div>
+        <div><div class="k">리스크</div><div class="v2 kr">낮음</div></div>
+      </div>
+    </div>
+    <div class="action-card keep">
+      <div class="action-icon">=</div>
+      <div class="action-title">KEEP</div>
+      <div class="action-cond">
+        <strong>CAC 평균 ±20% 이내</strong><br>
+        <strong>AND 신청율 ±10% 이내</strong><br>
+        <strong>AND CAC ≤ 35,000원</strong><br><br>
+        예: 통합 → CAC <span class="v" id="t-keep-cac"></span> AND 신청율 <span class="v" id="t-keep-rate"></span>
+      </div>
+      <div class="action-meta">
+        <div><div class="k">광고비</div><div class="v2">±5%</div></div>
+        <div><div class="k">관찰</div><div class="v2 kr">주 1회</div></div>
+        <div><div class="k">운영</div><div class="v2 kr">A/B + 입찰 미세조정</div></div>
+        <div><div class="k">리스크</div><div class="v2 kr">낮음</div></div>
+      </div>
+    </div>
+    <div class="action-card opt">
+      <div class="action-icon">!</div>
+      <div class="action-title">OPTIMIZE</div>
+      <div class="action-cond">
+        <strong>CAC > 35,000원</strong> (절대값 초과)<br>
+        <strong>OR</strong> CAC 평균 × 120~150%<br>
+        <strong>OR</strong> 신청율 평균 × 70~90%<br><br>
+        예: CAC <span class="v">> 35,000원</span> OR <span class="v" id="t-opt-cac"></span>
+      </div>
+      <div class="action-meta">
+        <div><div class="k">광고비</div><div class="v2">-10~20%</div></div>
+        <div><div class="k">관찰</div><div class="v2 kr">주 2회</div></div>
+        <div><div class="k">운영</div><div class="v2 kr">소재·타겟·랜딩 개선</div></div>
+        <div><div class="k">리스크</div><div class="v2 kr">중</div></div>
+      </div>
+    </div>
+    <div class="action-card off">
+      <div class="action-icon">×</div>
+      <div class="action-title">OFF</div>
+      <div class="action-cond">
+        <strong>CAC > 35,000원</strong><br>
+        <strong>AND</strong> CAC ≥ 채널 평균 × 150%<br>
+        <strong>AND</strong> 신청율 ≤ 평균 × 70% (2주 연속)<br><br>
+        예: CAC <span class="v" id="t-off-cac"></span> AND 신청율 <span class="v" id="t-off-rate"></span>
+      </div>
+      <div class="action-meta">
+        <div><div class="k">광고비</div><div class="v2">0</div></div>
+        <div><div class="k">관찰</div><div class="v2 kr">월 1회</div></div>
+        <div><div class="k">운영</div><div class="v2 kr">운영 중단</div></div>
+        <div><div class="k">리스크</div><div class="v2 kr">높음</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="thresholds">
+  <div class="section-header">
+    <div>
+      <div class="section-num">05 · Integrated Thresholds</div>
+      <h2 class="section-title">통합 기준 <span class="accent">임계치</span></h2>
+    </div>
+    <div class="section-sub">전체 paid 평균 (특이값 제외) 기준 + 절대값 35,000원 상한</div>
+  </div>
+  <div class="threshold-section" id="thresholdsBlock"></div>
+</section>
+
+<section id="channels">
+  <div class="section-header">
+    <div>
+      <div class="section-num">06 · Channel Benchmarks</div>
+      <h2 class="section-title">채널별 <span class="accent">60일</span> 벤치마크</h2>
+    </div>
+    <div class="section-sub">각 지표는 동기간 대비 변화율(△)을 함께 표시</div>
+  </div>
+  <div class="channel-grid" id="channelGrid"></div>
+</section>
+
+<section id="compare">
+  <div class="section-header">
+    <div>
+      <div class="section-num">07 · Same-Period Comparison</div>
+      <h2 class="section-title">동요일 <span class="accent">동기간</span> 비교</h2>
+    </div>
+    <div class="section-sub">최근 60일 vs 이전 60일 vs 작년 동기간 · 모두 동일 요일 분포</div>
+  </div>
+
+  <div class="yoy-note" id="yoyNote"></div>
+
+  <div class="compare-block">
+    <div class="compare-title">채널별 <span class="accent">비교</span></div>
+    <div class="compare-sub">5개 paid 채널 · 광고비 내림차순 · YoY 컬럼 별도 표시</div>
+    <div class="period-legend">
+      <div class="period-tag recent"><span class="dot"></span><span class="lbl">최근 (Recent)</span><span class="date">2026.04.02 — 05.31</span></div>
+      <div class="period-tag prior"><span class="dot"></span><span class="lbl">이전 (Prior)</span><span class="date">2026.01.29 — 03.29</span></div>
+      <div class="period-tag yoy"><span class="dot"></span><span class="lbl">작년 (YoY)</span><span class="date">2025.04.03 — 06.01</span></div>
+    </div>
+    <div class="table-wrap">
+    <table class="cmp grouped">
+      <thead class="grouped">
+        <tr class="group-row">
+          <th rowspan="2" class="ch-h">채널</th>
+          <th colspan="3" class="g-cost group-end">광고비</th>
+          <th colspan="4" class="g-cac group-end">CAC (조회완료)</th>
+          <th colspan="4" class="g-rate group-end">신청율</th>
+          <th colspan="2" class="g-roas">ROAS</th>
+        </tr>
+        <tr class="sub-row">
+          <th>최근</th>
+          <th>이전</th>
+          <th class="group-end">YoY</th>
+          <th>최근</th>
+          <th>이전</th>
+          <th>YoY</th>
+          <th class="group-end">△ vs 이전</th>
+          <th>최근</th>
+          <th>이전</th>
+          <th>YoY</th>
+          <th class="group-end">△ vs 이전</th>
+          <th>최근</th>
+          <th>YoY</th>
+        </tr>
+      </thead>
+      <tbody id="channelCmpBody"></tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="compare-block">
+    <div class="compare-title">매체별 <span class="accent">비교</span></div>
+    <div class="compare-sub">두 기간 중 하나라도 운영된 매체 · 최근 광고비 내림차순</div>
+    <div class="diag-controls" id="mediaCmpFilter"></div>
+    <div class="table-wrap">
+    <table class="cmp grouped">
+      <thead class="grouped">
+        <tr class="group-row">
+          <th rowspan="2" class="ch-h">채널</th>
+          <th rowspan="2" class="ch-h group-end">매체</th>
+          <th colspan="3" class="g-cost group-end">광고비</th>
+          <th colspan="3" class="g-cac group-end">CAC (조회완료)</th>
+          <th colspan="3" class="g-rate group-end">신청율</th>
+          <th colspan="2" class="g-roas group-end">ROAS</th>
+          <th rowspan="2" class="ch-h">상태</th>
+        </tr>
+        <tr class="sub-row">
+          <th>최근</th>
+          <th>이전</th>
+          <th class="group-end">△ %</th>
+          <th>최근</th>
+          <th>이전</th>
+          <th class="group-end">△ %</th>
+          <th>최근</th>
+          <th>이전</th>
+          <th class="group-end">△ pt</th>
+          <th>최근</th>
+          <th class="group-end">YoY</th>
+        </tr>
+      </thead>
+      <tbody id="mediaCmpBody"></tbody>
+    </table>
+    </div>
+  </div>
+</section>
+
+<section id="matrix">
+  <div class="section-header">
+    <div>
+      <div class="section-num">08 · Decision Matrix</div>
+      <h2 class="section-title">의사결정 <span class="accent">매트릭스</span></h2>
+    </div>
+    <div class="section-sub">8가지 케이스 · 절대값 35K 상한 적용 시나리오 포함</div>
+  </div>
+  <div class="table-wrap">
+  <table class="matrix">
+    <thead>
+      <tr>
+        <th>Case</th>
+        <th>CAC (P1)</th>
+        <th>신청율 (P2)</th>
+        <th>예상결제액 (P3)</th>
+        <th>ROAS (P4)</th>
+        <th>최종 판단</th>
+        <th>광고비 액션</th>
+        <th style="width:26%;">비고</th>
+      </tr>
+    </thead>
+    <tbody id="matrixBody"></tbody>
+  </table>
+  </div>
+</section>
+
+<section id="diagnosis">
+  <div class="section-header">
+    <div>
+      <div class="section-num">09 · Current Diagnosis</div>
+      <h2 class="section-title">최근 60일 <span class="accent">매체</span> 진단</h2>
+    </div>
+    <div class="section-sub">개선 로직 적용: DOOH 별도평가 / 단일매체 채널은 통합 평균 기준 / CAC 35,000원 절대 상한</div>
+  </div>
+  <div class="diag-controls" id="filterBar"></div>
+  <div class="table-wrap">
+  <table class="diag" id="diagTable">
+    <thead>
+      <tr>
+        <th data-sort="cost" class="num-h">광고비 ▼</th>
+        <th data-sort="channel">채널</th>
+        <th data-sort="name">매체</th>
+        <th data-sort="cac" class="num-h">CAC</th>
+        <th data-sort="cac_diff" class="num-h">vs 벤치</th>
+        <th data-sort="rate" class="num-h">신청율</th>
+        <th data-sort="rate_diff" class="num-h">vs 벤치</th>
+        <th data-sort="roas" class="num-h">ROAS</th>
+        <th data-sort="code">판단</th>
+        <th>권장 액션</th>
+      </tr>
+    </thead>
+    <tbody id="diagBody"></tbody>
+  </table>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="signature">비즈넵 환급 · BZNAV</div>
+  <div>Performance Marketing Optimization Dashboard v5 · 2026.05.31 기준 · 60일 동요일 동기간 + YoY 분석</div>
+</footer>
+
+<script>
+const DATA = {"periods": {"recent": {"start": "2026-04-02", "end": "2026-05-31", "days": 60}, "prior": {"start": "2026-01-29", "end": "2026-03-29", "days": 60}, "yoy": {"start": "2025-04-03", "end": "2025-06-01", "days": 60}}, "integrated": {"recent": {"cost": 1649292855.6666667, "view": 114838.0, "apply": 10026.0, "rev": 2191100755.675, "profit": 541807900.0083334, "cac": 14361.908563948055, "rate": 8.730559570873753, "roas": 132.85092142046096, "profit_rate": 32.85092142046097}, "prior": {"cost": 1738781817.3333333, "view": 93403.0, "apply": 9295.0, "rev": 1908172019.4550002, "profit": 180390202.12166673, "cac": 18615.909738802107, "rate": 9.951500487136387, "roas": 109.74188943276681, "profit_rate": 10.374516245995746}, "yoy": {"cost": 516770134.6666667, "view": 31369.0, "apply": 3641.0, "rev": 734026644.117, "profit": 217256509.45033333, "cac": 16473.911653755833, "rate": 11.607000541936307, "roas": 142.0412277869871, "profit_rate": 42.0412277869871}}, "may": {"raw": {"cost": 812969126.0, "view": 56285.0, "apply": 4859.0, "rev": 1079073443.435, "profit": 266104317.43500003, "cac": 14443.7972106245, "rate": 8.632850670693792, "roas": 132.73240138211594, "profit_rate": 32.73240138211596}, "days_total": 31, "days_affected": 31, "start": "2026-05-01", "end": "2026-05-31"}, "cac_cap": 35000, "channels": [{"name": "00.paid_display", "media_count": 12, "recent": {"cost": 1255497852.0, "view": 84430.0, "apply": 7307.0, "rev": 1604614406.2, "cac": 14870.281321805045, "rate": 8.654506691934147, "roas": 127.80702122619003, "profit_rate": 27.80702122619004}, "prior": {"cost": 1278684304.0, "view": 60588.0, "apply": 5535.0, "rev": 1074026088.915, "cac": 21104.580180893907, "rate": 9.135472370766488, "roas": 83.99462522181706, "profit_rate": -16.005374778182933}, "yoy": {"cost": 373444649.6666667, "view": 16605.0, "apply": 1751.0, "rev": 324928722.222, "cac": 22489.891578841714, "rate": 10.545016561276723, "roas": 87.00853594020653, "profit_rate": -12.991464059793476}}, {"name": "00.paid_dooh", "media_count": 1, "recent": {"cost": 5866666.666666667, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": 0.0, "profit_rate": -100.0}, "prior": {"cost": 4033333.333333333, "view": 6.0, "apply": 1.0, "rev": 41519.14, "cac": 672222.2222222221, "rate": 16.666666666666664, "roas": 1.0294001652892564, "profit_rate": -98.97059983471074}, "yoy": null}, {"name": "01.paid_cpa", "media_count": 3, "recent": {"cost": 16010689.0, "view": 2198.0, "apply": 129.0, "rev": 27692166.71, "cac": 7284.207916287534, "rate": 5.868971792538671, "roas": 172.96049351779928, "profit_rate": 72.96049351779926}, "prior": {"cost": 16560390.0, "view": 2953.0, "apply": 161.0, "rev": 32635769.400000002, "cac": 5607.988486285134, "rate": 5.4520826278360985, "roas": 197.07126100291117, "profit_rate": 97.07126100291119}, "yoy": {"cost": 2077152.0, "view": 874.0, "apply": 27.0, "rev": 2158324.09, "cac": 2376.604118993135, "rate": 3.0892448512585813, "roas": 103.9078550823435, "profit_rate": 3.907855082343519}}, {"name": "01.paid_msg", "media_count": 19, "recent": {"cost": 327861145.0, "view": 24062.0, "apply": 2048.0, "rev": 427915587.385, "cac": 13625.68136480758, "rate": 8.511345690300057, "roas": 130.51732232100878, "profit_rate": 30.517322321008805}, "prior": {"cost": 400421593.0, "view": 24861.0, "apply": 2922.0, "rev": 640188642.99, "cac": 16106.415389565987, "rate": 11.753348618317847, "roas": 159.87865144675152, "profit_rate": 62.62575604657764}, "yoy": {"cost": 118800000.0, "view": 12226.0, "apply": 1587.0, "rev": 326875767.53, "cac": 9716.996564698184, "rate": 12.980533289710452, "roas": 275.1479524663299, "profit_rate": 175.14795246632997}}, {"name": "01.paid_search", "media_count": 3, "recent": {"cost": 44056503.0, "view": 4148.0, "apply": 542.0, "rev": 130878595.38000001, "cac": 10621.143442622952, "rate": 13.066538090646093, "roas": 297.069868164525, "profit_rate": 197.06986816452502}, "prior": {"cost": 39082197.0, "view": 4993.0, "apply": 676.0, "rev": 161279999.01000002, "cac": 7827.397756859604, "rate": 13.538954536350891, "roas": 412.66871207368416, "profit_rate": 312.66871207368416}, "yoy": {"cost": 22448333.0, "view": 1658.0, "apply": 276.0, "rev": 80063830.275, "cac": 13539.404704463208, "rate": 16.646562123039807, "roas": 356.6582439551302, "profit_rate": 256.6582439551302}}, {"name": "07.paid_blog", "media_count": 0, "recent": null, "prior": {"cost": 0.0, "view": 2.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "yoy": {"cost": 0.0, "view": 6.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}}], "media": [{"channel": "00.paid_display", "name": "kakaomoment", "recent": {"cost": 802822744.0, "view": 64670.0, "apply": 5724.0, "rev": 1304932101.59, "cac": 12414.144796659966, "rate": 8.851090149992269, "roas": 162.54299113254817, "profit_rate": 62.54299113254819}, "prior": {"cost": 102439741.0, "view": 6920.0, "apply": 734.0, "rev": 162612164.13000003, "cac": 14803.43078034682, "rate": 10.606936416184972, "roas": 158.73933547918676, "profit_rate": 58.73933547918673}, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "keep"}, {"channel": "00.paid_display", "name": "meta", "recent": {"cost": 176100914.0, "view": 6574.0, "apply": 459.0, "rev": 84549926.43499999, "cac": 26787.483115302708, "rate": 6.982050501977486, "roas": 48.01220193269411, "profit_rate": -51.98779806730588}, "prior": {"cost": 554790964.0, "view": 24278.0, "apply": 1825.0, "rev": 273340270.51500005, "cac": 22851.592552928578, "rate": 7.517093665046544, "roas": 49.26905596014719, "profit_rate": -50.73094403985281}, "yoy": {"cost": 94619858.0, "view": 1887.0, "apply": 201.0, "rev": 37530205.635000005, "cac": 50143.00900900901, "rate": 10.651828298887123, "roas": 39.66419568606836, "profit_rate": -60.33580431393164}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "shinhancardlms", "recent": {"cost": 121000000.0, "view": 8881.0, "apply": 776.0, "rev": 138421837.45000002, "cac": 13624.591825244905, "rate": 8.737754757347146, "roas": 114.39821276859506, "profit_rate": 14.398212768595048}, "prior": {"cost": 44000000.0, "view": 3264.0, "apply": 330.0, "rev": 63547677.89500001, "cac": 13480.392156862745, "rate": 10.11029411764706, "roas": 144.42654067045459, "profit_rate": 44.426540670454564}, "yoy": {"cost": 11000000.0, "view": 308.0, "apply": 50.0, "rev": 15625462.840000004, "cac": 35714.28571428572, "rate": 16.233766233766232, "roas": 142.0496621818182, "profit_rate": 42.049662181818185}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "keep"}, {"channel": "00.paid_display", "name": "google_demandgen", "recent": {"cost": 98830567.0, "view": 4019.0, "apply": 378.0, "rev": 71362964.01, "cac": 24590.83528240856, "rate": 9.405324707638716, "roas": 72.20738095127999, "profit_rate": -27.792619048720013}, "prior": {"cost": 168573359.0, "view": 6100.0, "apply": 616.0, "rev": 102466990.92500001, "cac": 27634.976885245902, "rate": 10.098360655737705, "roas": 60.78480700203643, "profit_rate": -39.21519299796357}, "yoy": {"cost": 1897472.0, "view": 6.0, "apply": 1.0, "rev": 159830.45, "cac": 316245.3333333333, "rate": 16.666666666666664, "roas": 8.423336418139504, "profit_rate": -91.5766635818605}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "kbcardlms", "recent": {"cost": 97900000.0, "view": 8810.0, "apply": 704.0, "rev": 171348261.37, "cac": 11112.372304199773, "rate": 7.990919409761635, "roas": 175.02376033707864, "profit_rate": 75.02376033707866}, "prior": {"cost": 80300000.0, "view": 5942.0, "apply": 630.0, "rev": 152094767.76, "cac": 13513.968360821273, "rate": 10.602490743857288, "roas": 189.40817902864256, "profit_rate": 89.40817902864258}, "yoy": {"cost": 44000000.0, "view": 6458.0, "apply": 870.0, "rev": 178711569.20499998, "cac": 6813.2548776711055, "rate": 13.47166305357696, "roas": 406.16265728409087, "profit_rate": 306.16265728409087}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "keep"}, {"channel": "00.paid_display", "name": "kakaobank", "recent": {"cost": 89100000.0, "view": 5523.0, "apply": 402.0, "rev": 71480537.24500002, "cac": 16132.536664856056, "rate": 7.278652906029332, "roas": 80.22506985970821, "profit_rate": -19.774930140291804}, "prior": {"cost": 127245156.0, "view": 7866.0, "apply": 697.0, "rev": 144240574.27, "cac": 16176.602593440122, "rate": 8.86092041698449, "roas": 113.35643635031578, "profit_rate": 13.356436350315768}, "yoy": {"cost": 54083333.0, "view": 7420.0, "apply": 616.0, "rev": 99965400.79500002, "cac": 7288.858894878706, "rate": 8.30188679245283, "roas": 184.83587317926583, "profit_rate": 84.83587317926579}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "00.paid_display", "name": "google_pmax", "recent": {"cost": 53953509.0, "view": 2535.0, "apply": 227.0, "rev": 39488393.425, "cac": 21283.43550295858, "rate": 8.954635108481263, "roas": 73.18966672770068, "profit_rate": -26.810333272299296}, "prior": {"cost": 131153447.0, "view": 4605.0, "apply": 402.0, "rev": 61650210.050000004, "cac": 28480.66167209555, "rate": 8.729641693811075, "roas": 47.00616831671988, "profit_rate": -52.99383168328011}, "yoy": {"cost": 92028739.0, "view": 3852.0, "apply": 472.0, "rev": 97256659.305, "cac": 23891.157580477673, "rate": 12.2533748701973, "roas": 105.68074751627317, "profit_rate": 5.6807475162731516}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "hanacardlms", "recent": {"cost": 50600000.0, "view": 2934.0, "apply": 223.0, "rev": 44705254.165, "cac": 17246.080436264485, "rate": 7.60054533060668, "roas": 88.35030467391304, "profit_rate": -11.649695326086954}, "prior": {"cost": 60500000.0, "view": 3614.0, "apply": 375.0, "rev": 98299719.37500001, "cac": 16740.453790813503, "rate": 10.376314333148866, "roas": 162.47887500000002, "profit_rate": 62.478875}, "yoy": {"cost": 33000000.0, "view": 3306.0, "apply": 410.0, "rev": 73415356.69000001, "cac": 9981.851179673322, "rate": 12.401693889897157, "roas": 222.47077784848491, "profit_rate": 122.47077784848486}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_search", "name": "sa_naver", "recent": {"cost": 18703458.0, "view": 959.0, "apply": 98.0, "rev": 20631811.85, "cac": 19503.084462982275, "rate": 10.218978102189782, "roas": 110.31014612378097, "profit_rate": 10.310146123780967}, "prior": {"cost": 15779654.0, "view": 872.0, "apply": 118.0, "rev": 24909163.435000002, "cac": 18095.933486238533, "rate": 13.53211009174312, "roas": 157.8562079688186, "profit_rate": 57.85620796881859}, "yoy": {"cost": 16342172.0, "view": 544.0, "apply": 66.0, "rev": 23723903.060000002, "cac": 30040.757352941175, "rate": 12.132352941176471, "roas": 145.1698284658857, "profit_rate": 45.169828465885686}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_search", "name": "sa_google", "recent": {"cost": 17312036.0, "view": 401.0, "apply": 39.0, "rev": 8665268.56, "cac": 43172.159600997504, "rate": 9.72568578553616, "roas": 50.05343426966071, "profit_rate": -49.94656573033928}, "prior": {"cost": 12082546.0, "view": 326.0, "apply": 48.0, "rev": 13284503.570000004, "cac": 37063.024539877304, "rate": 14.723926380368098, "roas": 109.94788325242051, "profit_rate": 9.947883252420471}, "yoy": {"cost": 2586162.0, "view": 127.0, "apply": 22.0, "rev": 5594012.255000001, "cac": 20363.48031496063, "rate": 17.322834645669293, "roas": 216.30556225789417, "profit_rate": 116.30556225789412}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "hyundaicardlms", "recent": {"cost": 16500000.0, "view": 1245.0, "apply": 111.0, "rev": 23134713.744999994, "cac": 13253.012048192772, "rate": 8.91566265060241, "roas": 140.2103863333333, "profit_rate": 40.21038633333333}, "prior": null, "yoy": null, "is_new": true, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "keep"}, {"channel": "00.paid_display", "name": "cashnote", "recent": {"cost": 15766666.0, "view": 666.0, "apply": 76.0, "rev": 21944772.525000002, "cac": 23673.672672672674, "rate": 11.411411411411411, "roas": 139.18460963782707, "profit_rate": 39.18460963782706}, "prior": {"cost": 33890745.0, "view": 1285.0, "apply": 157.0, "rev": 27398086.299999997, "cac": 26374.120622568094, "rate": 12.217898832684824, "roas": 80.84238425564264, "profit_rate": -19.157615744357344}, "yoy": {"cost": 24054459.0, "view": 1097.0, "apply": 128.0, "rev": 18989082.255000003, "cac": 21927.49225159526, "rate": 11.668185961713764, "roas": 78.94204669080274, "profit_rate": -21.057953309197263}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "00.paid_display", "name": "okpos", "recent": {"cost": 14351385.0, "view": 367.0, "apply": 35.0, "rev": 7890889.890000001, "cac": 39104.59128065395, "rate": 9.536784741144414, "roas": 54.9834729540041, "profit_rate": -45.01652704599589}, "prior": {"cost": 115651938.0, "view": 8560.0, "apply": 982.0, "rev": 254543042.84500003, "cac": 13510.740420560747, "rate": 11.471962616822431, "roas": 220.09405743378034, "profit_rate": 120.09405743378035}, "yoy": {"cost": 25983100.0, "view": 843.0, "apply": 113.0, "rev": 36659374.115, "cac": 30822.182680901544, "rate": 13.404507710557533, "roas": 141.0893007955171, "profit_rate": 41.08930079551709}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "cashnote", "recent": {"cost": 13200000.0, "view": 126.0, "apply": 34.0, "rev": 10299860.024999999, "cac": 104761.90476190476, "rate": 26.984126984126984, "roas": 78.02924261363636, "profit_rate": -21.970757386363633}, "prior": {"cost": 19800000.0, "view": 512.0, "apply": 108.0, "rev": 28024963.785, "cac": 38671.875, "rate": 21.09375, "roas": 141.54022113636364, "profit_rate": 41.54022113636364}, "yoy": {"cost": 0.0, "view": 178.0, "apply": 24.0, "rev": 1331219.695, "cac": 0.0, "rate": 13.48314606741573, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "baeminmartlms", "recent": {"cost": 12650000.0, "view": 253.0, "apply": 44.0, "rev": 6014984.82, "cac": 50000.0, "rate": 17.391304347826086, "roas": 47.549287114624505, "profit_rate": -52.450712885375495}, "prior": {"cost": 33000000.0, "view": 2188.0, "apply": 377.0, "rev": 55053152.05, "cac": 15082.266910420476, "rate": 17.23034734917733, "roas": 166.82773348484847, "profit_rate": 100.16106681818184}, "yoy": null, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_cpa", "name": "refund_pincrux", "recent": {"cost": 11357060.0, "view": 1377.0, "apply": 90.0, "rev": 24408634.315, "cac": 8247.683369644154, "rate": 6.535947712418301, "roas": 214.92036068313456, "profit_rate": 114.92036068313456}, "prior": {"cost": 14434090.0, "view": 2103.0, "apply": 129.0, "rev": 30397385.070000004, "cac": 6863.571088920589, "rate": 6.134094151212553, "roas": 210.5943988848622, "profit_rate": 110.59439888486216}, "yoy": {"cost": 2077152.0, "view": 874.0, "apply": 27.0, "rev": 2158324.09, "cac": 2376.604118993135, "rate": 3.0892448512585813, "roas": 103.9078550823435, "profit_rate": 3.907855082343519}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "keep"}, {"channel": "01.paid_search", "name": "bs_naver", "recent": {"cost": 8041009.0, "view": 2788.0, "apply": 405.0, "rev": 101581514.97000001, "cac": 2884.149569583931, "rate": 14.526542324246773, "roas": 1263.2931385849713, "profit_rate": 1163.2931385849713}, "prior": {"cost": 11219997.0, "view": 3795.0, "apply": 510.0, "rev": 123086332.00500003, "cac": 2956.520948616601, "rate": 13.438735177865613, "roas": 1097.0264252744455, "profit_rate": 997.0264252744455}, "yoy": {"cost": 3519999.0, "view": 987.0, "apply": 188.0, "rev": 50745914.96, "cac": 3566.3617021276596, "rate": 19.047619047619047, "roas": 1441.6457209220798, "profit_rate": 1341.6457209220798}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "scale"}, {"channel": "01.paid_msg", "name": "okpos", "recent": {"cost": 6600000.0, "view": 253.0, "apply": 24.0, "rev": 4767293.57, "cac": 26086.956521739132, "rate": 9.486166007905137, "roas": 72.23172075757576, "profit_rate": -27.76827924242423}, "prior": {"cost": 0.0, "view": 10.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "yoy": {"cost": 5500000.0, "view": 320.0, "apply": 37.0, "rev": 4475502.785, "cac": 17187.5, "rate": 11.5625, "roas": 81.37277790909091, "profit_rate": -18.62722209090909}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "00.paid_dooh", "name": "gvalleytv", "recent": {"cost": 5866666.666666667, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": 0.0, "profit_rate": -100.0}, "prior": {"cost": 4033333.333333333, "view": 6.0, "apply": 1.0, "rev": 41519.14, "cac": 672222.2222222221, "rate": 16.666666666666664, "roas": 1.0294001652892564, "profit_rate": -98.97059983471074}, "yoy": null, "is_new": false, "is_paused": false, "is_dooh": true, "is_single": false, "code": "brand"}, {"channel": "01.paid_cpa", "name": "adison.offerwall", "recent": {"cost": 3807729.0, "view": 401.0, "apply": 17.0, "rev": 1742071.76, "cac": 9495.583541147133, "rate": 4.239401496259352, "roas": 45.7509386828737, "profit_rate": -54.249061317126305}, "prior": {"cost": 0.0, "view": 1.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "yoy": null, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "smartbill", "recent": {"cost": 3300000.0, "view": 152.0, "apply": 27.0, "rev": 11027002.350000001, "cac": 21710.526315789473, "rate": 17.763157894736842, "roas": 334.1515863636364, "profit_rate": 234.1515863636364}, "prior": {"cost": 4950000.0, "view": 329.0, "apply": 72.0, "rev": 24181728.610000003, "cac": 15045.592705167173, "rate": 21.88449848024316, "roas": 488.51976989899, "profit_rate": 388.5197698989899}, "yoy": {"cost": 3300000.0000000005, "view": 91.0, "apply": 17.0, "rev": 7306800.605, "cac": 36263.73626373627, "rate": 18.681318681318682, "roas": 221.41820015151512, "profit_rate": 121.41820015151512}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "00.paid_display", "name": "docple", "recent": {"cost": 3300000.0, "view": 12.0, "apply": 4.0, "rev": 2533467.17, "cac": 275000.0, "rate": 33.33333333333333, "roas": 76.77173242424243, "profit_rate": -23.22826757575757}, "prior": {"cost": 4400000.0, "view": 47.0, "apply": 15.0, "rev": 13356363.215, "cac": 93617.02127659574, "rate": 31.914893617021278, "roas": 303.55370943181816, "profit_rate": 203.5537094318182}, "yoy": null, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "tmaplms", "recent": {"cost": 3300000.0, "view": 146.0, "apply": 25.0, "rev": 2018547.375, "cac": 22602.739726027397, "rate": 17.123287671232877, "roas": 61.168102272727275, "profit_rate": -38.83189772727273}, "prior": null, "yoy": null, "is_new": true, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "paysam", "recent": {"cost": 2811145.0, "view": 1052.0, "apply": 53.0, "rev": 10361972.66, "cac": 2672.1910646387832, "rate": 5.038022813688213, "roas": 368.6032794466312, "profit_rate": 268.6032794466312}, "prior": null, "yoy": null, "is_new": true, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "00.paid_display", "name": "navergfa", "recent": {"cost": 1272067.0, "view": 24.0, "apply": 1.0, "rev": 287953.51, "cac": 53002.791666666664, "rate": 4.166666666666666, "roas": 22.636662219835905, "profit_rate": -77.3633377801641}, "prior": {"cost": 3215436.0, "view": 43.0, "apply": 4.0, "rev": 790899.8500000001, "cac": 74777.58139534884, "rate": 9.30232558139535, "roas": 24.596970675205483, "profit_rate": -75.40302932479452}, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "off"}, {"channel": "01.paid_cpa", "name": "buzzvil", "recent": {"cost": 845900.0, "view": 420.0, "apply": 22.0, "rev": 1541460.635, "cac": 2014.047619047619, "rate": 5.238095238095238, "roas": 182.227288686606, "profit_rate": 82.22728868660599}, "prior": {"cost": 1413500.0, "view": 719.0, "apply": 30.0, "rev": 2128477.1300000004, "cac": 1965.9248956884562, "rate": 4.172461752433936, "roas": 150.5820396179696, "profit_rate": 50.58203961796958}, "yoy": null, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "kakaopay", "recent": {"cost": 0.0, "view": 5.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "prior": {"cost": 137500000.0, "view": 7252.0, "apply": 783.0, "rev": 192077957.37, "cac": 18960.286817429675, "rate": 10.797021511307225, "roas": 139.69305990545456, "profit_rate": 39.693059905454554}, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "kakaobrandmsg", "recent": {"cost": 0.0, "view": 42.0, "apply": 11.0, "rev": 586947.855, "cac": 0.0, "rate": 26.190476190476193, "roas": null, "profit_rate": null}, "prior": {"cost": 9371593.0, "view": 1473.0, "apply": 238.0, "rev": 25705416.425, "cac": 6362.2491513917175, "rate": 16.157501697216563, "roas": 274.29078946343486, "profit_rate": 174.2907894634349}, "yoy": null, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "scale"}, {"channel": "00.paid_display", "name": "dabangpro", "recent": {"cost": 0.0, "view": 24.0, "apply": 1.0, "rev": 143400.4, "cac": 0.0, "rate": 4.166666666666666, "roas": null, "profit_rate": null}, "prior": {"cost": 2566662.0, "view": 34.0, "apply": 1.0, "rev": 63723.335, "cac": 75490.05882352941, "rate": 2.941176470588235, "roas": 2.4827318517202497, "profit_rate": -97.51726814827975}, "yoy": null, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "ktlms", "recent": {"cost": 0.0, "view": 2.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "prior": {"cost": 0.0, "view": 11.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "yoy": null, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "marketboro", "recent": {"cost": 0.0, "view": 1.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "prior": {"cost": 0.0, "view": 3.0, "apply": 1.0, "rev": 109212.675, "cac": 0.0, "rate": 33.33333333333333, "roas": null, "profit_rate": null}, "yoy": null, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "00.paid_display", "name": "cafe_naver", "recent": {"cost": 0.0, "view": 9.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "prior": {"cost": 0.0, "view": 9.0, "apply": 1.0, "rev": 948839.5800000001, "cac": 0.0, "rate": 11.11111111111111, "roas": null, "profit_rate": null}, "yoy": {"cost": 0.0, "view": 36.0, "apply": 6.0, "rev": 1720416.3599999999, "cac": 0.0, "rate": 16.666666666666664, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "wooricardlms", "recent": {"cost": 0.0, "view": 7.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "prior": {"cost": 0.0, "view": 19.0, "apply": 2.0, "rev": 72662.98000000001, "cac": 0.0, "rate": 10.526315789473683, "roas": null, "profit_rate": null}, "yoy": {"cost": 22000000.0, "view": 1555.0, "apply": 177.0, "rev": 45982613.300000004, "cac": 14147.909967845659, "rate": 11.382636655948552, "roas": 209.01187863636363, "profit_rate": 109.01187863636363}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "00.paid_display", "name": "baeminceo", "recent": {"cost": 0.0, "view": 7.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "prior": {"cost": 0.0, "view": 3.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "yoy": null, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "hpointlms", "recent": {"cost": 0.0, "view": 1.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "prior": {"cost": 0.0, "view": 7.0, "apply": 1.0, "rev": 811610.28, "cac": 0.0, "rate": 14.285714285714285, "roas": null, "profit_rate": null}, "yoy": null, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "hanacardapppush", "recent": {"cost": 0.0, "view": 140.0, "apply": 16.0, "rev": 5228912.0, "cac": 0.0, "rate": 11.428571428571429, "roas": null, "profit_rate": null}, "prior": null, "yoy": null, "is_new": true, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "scale"}, {"channel": "01.paid_msg", "name": "joongna_lms", "recent": {"cost": 0.0, "view": 9.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "prior": null, "yoy": null, "is_new": true, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "joongnaapppush", "recent": {"cost": 0.0, "view": 3.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "prior": null, "yoy": null, "is_new": true, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "00.paid_display", "name": "kakaopay", "recent": null, "prior": {"cost": 24104850.0, "view": 808.0, "apply": 97.0, "rev": 29055331.955000002, "cac": 29832.73514851485, "rate": 12.004950495049505, "roas": 120.53728587815316, "profit_rate": 20.537285878153167}, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "okcashbaglms", "recent": null, "prior": {"cost": 11000000.0, "view": 199.0, "apply": 5.0, "rev": 209773.785, "cac": 55276.38190954774, "rate": 2.512562814070352, "roas": 1.9070344090909093, "profit_rate": -98.09296559090909}, "yoy": null, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "hogangnono", "recent": null, "prior": {"cost": 5500000.0, "view": 6.0, "apply": 0.0, "rev": 0.0, "cac": 916666.6666666666, "rate": 0.0, "roas": 0.0, "profit_rate": -100.0}, "yoy": null, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "aptner", "recent": null, "prior": {"cost": 3300000.0, "view": 4.0, "apply": 0.0, "rev": 0.0, "cac": 825000.0, "rate": 0.0, "roas": 0.0, "profit_rate": -100.0}, "yoy": null, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "tiktok", "recent": null, "prior": {"cost": 1852006.0, "view": 20.0, "apply": 4.0, "rev": 3559591.9450000003, "cac": 92600.3, "rate": 20.0, "roas": 192.20196613833866, "profit_rate": 92.20196613833866}, "yoy": {"cost": 44900484.0, "view": 1334.0, "apply": 186.0, "rev": 20862574.460000005, "cac": 33658.53373313343, "rate": 13.943028485757122, "roas": 46.46403023183448, "profit_rate": -53.535969768165515}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_cpa", "name": "tnk", "recent": null, "prior": {"cost": 712800.0, "view": 130.0, "apply": 2.0, "rev": 109907.2, "cac": 5483.076923076923, "rate": 1.5384615384615385, "roas": 15.41907968574635, "profit_rate": -84.58092031425365}, "yoy": null, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "lgupluslms", "recent": null, "prior": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "hogangnono", "recent": null, "prior": {"cost": 0.0, "view": 38.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "yoy": null, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "07.paid_blog", "name": "naverblog", "recent": null, "prior": {"cost": 0.0, "view": 2.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "yoy": {"cost": 0.0, "view": 6.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": false, "code": "paused"}, {"channel": "00.paid_display", "name": "tiktok_junseconomylab", "recent": null, "prior": null, "yoy": {"cost": 282875.0, "view": 2.0, "apply": 1.0, "rev": 10019.1, "cac": 141437.5, "rate": 50.0, "roas": 3.541882456915599, "profit_rate": -96.45811754308441}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "theshoplms", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "samsungcard", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "shinhancardpush", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "remember", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "innoforest", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "golfzon", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "smartbill", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "meta_junseconomylab", "recent": null, "prior": null, "yoy": {"cost": 3183663.0, "view": 32.0, "apply": 10.0, "rev": 1053845.3120000002, "cac": 99489.46875, "rate": 31.25, "roas": 33.10166032020349, "profit_rate": -66.89833967979652}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "cafe24", "recent": null, "prior": null, "yoy": {"cost": 1024000.0, "view": 16.0, "apply": 3.0, "rev": 4978326.015000001, "cac": 64000.0, "rate": 18.75, "roas": 486.1646499023438, "profit_rate": 386.1646499023438}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "google", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 3.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "moneyquiz", "recent": null, "prior": null, "yoy": {"cost": 2640000.0, "view": 53.0, "apply": 3.0, "rev": 2862073.7600000002, "cac": 49811.32075471698, "rate": 5.660377358490567, "roas": 108.41188484848485, "profit_rate": 8.411884848484858}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "bccardlms", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "ymyd", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "asum", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "buzzvil", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "medigate", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "kakaobank", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 1.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "lottememberslms", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "barogo", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "atlantruck", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 6.0, "apply": 1.0, "rev": 9085.960000000001, "cac": 0.0, "rate": 16.666666666666664, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "sktlms", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "cauly", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "payhere", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 7.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "toss", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "obizlms", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 1.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "lpoint", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "atlantruck", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "v3", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 2.0, "apply": 1.0, "rev": 18156.45, "cac": 0.0, "rate": 50.0, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "nicelms", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "youtuber_junseconomylab", "recent": null, "prior": null, "yoy": {"cost": 28746666.66666667, "view": 17.0, "apply": 11.0, "rev": 2880914.6599999997, "cac": 1690980.3921568631, "rate": 64.70588235294117, "roas": 10.021734670686454, "profit_rate": -89.97826532931353}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}], "known_issues": [{"id": 1, "date": "2024.11.02 ~ 11.03", "name": "홈택스 서비스 변경 이슈", "impact": "전반", "in_period": []}, {"id": 2, "date": "2025.05.01 ~ 05.17", "name": "5월 연휴 + 홈택스 이슈", "impact": "전반", "in_period": ["yoy"]}, {"id": 3, "date": "2026.02.11", "name": "홈택스 이슈", "impact": "전반", "in_period": ["prior"]}, {"id": 4, "date": "2026.04.01 ~ 04.14", "name": "자필서명 퍼널 이슈", "impact": "신청율", "in_period": ["recent"]}, {"id": 5, "date": "2026.04.16", "name": "자필서명 퍼널 제거", "impact": "신청율", "in_period": ["recent"]}, {"id": 6, "date": "2026.04.26 ~ 04.27", "name": "카카오인증서 이슈", "impact": "조회완료율", "in_period": ["recent"]}, {"id": 7, "date": "2026.05.01 ~ 05.31", "name": "5월 홈택스 간헐적 이슈", "impact": "전반", "in_period": ["recent"]}, {"id": 8, "date": "2026.05.11 ~ 05.31", "name": "조회 로딩 지연 이슈", "impact": "신청율", "in_period": ["recent"]}]};
+
+const fmt = (n) => n == null ? '-' : Math.round(n).toLocaleString('ko-KR');
+const fmtKR = (n) => {
+  if (n == null) return '-';
+  if (n >= 100000000) return (n/100000000).toFixed(2) + '억';
+  if (n >= 10000000) return (n/10000000).toFixed(1) + '천만';
+  if (n >= 10000) return (n/10000).toFixed(0) + '만';
+  return fmt(n);
+};
+const fmtKRwon = (n) => n == null ? '-' : fmtKR(n) + '원';
+const pctChange = (curr, prev) => (curr == null || prev == null || prev === 0) ? null : (curr/prev - 1) * 100;
+const ptDiff = (curr, prev) => (curr == null || prev == null) ? null : curr - prev;
+
+function deltaPill(curr, prev, lowerBetter=false, isPt=false) {
+  if (curr == null || prev == null) return '<span class="delta-pill flat">-</span>';
+  const change = isPt ? (curr - prev) : pctChange(curr, prev);
+  if (change == null) return '<span class="delta-pill flat">-</span>';
+  const isUp = change > 0;
+  const good = lowerBetter ? !isUp : isUp;
+  const cls = Math.abs(change) < (isPt ? 0.3 : 2) ? 'flat' : (good ? 'good' : 'bad');
+  return `<span class="delta-pill ${cls}">${isUp ? '+' : ''}${change.toFixed(1)}${isPt ? 'pt' : '%'}</span>`;
+}
+function deltaCell(curr, prev, lowerBetter=false, isPt=false) {
+  if (curr == null || prev == null) return '<td class="num delta-flat">-</td>';
+  const change = isPt ? (curr - prev) : pctChange(curr, prev);
+  if (change == null) return '<td class="num delta-flat">-</td>';
+  const isUp = change > 0;
+  const good = lowerBetter ? !isUp : isUp;
+  const cls = Math.abs(change) < (isPt ? 0.3 : 2) ? 'delta-flat' : (good ? 'delta-down' : 'delta-up');
+  return `<td class="num ${cls}">${isUp ? '+' : ''}${change.toFixed(1)}${isPt ? 'pt' : '%'}</td>`;
+}
+
+const activeMedia = DATA.media.filter(m => !m.is_paused).length;
+document.getElementById('m-count').textContent = activeMedia + ' media';
+
+// Outlier note (informational - no auto-exclusion)
+const recentIssuesForNote = DATA.known_issues.filter(i => i.in_period.includes('recent'));
+document.getElementById('outlier-note').innerHTML = `
+  <strong>※ 통합 핵심지표 산정 기준</strong> —
+  <span class="num">RAW 60일 합계</span> 방식. 대상: <span class="num">paid% 전 채널 (paid_content 제외)</span> — paid_display + paid_msg + paid_cpa + paid_dooh + paid_search.
+  최근 60일 동안 <strong>${recentIssuesForNote.length}건의 알려진 이슈</strong> 발생 (02 섹션 참조) — 지표 해석 시 컨텍스트로 고려.
+`;
+
+// Known Issues
+const issues = DATA.known_issues;
+const issuesGrid = document.getElementById('issuesGrid');
+const periodMap = { recent: '최근 60일', prior: '이전 60일', yoy: '작년 동기간' };
+
+const recentIssues = issues.filter(i => i.in_period.includes('recent'));
+const priorIssues  = issues.filter(i => i.in_period.includes('prior'));
+const yoyIssues    = issues.filter(i => i.in_period.includes('yoy'));
+document.getElementById('issuesSummary').innerHTML = `
+  최근 60일 기간 중 <span class="recent-c">${recentIssues.length}건</span>의 이슈 영향 — 
+  신청율 영향 <strong>${recentIssues.filter(i=>i.impact==='신청율').length}건</strong> +
+  조회완료율 영향 <strong>${recentIssues.filter(i=>i.impact==='조회완료율').length}건</strong> +
+  전반 영향 <strong>${recentIssues.filter(i=>i.impact==='전반').length}건</strong>.
+  이전 60일 <span class="prior-c">${priorIssues.length}건</span> / 작년 동기간 <span class="yoy-c">${yoyIssues.length}건</span>의 이슈 영향.
+  Recent 기간 영향이 가장 큼 — 비교 시 컨텍스트 고려.
+`;
+
+issues.forEach(iss => {
+  const periodTag = iss.in_period.length > 0 ? iss.in_period[0] : 'none';
+  const periodClass = iss.in_period.length > 0 ? `in-${periodTag}` : 'in-none';
+  const badge = iss.in_period.length > 0
+    ? `<span class="issue-period-badge ${periodTag}">${periodMap[periodTag]}</span>`
+    : `<span class="issue-period-badge none">분석 기간 외</span>`;
+  issuesGrid.insertAdjacentHTML('beforeend', `
+    <div class="issue-card ${periodClass}">
+      <div class="issue-head">
+        <div class="issue-date">${iss.date}</div>
+        ${badge}
+      </div>
+      <div class="issue-name">${iss.name}</div>
+      <div class="issue-impact">영향 영역 <span class="ic ${iss.impact}">${iss.impact}</span></div>
+    </div>
+  `);
+});
+
+// KPIs (4 cards)
+const ri = DATA.integrated.recent;
+const pi = DATA.integrated.prior;
+const yi = DATA.integrated.yoy;
+const kpiRow = document.getElementById('kpiRow');
+const kpiData = [
+  { rank: 'P1', label: '조회완료 CAC', val: fmt(ri.cac), unit: '원', prev: pi.cac, curr: ri.cac, lowerBetter: true, isPt: false, sub: 'YoY ' + fmt(yi.cac) + '원' },
+  { rank: 'P2', label: '신청율', val: ri.rate.toFixed(2), unit: '%', prev: pi.rate, curr: ri.rate, lowerBetter: false, isPt: true, sub: 'YoY ' + yi.rate.toFixed(2) + '%' },
+  { rank: 'P3', label: '예상결제액 (60일)', val: fmtKR(ri.rev), unit: '원', prev: pi.rev, curr: ri.rev, lowerBetter: false, isPt: false, sub: 'YoY ' + fmtKR(yi.rev) + '원' },
+  { rank: 'P4', label: 'ROAS', val: ri.roas.toFixed(1), unit: '%', sub: 'YoY ROAS ' + yi.roas.toFixed(1) + '%', prev: pi.roas, curr: ri.roas, lowerBetter: false, isPt: true },
+];
+kpiData.forEach(k => {
+  const pill = deltaPill(k.curr, k.prev, k.lowerBetter, k.isPt);
+  kpiRow.insertAdjacentHTML('beforeend', `
+    <div class="kpi-card">
+      <div class="kpi-label"><span class="kpi-rank">${k.rank}</span>${k.label}</div>
+      <div class="kpi-value num">${k.val}<span class="unit">${k.unit}</span></div>
+      <div class="kpi-delta">
+        <span>vs 이전</span>
+        ${pill}
+        ${k.sub ? '<span style="color:var(--ink-dim);font-size:10.5px;">· ' + k.sub + '</span>' : ''}
+      </div>
+    </div>
+  `);
+});
+
+// === May 2026 totals panel (current state) ===
+const may = DATA.may.raw;
+const mayPanel = document.getElementById('mayPanel');
+const mayCells = [
+  { k: '광고비', v: fmtKR(may.cost), unit: '원' },
+  { k: '조회완료', v: fmt(may.view), unit: '건' },
+  { k: '신청완료', v: fmt(may.apply), unit: '건' },
+  { k: '예상결제액', v: fmtKR(may.rev), unit: '원' },
+  { k: 'CAC', v: fmt(may.cac), unit: '원', sub: '60일 평균: ' + fmt(ri.cac) + '원' },
+  { k: '신청율', v: may.rate != null ? may.rate.toFixed(2) : '-', unit: '%', sub: '60일 평균: ' + ri.rate.toFixed(2) + '%' },
+  { k: 'ROAS', v: may.roas != null ? may.roas.toFixed(1) : '-', unit: '%', sub: '60일 평균: ' + ri.roas.toFixed(1) + '%' },
+];
+mayPanel.innerHTML = `
+  <div class="may-panel-header">
+    <div class="may-panel-title">
+      <span class="badge">5월 누적</span>
+      <span><span class="accent">5월 현재</span> 누적 현황</span>
+    </div>
+    <div class="may-panel-meta">
+      <span class="num">2026.05.01 — 05.27</span> · 총 <span class="num">${DATA.may.days_total}일</span> 데이터 · 알려진 이슈일 <span class="num">${DATA.may.days_affected}일</span> 포함
+    </div>
+  </div>
+  <div class="may-grid">
+    ${mayCells.map(c => `
+      <div class="may-cell">
+        <div class="k">${c.k}</div>
+        <div class="v">${c.v}<span class="unit">${c.unit}</span></div>
+        ${c.sub ? `<div class="sub">${c.sub}</div>` : ''}
+      </div>
+    `).join('')}
+  </div>
+  <div class="may-note">
+    <strong>※ 현재 상태 (Raw):</strong> 5월 데이터는 전체 27일 모두 알려진 이슈 영향 (5월 홈택스 간헐적 + 5/11 이후 조회 로딩 지연) — 본 수치는 <strong>이슈 영향을 포함한 실제 운영 결과</strong>입니다. 정상화된 평균 비교는 위 60일 핵심 지표 (이슈일 자동 제외 기준) 참조.
+  </div>
+`;
+
+// Thresholds
+const intCac = ri.cac;
+const intRate = ri.rate;
+document.getElementById('t-scale-cac').textContent = '≤ ' + fmt(intCac * 0.8) + '원';
+document.getElementById('t-scale-rate').textContent = '≥ ' + (intRate * 1.1).toFixed(1) + '%';
+document.getElementById('t-keep-cac').textContent = fmt(intCac * 0.8) + '~' + fmt(intCac * 1.2) + '원';
+document.getElementById('t-keep-rate').textContent = (intRate * 0.9).toFixed(1) + '~' + (intRate * 1.1).toFixed(1) + '%';
+document.getElementById('t-opt-cac').textContent = fmt(intCac * 1.2) + '~' + fmt(intCac * 1.5) + '원';
+document.getElementById('t-off-cac').textContent = '≥ ' + fmt(intCac * 1.5) + '원';
+document.getElementById('t-off-rate').textContent = '≤ ' + (intRate * 0.7).toFixed(1) + '%';
+
+const tBlock = document.getElementById('thresholdsBlock');
+const thresholdRows = [
+  {
+    badge: 'P1', title: '조회완료 CAC', bench: `60일 평균 <strong>${fmt(intCac)}원</strong> · <strong>절대 상한 35,000원</strong> · 낮을수록 우수 ↓`,
+    segs: [
+      { cls: 'scale', name: 'SCALE', label: '≤ ' + fmt(intCac*0.8) + '원' },
+      { cls: 'keep', name: 'KEEP', label: fmt(intCac*0.8) + '~' + fmt(intCac*1.2) + '원 (≤35K)' },
+      { cls: 'opt', name: 'OPTIMIZE', label: '> 35,000원 OR ratio 120~150%' },
+      { cls: 'off', name: 'OFF', label: '> 35K + ≥ 150%' },
+    ]
+  },
+  {
+    badge: 'P2', title: '신청율', bench: `60일 평균 <strong>${intRate.toFixed(2)}%</strong> · 높을수록 우수 ↑`,
+    segs: [
+      { cls: 'off', name: 'OFF', label: '≤ ' + (intRate*0.7).toFixed(1) + '%' },
+      { cls: 'opt', name: 'OPTIMIZE', label: (intRate*0.7).toFixed(1) + '~' + (intRate*0.9).toFixed(1) + '%' },
+      { cls: 'keep', name: 'KEEP', label: (intRate*0.9).toFixed(1) + '~' + (intRate*1.1).toFixed(1) + '%' },
+      { cls: 'scale', name: 'SCALE', label: '≥ ' + (intRate*1.1).toFixed(1) + '%' },
+    ]
+  },
+  {
+    badge: 'P3', title: '예상결제액 (월 기준)', bench: `월 누적 기준 · 절대값 적용`,
+    segs: [
+      { cls: 'off', name: 'SUNSET', label: '≤ 30M원' },
+      { cls: 'opt', name: 'OPTIMIZE', label: '30M ~ 100M원' },
+      { cls: 'keep', name: 'KEEP', label: '100M ~ 300M원' },
+      { cls: 'scale', name: 'SCALE', label: '≥ 300M원 / 비중 10%↑' },
+    ]
+  },
+  {
+    badge: 'P4', title: 'ROAS', bench: `평균 ROAS <strong>${ri.roas.toFixed(1)}%</strong> · YoY ROAS <strong>${yi.roas.toFixed(1)}%</strong>`,
+    segs: [
+      { cls: 'off', name: '손실', label: 'ROAS < 80%' },
+      { cls: 'opt', name: '주의', label: '80~100%' },
+      { cls: 'keep', name: '안정', label: '100~200%' },
+      { cls: 'scale', name: '우수', label: '≥ 200%' },
+    ]
+  }
+];
+thresholdRows.forEach(r => {
+  tBlock.insertAdjacentHTML('beforeend', `
+    <div class="threshold-row">
+      <div class="threshold-row-header">
+        <div class="threshold-row-title"><span class="badge">${r.badge}</span>${r.title}</div>
+        <div class="threshold-row-bench">${r.bench}</div>
+      </div>
+      <div class="threshold-bar">${r.segs.map(s => `<div class="tb-seg ${s.cls}">${s.name}</div>`).join('')}</div>
+      <div class="threshold-bar-labels">${r.segs.map(s => `<div class="tbl-seg ${s.cls}">${s.label}</div>`).join('')}</div>
+    </div>
+  `);
+});
+
+// Channels
+const chMeta = {
+  '00.paid_display': { tag: 'good', label: '디스플레이', desc: '볼륨 핵심' },
+  '00.paid_dooh':    { tag: 'bad',  label: 'DOOH 브랜딩', desc: '별도 평가' },
+  '01.paid_cpa':     { tag: 'best', label: '성과형 CPA', desc: 'CAC 최저' },
+  '01.paid_msg':     { tag: 'good', label: 'LMS·메시지', desc: '품질 양호' },
+  '01.paid_search':  { tag: 'best', label: '검색광고', desc: 'ROAS 최상' },
+  '07.paid_blog':    { tag: 'warn', label: '블로그 콘텐츠', desc: '사후 attribution' },
+};
+// Sort by recent cost desc
+const channelGridSorted = DATA.channels.slice()
+  .filter(c => c.recent)
+  .sort((a, b) => (b.recent.cost || 0) - (a.recent.cost || 0));
+const channelGrid = document.getElementById('channelGrid');
+channelGridSorted.forEach(ch => {
+  const meta = chMeta[ch.name] || { tag:'good', label:'', desc:'' };
+  const r = ch.recent;
+  const p = ch.prior;
+  const cacDelta = p ? pctChange(r.cac, p.cac) : null;
+  const rateDelta = p ? ptDiff(r.rate, p.rate) : null;
+  const roasDelta = p ? ptDiff(r.roas, p.roas) : null;
+  function dspan(v, lowerBetter, isPt) {
+    if (v == null) return '<span class="ch-stat-delta flat">-</span>';
+    const cls = Math.abs(v) < (isPt ? 0.3 : 2) ? 'flat' : ((lowerBetter ? v < 0 : v > 0) ? 'good' : 'bad');
+    return `<span class="ch-stat-delta ${cls}">${v > 0 ? '+' : ''}${v.toFixed(1)}${isPt?'pt':'%'}</span>`;
+  }
+  channelGrid.insertAdjacentHTML('beforeend', `
+    <div class="ch-card">
+      <div class="ch-header">
+        <div>
+          <div class="ch-name">${ch.name}</div>
+          <div class="ch-name-sub">${meta.label}${ch.media_count === 1 ? ' · 단일 매체' : ''}</div>
+        </div>
+        <div class="ch-spend">광고비<strong>${fmtKR(r.cost)}원</strong></div>
+      </div>
+      <div class="ch-stat"><span class="ch-stat-key">CAC 조회</span><span class="ch-stat-val">${r.cac != null ? fmt(r.cac) + '원' : '-'}</span>${dspan(cacDelta, true, false)}</div>
+      <div class="ch-stat"><span class="ch-stat-key">신청율</span><span class="ch-stat-val">${r.rate != null ? r.rate.toFixed(2) + '%' : '-'}</span>${dspan(rateDelta, false, true)}</div>
+      <div class="ch-stat"><span class="ch-stat-key">ROAS</span><span class="ch-stat-val">${r.roas != null ? r.roas.toFixed(1) + '%' : '-'}</span>${dspan(roasDelta, false, true)}</div>
+      <span class="ch-tag ${meta.tag}">${meta.desc}</span>
+    </div>
+  `);
+});
+
+// YoY note
+document.getElementById('yoyNote').innerHTML = `
+  <strong>※ YoY (작년 동기간) 활용 주의:</strong>
+  2025년 5월 1~17일 연휴 + 홈택스 이슈로 작년 동기간 60일 중 <span class="warn">17일이 영향</span>받았습니다.
+  알고리즘은 해당 일자를 자동 제외하지만, 절대 수준 비교 시 <strong>YoY 평균은 "이슈 외 기간 평균"</strong>이라는 점에 유의.
+  특히 Recent vs YoY 비교 시 CAC 상승했다면 효율 악화로 단정하지 말고, 봄철 시즈널리티 (종합소득세 시즌, 3~5월)와 시장 가격 인플레이션을 함께 고려해야 합니다.
+`;
+
+// Integrated Compare removed per request
+
+// Channel Cmp
+const chCmpBody = document.getElementById('channelCmpBody');
+const chSorted = DATA.channels.slice().filter(c => c.recent || c.prior);
+chSorted.sort((a,b) => (b.recent?.cost || 0) - (a.recent?.cost || 0));
+chSorted.forEach(ch => {
+  const r = ch.recent, p = ch.prior, y = ch.yoy;
+  const meta = chMeta[ch.name] || {};
+  const v = (x, k, fn) => x && x[k] != null ? fn(x[k]) : '-';
+  chCmpBody.insertAdjacentHTML('beforeend', `
+    <tr>
+      <td><div style="display:flex;flex-direction:column;gap:4px;"><span class="ch-chip">${ch.name}</span><span style="font-size:11px;color:var(--ink-mute);font-weight:500;">${meta.label || ''}${ch.media_count === 1 ? ' · 단일' : ''}</span></div></td>
+      <td class="num p-recent">${v(r,'cost', fmtKRwon)}</td>
+      <td class="num p-prior">${v(p,'cost', fmtKRwon)}</td>
+      <td class="num p-yoy group-end">${v(y,'cost', fmtKRwon)}</td>
+      <td class="num p-recent">${v(r,'cac', x => fmt(x)+'원')}</td>
+      <td class="num p-prior">${v(p,'cac', x => fmt(x)+'원')}</td>
+      <td class="num p-yoy">${v(y,'cac', x => fmt(x)+'원')}</td>
+      ${deltaCell(r?.cac, p?.cac, true, false).replace('<td class="num', '<td class="num p-delta group-end')}
+      <td class="num p-recent">${v(r,'rate', x => x.toFixed(2)+'%')}</td>
+      <td class="num p-prior">${v(p,'rate', x => x.toFixed(2)+'%')}</td>
+      <td class="num p-yoy">${v(y,'rate', x => x.toFixed(2)+'%')}</td>
+      ${deltaCell(r?.rate, p?.rate, false, true).replace('<td class="num', '<td class="num p-delta group-end')}
+      <td class="num p-recent">${v(r,'roas', x => x.toFixed(1)+'%')}</td>
+      <td class="num p-yoy">${v(y,'roas', x => x.toFixed(1)+'%')}</td>
+    </tr>
+  `);
+});
+
+// Media Cmp
+let mediaFilter = 'all';
+function renderMediaCmp() {
+  const body = document.getElementById('mediaCmpBody');
+  let list = DATA.media.slice();
+  if (mediaFilter === 'new') list = list.filter(m => m.is_new);
+  else if (mediaFilter === 'paused') list = list.filter(m => m.is_paused);
+  else if (mediaFilter === 'both') list = list.filter(m => !m.is_new && !m.is_paused);
+  body.innerHTML = list.map(m => {
+    const r = m.recent, p = m.prior, y = m.yoy;
+    const v = (x, k, fn) => x && x[k] != null ? fn(x[k]) : '-';
+    let status = '';
+    if (m.is_new) status = '<span class="verdict-chip scale">신규</span>';
+    else if (m.is_paused) status = '<span class="verdict-chip paused">중단</span>';
+    else status = '<span class="verdict-chip keep">지속</span>';
+    return `
+    <tr>
+      <td><span class="ch-chip">${m.channel}</span></td>
+      <td class="media-name group-end">${m.name}${m.is_single ? '<span class="verdict-chip single">단일</span>' : ''}</td>
+      <td class="num p-recent">${v(r,'cost', fmtKRwon)}</td>
+      <td class="num p-prior">${v(p,'cost', fmtKRwon)}</td>
+      ${deltaCell(r?.cost, p?.cost, false, false).replace('<td class="num', '<td class="num p-delta group-end')}
+      <td class="num p-recent">${v(r,'cac', x => fmt(x)+'원')}</td>
+      <td class="num p-prior">${v(p,'cac', x => fmt(x)+'원')}</td>
+      ${deltaCell(r?.cac, p?.cac, true, false).replace('<td class="num', '<td class="num p-delta group-end')}
+      <td class="num p-recent">${v(r,'rate', x => x.toFixed(2)+'%')}</td>
+      <td class="num p-prior">${v(p,'rate', x => x.toFixed(2)+'%')}</td>
+      ${deltaCell(r?.rate, p?.rate, false, true).replace('<td class="num', '<td class="num p-delta group-end')}
+      <td class="num p-recent">${v(r,'roas', x => x.toFixed(1)+'%')}</td>
+      <td class="num p-yoy group-end">${v(y,'roas', x => x.toFixed(1)+'%')}</td>
+      <td>${status}</td>
+    </tr>`;
+  }).join('');
+}
+const mFilter = document.getElementById('mediaCmpFilter');
+const mCounts = {
+  all: DATA.media.length,
+  both: DATA.media.filter(m => !m.is_new && !m.is_paused).length,
+  new: DATA.media.filter(m => m.is_new).length,
+  paused: DATA.media.filter(m => m.is_paused).length,
+};
+[['all','전체'], ['both','지속'], ['new','신규'], ['paused','중단']].forEach(([k, label]) => {
+  mFilter.insertAdjacentHTML('beforeend',
+    `<button class="filter-btn ${k === 'all' ? 'active' : ''}" data-mfilter="${k}">${label}<span class="count">${mCounts[k]}</span></button>`
+  );
+});
+mFilter.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    mFilter.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    mediaFilter = btn.dataset.mfilter;
+    renderMediaCmp();
+  });
+});
+renderMediaCmp();
+
+// Matrix
+const matrix = [
+  ['Case 1','green','≤ -20%','green','≥ +10%','green','≥ 3억','green','≥ 200%','SCALE','+30%','핵심 성장 매체 (절대 CAC ≤ 35K 전제)'],
+  ['Case 2','green','≤ -20%','green','≥ +10%','blue','1~3억','blue','100~200%','SCALE','+20%','효율 우수 / 볼륨 확장 여지'],
+  ['Case 3','blue','±20%','blue','±10%','blue','1~3억','blue','100~200%','KEEP','±5%','안정 운영 (CAC ≤ 35K)'],
+  ['Case 4','yellow','+20~50%','blue','±10%','blue','1~3억','yellow','80~100%','OPTIMIZE','-15%','입찰·타겟 정밀화'],
+  ['Case 5','red','CAC > 35K (절대)','blue','±10%','blue','1~3억','blue','100~200%','OPTIMIZE','-10%','신 룰: 절대 상한 단독 트리거'],
+  ['Case 6','red','≥ +50%','yellow','-10~30%','yellow','3천~1억','red','< 80%','OFF 후보','-50%','2주 모니터 후 OFF'],
+  ['Case 7','red','> 35K + ≥ +50%','red','≤ -30%','red','≤ 3천만','red','< 80%','OFF','0','즉시 중단 (절대+상대 모두 미달)'],
+  ['Case 8','red','≥ +50% (≤ 35K)','green','≥ +10%','green','≥ 3억','blue','100~200%','KEEP','±5%','절대 CAC ≤ 35K면 비율 무관 KEEP'],
+];
+const verdictClass = (v) => v.includes('SCALE') ? 'scale' : v.includes('OFF') ? 'off' : v.includes('OPTIMIZE') ? 'opt' : v.includes('KEEP') ? 'keep' : '';
+const matBody = document.getElementById('matrixBody');
+matrix.forEach(r => {
+  matBody.insertAdjacentHTML('beforeend', `
+    <tr>
+      <td class="case-id">${r[0]}</td>
+      <td><span class="sig ${r[1]}">${r[2]}</span></td>
+      <td><span class="sig ${r[3]}">${r[4]}</span></td>
+      <td><span class="sig ${r[5]}">${r[6]}</span></td>
+      <td><span class="sig ${r[7]}">${r[8]}</span></td>
+      <td><span class="verdict-chip ${verdictClass(r[9])}">${r[9]}</span></td>
+      <td class="verdict">${r[10]}</td>
+      <td style="color:var(--ink-soft);font-size:12px;">${r[11]}</td>
+    </tr>
+  `);
+});
+
+// Diagnosis
+const codeLabel = { scale:'SCALE', keep:'KEEP', opt:'OPTIMIZE', off:'OFF', brand:'브랜딩', gray:'데이터 부족', paused:'중단' };
+const actionMsg = {
+  scale: '예산 확대 + 유사 매체/소재 확장',
+  keep:  '유지 + 입찰 미세조정 (±5%) + A/B 소재',
+  opt:   '소재·타겟·랜딩 개선 + 광고비 -10~20% (CAC>35K 또는 비율 악화)',
+  off:   '즉시 중단 검토 (CAC > 35K + 비율 모두 미달)',
+  brand: '브랜딩 채널 — 인지도·노출 기반 별도 평가',
+  gray:  '데이터 누적 후 재진단',
+  paused: '중단 상태 — 재진입 검토 시 신규 학습기 적용',
+};
+let activeFilter = 'all', sortKey = 'cost', sortDir = -1;
+
+function diagDeltaCell(actual, bench, invert) {
+  if (actual == null || bench == null || bench === 0) return '<td class="num delta-flat">-</td>';
+  const ratio = (actual / bench - 1) * 100;
+  let cls;
+  if (invert) cls = ratio < -10 ? 'delta-down' : (ratio > 10 ? 'delta-up' : 'delta-flat');
+  else cls = ratio > 10 ? 'delta-down' : (ratio < -10 ? 'delta-up' : 'delta-flat');
+  return `<td class="num ${cls}">${ratio >= 0 ? '+' : ''}${ratio.toFixed(0)}%</td>`;
+}
+
+function renderDiag() {
+  let list = DATA.media.filter(m => m.recent && !m.is_paused);
+  if (activeFilter !== 'all') list = list.filter(m => m.code === activeFilter);
+  list.sort((a,b) => {
+    let av, bv;
+    const ar = a.recent, br = b.recent;
+    if (sortKey === 'cac_diff') {
+      const aCh = DATA.channels.find(c => c.name === a.channel);
+      const bCh = DATA.channels.find(c => c.name === b.channel);
+      av = (ar.cac && aCh?.recent?.cac) ? ar.cac/aCh.recent.cac : 0;
+      bv = (br.cac && bCh?.recent?.cac) ? br.cac/bCh.recent.cac : 0;
+    } else if (sortKey === 'rate_diff') {
+      const aCh = DATA.channels.find(c => c.name === a.channel);
+      const bCh = DATA.channels.find(c => c.name === b.channel);
+      av = (ar.rate && aCh?.recent?.rate) ? ar.rate/aCh.recent.rate : 0;
+      bv = (br.rate && bCh?.recent?.rate) ? br.rate/bCh.recent.rate : 0;
+    } else if (sortKey === 'code') {
+      const o = {off:0, opt:1, keep:2, scale:3, brand:4, gray:5};
+      av = o[a.code] ?? 6; bv = o[b.code] ?? 6;
+    } else if (sortKey === 'channel' || sortKey === 'name') {
+      av = a[sortKey] || ''; bv = b[sortKey] || '';
+      return av.localeCompare(bv) * sortDir;
+    } else {
+      av = ar[sortKey] ?? 0; bv = br[sortKey] ?? 0;
+    }
+    return (av - bv) * sortDir;
+  });
+
+  document.getElementById('diagBody').innerHTML = list.map(m => {
+    const r = m.recent;
+    const ch = DATA.channels.find(c => c.name === m.channel);
+    const cacBench = m.is_single ? DATA.integrated.recent.cac : ch?.recent?.cac;
+    const rateBench = m.is_single ? DATA.integrated.recent.rate : ch?.recent?.rate;
+    return `
+    <tr>
+      <td class="num">${fmtKRwon(r.cost)}</td>
+      <td><span class="ch-chip">${m.channel}</span></td>
+      <td class="media-name">${m.name}${m.is_single ? '<span class="verdict-chip single">단일</span>' : ''}</td>
+      <td class="num">${r.cac != null ? fmt(r.cac) + '원' : '-'}</td>
+      ${diagDeltaCell(r.cac, cacBench, true)}
+      <td class="num">${r.rate != null ? r.rate.toFixed(2) + '%' : '-'}</td>
+      ${diagDeltaCell(r.rate, rateBench, false)}
+      <td class="num" style="color:${r.roas >= 100 ? 'var(--scale)' : (r.roas >= 80 ? 'var(--ink)' : 'var(--off)')};font-weight:700;">${r.roas != null ? r.roas.toFixed(1) + '%' : '-'}</td>
+      <td><span class="verdict-chip ${m.code}">${codeLabel[m.code] || '-'}</span></td>
+      <td class="action-cell">${actionMsg[m.code] || '-'}</td>
+    </tr>`;
+  }).join('');
+}
+const activeList = DATA.media.filter(m => m.recent && !m.is_paused);
+const counts = { all: activeList.length };
+['scale','keep','opt','off','brand'].forEach(c => counts[c] = activeList.filter(m => m.code === c).length);
+const filterBar = document.getElementById('filterBar');
+[['all','전체','all'], ['off','OFF','off'], ['opt','OPTIMIZE','opt'], ['keep','KEEP','keep'], ['scale','SCALE','scale'], ['brand','브랜딩','brand']].forEach(([code, label, cls]) => {
+  filterBar.insertAdjacentHTML('beforeend', `
+    <button class="filter-btn ${cls} ${code === 'all' ? 'active' : ''}" data-filter="${code}">
+      ${label}<span class="count">${counts[code] || 0}</span>
+    </button>
+  `);
+});
+filterBar.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    filterBar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeFilter = btn.dataset.filter;
+    renderDiag();
+  });
+});
+document.querySelectorAll('#diagTable th[data-sort]').forEach(th => {
+  th.addEventListener('click', () => {
+    const k = th.dataset.sort;
+    if (sortKey === k) sortDir = -sortDir;
+    else { sortKey = k; sortDir = -1; }
+    renderDiag();
+  });
+});
+renderDiag();
+</script>
+</body>
+</html>
