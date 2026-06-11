@@ -52,23 +52,18 @@
 
   /* Header */
   header {
-    background: var(--bg-card); padding: 84px 56px 56px;
+    background: var(--bg-card); padding: 24px 56px 22px;
     border-bottom: 1px solid var(--line); position: relative; overflow: hidden;
   }
   header::before {
-    content: ''; position: absolute; top: -200px; right: -100px;
-    width: 700px; height: 700px;
-    background: radial-gradient(circle, rgba(90,46,234,.10) 0%, rgba(90,46,234,.04) 30%, transparent 65%);
+    content: ''; position: absolute; top: -100px; right: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(90,46,234,.06) 0%, transparent 60%);
     pointer-events: none;
   }
-  header::after {
-    content: ''; position: absolute; bottom: -150px; left: -100px;
-    width: 500px; height: 500px;
-    background: radial-gradient(circle, rgba(139,107,240,.08) 0%, transparent 60%);
-    pointer-events: none;
-  }
-  .header-content { max-width: 1400px; margin: 0 auto; position: relative; }
-  .brand-mark { display: inline-flex; align-items: center; gap: 12px; margin-bottom: 28px; }
+  header::after { display: none; }
+  .header-content { max-width: 1400px; margin: 0 auto; position: relative; display: flex; justify-content: space-between; align-items: center; }
+  .brand-mark { display: inline-flex; align-items: center; gap: 12px; margin-bottom: 0; }
   .brand-logo {
     width: 32px; height: 32px; background: var(--brand); border-radius: 8px;
     display: flex; align-items: center; justify-content: center;
@@ -82,7 +77,7 @@
     background: var(--brand-50); border: 1px solid var(--brand-pale);
     padding: 7px 14px; border-radius: 100px;
     font-size: 11.5px; color: var(--brand); font-weight: 600;
-    letter-spacing: 0.08em; margin-bottom: 24px; text-transform: uppercase;
+    letter-spacing: 0.08em; margin-bottom: 0; text-transform: uppercase;
   }
   .eyebrow .dot {
     width: 6px; height: 6px; background: var(--brand); border-radius: 50%;
@@ -483,6 +478,203 @@
     .may-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
+  /* === Budget vs Actual Panel === */
+  .budget-panel {
+    margin-top: 28px;
+    background: linear-gradient(135deg, rgba(90,46,234,.04) 0%, var(--bg-card) 60%);
+    border: 1.5px solid var(--brand-pale);
+    border-radius: 16px;
+    padding: 28px;
+  }
+  .budget-panel-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 22px; padding-bottom: 16px;
+    border-bottom: 1px solid var(--brand-pale);
+  }
+  .budget-panel-title {
+    font-size: 20px; font-weight: 800; color: var(--ink); letter-spacing: -0.025em;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .budget-panel-title .badge {
+    font-size: 10.5px; font-weight: 800; letter-spacing: 0.08em;
+    background: var(--brand); color: white;
+    padding: 5px 10px; border-radius: 6px; text-transform: uppercase;
+  }
+  .budget-panel-title .accent { color: var(--brand); }
+  .budget-panel-meta { font-size: 11.5px; color: var(--ink-mute); text-align: right; line-height: 1.6; }
+  .budget-panel-meta .num { color: var(--ink); font-weight: 700; }
+
+  .budget-block { margin-bottom: 24px; }
+  .budget-block:last-child { margin-bottom: 0; }
+  .budget-block-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 14px; padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+  }
+  .budget-block-title {
+    font-size: 14px; font-weight: 800; color: var(--ink);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .budget-block-title .b-chip {
+    font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 5px;
+    background: var(--brand-pale); color: var(--brand); letter-spacing: 0.06em;
+  }
+  .budget-block-title .b-chip.partial { background: rgba(234,88,12,.12); color: var(--s05); }
+  .budget-block-meta { font-size: 11px; color: var(--ink-mute); }
+  .budget-block-meta .num { color: var(--ink); font-weight: 700; }
+
+  .budget-grid {
+    display: grid;
+    grid-template-columns: 120px 1fr 1fr 1fr;
+    gap: 10px;
+    align-items: center;
+  }
+  .budget-grid .bh {
+    font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--ink-mute); padding: 8px 12px;
+    border-bottom: 1.5px solid var(--line-strong);
+  }
+  .budget-grid .br-label {
+    font-size: 13px; font-weight: 700; color: var(--ink);
+    padding: 8px 12px;
+  }
+  .budget-grid .br-label .sub {
+    display: block; font-size: 10px; font-weight: 500; color: var(--ink-mute); margin-top: 2px;
+  }
+  .budget-cell {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .budget-cell .bvals {
+    display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+    font-size: 11px; color: var(--ink-mute);
+  }
+  .budget-cell .bvals .lab { font-weight: 700; font-size: 9.5px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-mute); }
+  .budget-cell .bvals .val { font-weight: 700; color: var(--ink); font-size: 11.5px; }
+  .budget-cell .progress-bar {
+    height: 6px; border-radius: 3px; background: var(--line);
+    overflow: hidden; position: relative; margin-top: 4px;
+  }
+  .budget-cell .progress-fill {
+    height: 100%; border-radius: 3px;
+    transition: width .3s ease;
+  }
+  .budget-cell .progress-fill.above   { background: linear-gradient(90deg, var(--scale) 0%, #14b8a6 100%); }
+  .budget-cell .progress-fill.on      { background: linear-gradient(90deg, var(--keep) 0%, var(--brand) 100%); }
+  .budget-cell .progress-fill.warn    { background: linear-gradient(90deg, var(--s05) 0%, #f59e0b 100%); }
+  .budget-cell .progress-fill.under   { background: linear-gradient(90deg, var(--ink-mute) 0%, #94a3b8 100%); }
+  .budget-cell .progress-pct {
+    font-size: 18px; font-weight: 900; color: var(--ink);
+    display: flex; align-items: baseline; gap: 6px;
+  }
+  .budget-cell .progress-pct .arr { font-size: 11px; font-weight: 700; }
+  .budget-cell .progress-pct .arr.above { color: var(--scale); }
+  .budget-cell .progress-pct .arr.under { color: var(--off); }
+  .budget-cell .progress-pct .arr.on    { color: var(--brand); }
+  .budget-cell .progress-pct .delta-abs {
+    font-size: 12px; font-weight: 700; margin-left: 4px;
+    padding: 2px 8px; border-radius: 5px; letter-spacing: -0.01em;
+  }
+  .budget-cell .progress-pct .delta-abs.pos  { color: var(--scale); background: rgba(16,185,129,.10); }
+  .budget-cell .progress-pct .delta-abs.neg  { color: var(--off);   background: rgba(220,38,38,.08); }
+  .budget-cell .progress-pct .delta-abs.flat { color: var(--ink-mute); background: var(--bg-elev); }
+
+  @media (max-width: 900px) {
+    .budget-grid { grid-template-columns: 1fr; }
+    .budget-grid .bh { display: none; }
+    .budget-grid .br-label { padding-top: 16px; padding-bottom: 4px; }
+  }
+
+  /* === 10-day same-weekday compare === */
+  .ten-compare-block {
+    margin-top: 32px;
+    background: var(--bg-card);
+    border: 1.5px solid var(--brand-pale);
+    border-radius: 14px;
+    padding: 22px 24px;
+  }
+  .ten-compare-block .ten-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    padding-bottom: 14px; margin-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  .ten-compare-block .ten-title {
+    font-size: 16px; font-weight: 800; color: var(--ink);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .ten-compare-block .ten-title .b-chip {
+    font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 5px;
+    background: var(--brand-pale); color: var(--brand); letter-spacing: 0.06em;
+  }
+  .ten-compare-block .ten-meta {
+    font-size: 11px; color: var(--ink-mute); text-align: right; line-height: 1.6;
+  }
+  .ten-compare-block .ten-meta .num { color: var(--ink); font-weight: 700; }
+  .ten-grid {
+    display: grid; grid-template-columns: 130px repeat(3, 1fr); gap: 0;
+    font-size: 12.5px;
+  }
+  .ten-grid .th, .ten-grid .td {
+    padding: 9px 12px;
+  }
+  .ten-grid .th {
+    font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--ink-mute); border-bottom: 1.5px solid var(--line-strong);
+    text-align: right;
+  }
+  .ten-grid .th.first { text-align: left; }
+  .ten-grid .td {
+    border-bottom: 1px solid var(--line);
+    color: var(--ink-soft); font-weight: 600;
+    text-align: right;
+  }
+  .ten-grid .td.label { color: var(--ink); font-weight: 700; text-align: left; }
+  .ten-grid .td.delta { font-weight: 800; }
+  .ten-grid .td.delta.up   { color: var(--scale); }
+  .ten-grid .td.delta.down { color: var(--off); }
+  .ten-grid .td.delta.flat { color: var(--ink-mute); }
+  .ten-grid .row-may   { background: rgba(248,250,252,.5); }
+  .ten-grid .row-june  { background: rgba(241,235,254,.4); }
+
+  /* === Media filter buttons (10-day compare) === */
+  .ten-filter-bar {
+    display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
+    padding: 12px 0 16px; border-bottom: 1px solid var(--line); margin-bottom: 14px;
+  }
+  .ten-filter-bar .ten-fbtn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 11px; border-radius: 7px;
+    font-size: 11.5px; font-weight: 700;
+    background: var(--bg-card); border: 1px solid var(--line);
+    color: var(--ink-soft); cursor: pointer; transition: all .15s ease;
+    font-family: inherit;
+  }
+  .ten-filter-bar .ten-fbtn:hover { border-color: var(--brand-pale); color: var(--ink); background: var(--brand-25); }
+  .ten-filter-bar .ten-fbtn.active {
+    background: var(--brand); color: white; border-color: var(--brand);
+    box-shadow: 0 2px 6px rgba(90,46,234,.20);
+  }
+  .ten-filter-bar .ten-fbtn .pill {
+    font-size: 10px; padding: 1px 6px; border-radius: 4px;
+    background: var(--bg-elev); color: var(--ink-mute); font-weight: 700;
+  }
+  .ten-filter-bar .ten-fbtn.active .pill {
+    background: rgba(255,255,255,.22); color: white;
+  }
+  .ten-filter-bar .ten-fbtn.total { font-weight: 800; }
+  .ten-no-data {
+    padding: 24px 16px; text-align: center; color: var(--ink-mute);
+    font-size: 12px; font-style: italic;
+  }
+
+  @media (max-width: 700px) {
+    .ten-grid { grid-template-columns: 100px repeat(3, 1fr); font-size: 11px; }
+    .ten-grid .th, .ten-grid .td { padding: 7px 6px; }
+  }
+
   /* Period legend */
   .period-legend {
     display: flex; gap: 10px; flex-wrap: wrap;
@@ -584,6 +776,7 @@
   .verdict-chip.keep  { color: var(--keep);  border-color: var(--keep-border);  background: var(--keep-bg); }
   .verdict-chip.opt   { color: var(--opt);   border-color: var(--opt-border);   background: var(--opt-bg); }
   .verdict-chip.off   { color: var(--off);   border-color: var(--off-border);   background: var(--off-bg); }
+  .verdict-chip.off-proposal { color: #B45309; border-color: #FDE68A; background: #FFFBEB; }
   .verdict-chip.brand { color: var(--brand-chan); border-color: var(--brand-chan-border); background: var(--brand-chan-bg); }
   .verdict-chip.gray  { color: var(--gray-chip); border-color: var(--gray-chip-border); background: var(--gray-chip-bg); }
   .verdict-chip.paused { color: var(--ink-dim); border-color: var(--line); background: var(--bg-elev); }
@@ -650,6 +843,97 @@
     .header-meta { grid-template-columns: 1fr; }
     table.cmp, table.matrix, table.diag { font-size: 11px; }
   }
+
+  /* === Tab Navigation === */
+  .tab-bar {
+    display: flex; gap: 0; padding: 0;
+    border-bottom: 2px solid var(--brand-pale);
+    margin: 0 0 0;
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg);
+    padding-top: 0;
+  }
+  .tab-btn {
+    padding: 16px 28px; font-size: 14.5px; font-weight: 800;
+    background: transparent; border: none; cursor: pointer;
+    color: var(--ink-mute); position: relative;
+    letter-spacing: -0.02em; font-family: inherit;
+    display: flex; align-items: center; gap: 10px;
+    transition: color .15s ease;
+  }
+  .tab-btn:hover { color: var(--ink); }
+  .tab-btn.active { color: var(--brand); }
+  .tab-btn.active::after {
+    content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
+    height: 3px; background: var(--brand);
+    border-radius: 2px;
+  }
+  .tab-btn .tab-num {
+    font-size: 11px; padding: 4px 8px; border-radius: 5px;
+    background: var(--bg-elev); color: var(--ink-mute);
+    letter-spacing: 0.04em; font-weight: 800;
+  }
+  .tab-btn.active .tab-num { background: var(--brand-pale); color: var(--brand); }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; animation: fadeIn .25s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* Per-tab title block */
+  .tab-title-block {
+    padding: 36px 0 28px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 36px;
+  }
+  .tab-title-block h1 {
+    font-size: 32px; font-weight: 800; margin-bottom: 10px;
+    letter-spacing: -0.035em; color: var(--ink); line-height: 1.15;
+  }
+  .tab-title-block h1 .accent { color: var(--brand); }
+  .tab-title-block .sub {
+    font-size: 13px; color: var(--ink-mute); line-height: 1.6;
+    margin-bottom: 22px; font-weight: 500;
+  }
+  .tab-title-block .header-meta {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px;
+    padding: 18px 22px; background: var(--bg-card);
+    border: 1px solid var(--line); border-radius: 12px;
+  }
+  .tab-title-block .header-meta .meta-item {
+    font-size: 11.5px; line-height: 1.6;
+  }
+  .tab-title-block .header-meta .meta-item .k {
+    color: var(--ink-mute); font-weight: 700;
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em;
+    margin-bottom: 4px;
+  }
+  .tab-title-block .header-meta .meta-item .v {
+    color: var(--ink); font-weight: 700; font-size: 13px;
+  }
+  @media (max-width: 900px) {
+    .tab-title-block .header-meta { grid-template-columns: repeat(2, 1fr); }
+    .tab-title-block h1 { font-size: 26px; }
+  }
+
+  /* June diagnosis table */
+  table.juneDiag { width: 100%; border-collapse: collapse; }
+  table.juneDiag th, table.juneDiag td {
+    padding: 9px 11px; font-size: 12px; text-align: right;
+    border-bottom: 1px solid var(--line);
+  }
+  table.juneDiag thead th {
+    background: var(--bg-elev); font-size: 10px; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.06em;
+    color: var(--ink-mute); border-bottom: 1.5px solid var(--line-strong);
+  }
+  table.juneDiag th.left, table.juneDiag td.left { text-align: left; }
+  table.juneDiag td.label { color: var(--ink); font-weight: 700; }
+  table.juneDiag .ch-chip {
+    font-size: 9.5px; font-weight: 800; padding: 2px 7px; border-radius: 5px;
+    background: var(--brand-pale); color: var(--brand); letter-spacing: 0.04em;
+    display: inline-block; white-space: nowrap;
+  }
+  table.juneDiag tr:hover td { background: var(--brand-25); }
+
 </style>
 </head>
 <body>
@@ -660,33 +944,94 @@
       <div class="brand-logo">B</div>
       <div class="brand-name">비즈넵 <span>환급</span></div>
     </div>
-    <div class="eyebrow"><span class="dot"></span>Performance Marketing Dashboard</div>
-    <h1>매체 최적화 <span class="accent">대시보드</span></h1>
-    <div class="sub">우선순위 레버 기반 의사결정 프레임 · 동요일 60일 동기간 비교 · 작년 동기간(YoY) 참고 · 알려진 이슈 자동 제외 · CAC 절대 상한 35,000원 적용</div>
-    <div class="header-meta">
-      <div class="meta-item"><div class="k">최근 60일 (Recent)</div><div class="v num">2026.04.09 — 06.07</div></div>
-      <div class="meta-item"><div class="k">이전 60일 (Prior, -63일)</div><div class="v num">2026.02.05 — 04.05</div></div>
-      <div class="meta-item"><div class="k">작년 동기간 (YoY, -364일)</div><div class="v num">2025.04.10 — 06.08</div></div>
-      <div class="meta-item"><div class="k">분석 매체 / CAC 상한</div><div class="v num"><span id="m-count">—</span> · 35,000원</div></div>
-    </div>
+    <div class="eyebrow"><span class="dot"></span>Performance Marketing</div>
   </div>
 </header>
 
-<nav>
-  <ul>
-    <li><a href="#kpi" class="n01"><span class="step">01</span>핵심 지표</a></li>
-    <li><a href="#issues" class="n02"><span class="step">02</span>특이사항 히스토리</a></li>
-    <li><a href="#priority" class="n03"><span class="step">03</span>우선순위 레버</a></li>
-    <li><a href="#framework" class="n04"><span class="step">04</span>액션 프레임</a></li>
-    <li><a href="#thresholds" class="n05"><span class="step">05</span>임계치</a></li>
-    <li><a href="#channels" class="n06"><span class="step">06</span>채널 벤치마크</a></li>
-    <li><a href="#compare" class="n07"><span class="step">07</span>동기간 비교</a></li>
-    <li><a href="#matrix" class="n08"><span class="step">08</span>의사결정 매트릭스</a></li>
-    <li><a href="#diagnosis" class="n09"><span class="step">09</span>현황 진단</a></li>
-  </ul>
-</nav>
+<div class="tab-bar">
+  <button class="tab-btn active" data-tab="1">
+    <span class="tab-num">01</span> 당월 성과 및 운영 현황
+  </button>
+  <button class="tab-btn" data-tab="2">
+    <span class="tab-num">02</span> 매체 최적화 대시보드
+  </button>
+</div>
 
 <main>
+
+<div class="tab-content active" data-tab="1">
+
+<div class="tab-title-block">
+  <h1>당월 운영 현황 <span class="accent">리포트</span></h1>
+  <div class="sub">5월 마감 종합 · 6월 진행 현황 · FY2026 사업계획 대비 진척 · 10일 동요일 단기 트렌드 · 당월 매체 진단</div>
+  <div class="header-meta">
+    <div class="meta-item"><div class="k">대상 기간 (Range)</div><div class="v num">2026.05.01 — 06.10</div></div>
+    <div class="meta-item"><div class="k">6월 MTD (진행중)</div><div class="v num">06.01 — 06.10 · 10/30일 (33.3%)</div></div>
+    <div class="meta-item"><div class="k">사업계획 파일</div><div class="v num" style="font-size:11px;">FY2026_사업계획_2602_v3_5</div></div>
+    <div class="meta-item"><div class="k">대상 채널</div><div class="v num">paid% (paid_content 제외)</div></div>
+  </div>
+</div>
+
+<section id="current-month">
+  <div class="section-header">
+    <div>
+      <div class="section-num">01 · Current State</div>
+      <h2 class="section-title">5월 종합 + <span class="accent">6월 누적</span></h2>
+    </div>
+    <div class="section-sub">5월 마감 · 6월 진행 중 · paid 전체 (paid_content 제외)</div>
+  </div>
+  <div class="may-panel" id="mayPanel"></div>
+</section>
+
+<section id="budget-progress">
+  <div class="section-header">
+    <div>
+      <div class="section-num">02 · Budget Progress</div>
+      <h2 class="section-title">FY 사업계획 <span class="accent">대비 실적</span></h2>
+    </div>
+    <div class="section-sub">1~5월 누적 + 6월 MTD vs 월 목표 (FY2026_사업계획_사업전략그룹_2602_v3_5)</div>
+  </div>
+  <div class="budget-panel" id="budgetPanel"></div>
+</section>
+
+<section id="ten-day-section">
+  <div class="section-header">
+    <div>
+      <div class="section-num">03 · Same-Weekday Compare</div>
+      <h2 class="section-title">10일 동요일 <span class="accent">동기간 비교</span></h2>
+    </div>
+    <div class="section-sub">5/4 ~ 5/13 vs 6/1 ~ 6/10 · 매체별 필터 가능</div>
+  </div>
+  <div class="ten-compare-block" id="tenCompareBlock"></div>
+</section>
+
+<section id="june-media-diag">
+  <div class="section-header">
+    <div>
+      <div class="section-num">04 · June Media Diagnosis</div>
+      <h2 class="section-title">당월 데이터 <span class="accent">기준 매체 진단</span></h2>
+    </div>
+    <div class="section-sub">6월 1~10일 데이터로 산정 · 통합 평균 대비 비율 + CAC 35K 상한 적용</div>
+  </div>
+  <div class="table-wrap">
+    <table class="juneDiag" id="juneDiagTable"></table>
+  </div>
+</section>
+
+</div>
+
+<div class="tab-content" data-tab="2">
+
+<div class="tab-title-block">
+  <h1>퍼포먼스 매체 <span class="accent">최적화 대시보드</span></h1>
+  <div class="sub">우선순위 레버 기반 의사결정 프레임 · 동요일 60일 동기간 비교 · 작년 동기간(YoY) 참고 · CAC 절대 상한 35,000원 적용</div>
+  <div class="header-meta">
+    <div class="meta-item"><div class="k">최근 60일 (Recent)</div><div class="v num">2026.04.12 — 06.10</div></div>
+    <div class="meta-item"><div class="k">이전 60일 (Prior, -63일)</div><div class="v num">2026.02.08 — 04.08</div></div>
+    <div class="meta-item"><div class="k">작년 동기간 (YoY, -364일)</div><div class="v num">2025.04.13 — 06.11</div></div>
+    <div class="meta-item"><div class="k">분석 매체 / CAC 상한</div><div class="v num"><span id="m-count">—</span> · 35,000원</div></div>
+  </div>
+</div>
 
 <section id="kpi">
   <div class="section-header">
@@ -698,7 +1043,6 @@
   </div>
   <div class="outlier-note" id="outlier-note"></div>
   <div class="kpi-row" id="kpiRow"></div>
-  <div class="may-panel" id="mayPanel"></div>
 </section>
 
 <section id="issues">
@@ -873,9 +1217,9 @@
     <div class="compare-title">채널별 <span class="accent">비교</span></div>
     <div class="compare-sub">5개 paid 채널 · 광고비 내림차순 · YoY 컬럼 별도 표시</div>
     <div class="period-legend">
-      <div class="period-tag recent"><span class="dot"></span><span class="lbl">최근 (Recent)</span><span class="date">2026.04.09 — 06.07</span></div>
-      <div class="period-tag prior"><span class="dot"></span><span class="lbl">이전 (Prior)</span><span class="date">2026.02.05 — 04.05</span></div>
-      <div class="period-tag yoy"><span class="dot"></span><span class="lbl">작년 (YoY)</span><span class="date">2025.04.10 — 06.08</span></div>
+      <div class="period-tag recent"><span class="dot"></span><span class="lbl">최근 (Recent)</span><span class="date">2026.04.12 — 06.10</span></div>
+      <div class="period-tag prior"><span class="dot"></span><span class="lbl">이전 (Prior)</span><span class="date">2026.02.08 — 04.08</span></div>
+      <div class="period-tag yoy"><span class="dot"></span><span class="lbl">작년 (YoY)</span><span class="date">2025.04.13 — 06.11</span></div>
     </div>
     <div class="table-wrap">
     <table class="cmp grouped">
@@ -942,74 +1286,20 @@
     </table>
     </div>
   </div>
+
 </section>
 
-<section id="matrix">
-  <div class="section-header">
-    <div>
-      <div class="section-num">08 · Decision Matrix</div>
-      <h2 class="section-title">의사결정 <span class="accent">매트릭스</span></h2>
-    </div>
-    <div class="section-sub">8가지 케이스 · 절대값 35K 상한 적용 시나리오 포함</div>
-  </div>
-  <div class="table-wrap">
-  <table class="matrix">
-    <thead>
-      <tr>
-        <th>Case</th>
-        <th>CAC (P1)</th>
-        <th>신청율 (P2)</th>
-        <th>예상결제액 (P3)</th>
-        <th>ROAS (P4)</th>
-        <th>최종 판단</th>
-        <th>광고비 액션</th>
-        <th style="width:26%;">비고</th>
-      </tr>
-    </thead>
-    <tbody id="matrixBody"></tbody>
-  </table>
-  </div>
-</section>
-
-<section id="diagnosis">
-  <div class="section-header">
-    <div>
-      <div class="section-num">09 · Current Diagnosis</div>
-      <h2 class="section-title">최근 60일 <span class="accent">매체</span> 진단</h2>
-    </div>
-    <div class="section-sub">개선 로직 적용: DOOH 별도평가 / CAC 35,000원 절대 상한</div>
-  </div>
-  <div class="diag-controls" id="filterBar"></div>
-  <div class="table-wrap">
-  <table class="diag" id="diagTable">
-    <thead>
-      <tr>
-        <th data-sort="cost" class="num-h">광고비 ▼</th>
-        <th data-sort="channel">채널</th>
-        <th data-sort="name">매체</th>
-        <th data-sort="cac" class="num-h">CAC</th>
-        <th data-sort="cac_diff" class="num-h">vs 벤치</th>
-        <th data-sort="rate" class="num-h">신청율</th>
-        <th data-sort="rate_diff" class="num-h">vs 벤치</th>
-        <th data-sort="roas" class="num-h">ROAS</th>
-        <th data-sort="code">판단</th>
-        <th>권장 액션</th>
-      </tr>
-    </thead>
-    <tbody id="diagBody"></tbody>
-  </table>
-  </div>
-</section>
+</div>
 
 </main>
 
 <footer>
   <div class="signature">비즈넵 환급 · BZNAV</div>
-  <div>Performance Marketing Optimization Dashboard v5 · 2026.06.07 기준 · 60일 동요일 동기간 + YoY 분석</div>
+  <div>Performance Marketing Optimization Dashboard v5 · 2026.06.10 기준 · 60일 동요일 동기간 + YoY 분석</div>
 </footer>
 
 <script>
-const DATA = {"periods": {"recent": {"start": "2026-04-09", "end": "2026-06-07", "days": 60}, "prior": {"start": "2026-02-05", "end": "2026-04-05", "days": 60}, "yoy": {"start": "2025-04-10", "end": "2025-06-08", "days": 60}}, "integrated": {"recent": {"cost": 1646205590.0, "view": 119037.0, "apply": 10713.0, "rev": 2303535690.82, "profit": 657330100.8200002, "cac": 13829.360534959718, "rate": 8.999722775271554, "roas": 139.9300126796435, "profit_rate": 39.930012679643504}, "prior": {"cost": 1696281812.0, "view": 92704.0, "apply": 9142.0, "rev": 1961544827.645, "profit": 276263015.6450001, "cac": 18297.827623403522, "rate": 9.861494649637557, "roas": 115.63790956010085, "profit_rate": 16.286386713023372}, "yoy": {"cost": 488614563.0, "view": 32538.0, "apply": 3780.0, "rev": 759906156.23, "profit": 271291593.23, "cac": 15016.73621611654, "rate": 11.61718605937673, "roas": 155.5226171656288, "profit_rate": 55.52261716562877}}, "may": {"raw": {"cost": 809210635.0, "view": 56285.0, "apply": 4859.0, "rev": 1079073443.435, "profit": 269862808.43500006, "cac": 14377.021142400285, "rate": 8.632850670693792, "roas": 133.3488954251077, "profit_rate": 33.34889542510771}, "days_total": 31, "days_affected": 31, "start": "2026-05-01", "end": "2026-05-31"}, "june": {"raw": {"cost": 193692872.0, "view": 18039.0, "apply": 1605.0, "rev": 304139837.10499996, "profit": 110446965.105, "cac": 10737.45063473585, "rate": 8.897388990520538, "roas": 157.02169830235155, "profit_rate": 57.021698302351574}, "days_total": 7, "days_affected": 0, "start": "2026-06-01", "end": "2026-06-07"}, "cac_cap": 35000, "channels": [{"name": "00.paid_display", "media_count": 13, "recent": {"cost": 1323954127.0, "view": 94056.0, "apply": 8301.0, "rev": 1768277542.525, "cac": 14076.232531683252, "rate": 8.825593263587649, "roas": 133.56033313116444, "profit_rate": 33.56033313116445}, "prior": {"cost": 1237173699.0, "view": 59031.0, "apply": 5328.0, "rev": 1083423782.35, "cac": 20958.033897443715, "rate": 9.025766122884587, "roas": 87.57248745473048, "profit_rate": -12.42751254526952}, "yoy": {"cost": 346927223.0, "view": 17621.0, "apply": 1876.0, "rev": 341211720.655, "cac": 19688.282333579253, "rate": 10.646387832699618, "roas": 98.35253564261227, "profit_rate": -1.6474643573877141}}, {"name": "00.paid_dooh", "media_count": 1, "recent": {"cost": 3300000.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": 0.0, "profit_rate": -100.0}, "prior": {"cost": 6600000.000000001, "view": 7.0, "apply": 1.0, "rev": 41519.14, "cac": 942857.142857143, "rate": 14.285714285714285, "roas": 0.6290778787878787, "profit_rate": -99.37092212121212}, "yoy": null}, {"name": "01.paid_cpa", "media_count": 3, "recent": {"cost": 12393153.0, "view": 2113.0, "apply": 137.0, "rev": 34084280.294999994, "cac": 5865.193090392807, "rate": 6.483672503549457, "roas": 275.0250908303964, "profit_rate": 175.02509083039644}, "prior": {"cost": 18415255.0, "view": 2862.0, "apply": 163.0, "rev": 20315050.6, "cac": 6434.400768693222, "rate": 5.695317959468903, "roas": 110.31642298735478, "profit_rate": 10.316422987354786}, "yoy": {"cost": 2509584.0, "view": 1114.0, "apply": 48.0, "rev": 4717917.1, "cac": 2252.7684021543987, "rate": 4.308797127468582, "roas": 187.9959826011004, "profit_rate": 87.99598260110042}}, {"name": "01.paid_msg", "media_count": 18, "recent": {"cost": 266660775.0, "view": 19070.0, "apply": 1743.0, "rev": 371148577.475, "cac": 13983.260356581017, "rate": 9.14001048767698, "roas": 139.18379164502167, "profit_rate": 39.18379164502166}, "prior": {"cost": 394900000.0, "view": 26094.0, "apply": 3000.0, "rev": 698980042.6700001, "cac": 15133.747221583506, "rate": 11.496895838123706, "roas": 177.00178340592555, "profit_rate": 79.7872987262598}, "yoy": {"cost": 116050000.0, "view": 12167.0, "apply": 1575.0, "rev": 331856512.52, "cac": 9538.094846716529, "rate": 12.944850826004767, "roas": 285.9599418526497, "profit_rate": 185.95994185264973}}, {"name": "01.paid_search", "media_count": 3, "recent": {"cost": 39897535.0, "view": 3798.0, "apply": 532.0, "rev": 130025290.525, "cac": 10504.88020010532, "rate": 14.007372301211163, "roas": 325.8980549174279, "profit_rate": 225.89805491742788}, "prior": {"cost": 39192858.0, "view": 4708.0, "apply": 650.0, "rev": 158784432.885, "cac": 8324.73619371283, "rate": 13.806287170773151, "roas": 405.1361421129329, "profit_rate": 305.136142112933}, "yoy": {"cost": 23127756.0, "view": 1630.0, "apply": 281.0, "rev": 82120005.95500001, "cac": 14188.80736196319, "rate": 17.23926380368098, "roas": 355.0712224523642, "profit_rate": 255.07122245236417}}, {"name": "07.paid_blog", "media_count": 0, "recent": null, "prior": {"cost": 0.0, "view": 2.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "yoy": {"cost": 0.0, "view": 6.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}}], "media": [{"channel": "00.paid_display", "name": "kakaomoment", "recent": {"cost": 898150329.0, "view": 74522.0, "apply": 6619.0, "rev": 1466200105.76, "cac": 12052.150089906336, "rate": 8.881940903357398, "roas": 163.24662569488407, "profit_rate": 63.24662569488411}, "prior": {"cost": 150602509.0, "view": 11310.0, "apply": 1120.0, "rev": 253387026.49, "cac": 13315.871706454465, "rate": 9.902740937223696, "roas": 168.2488745854825, "profit_rate": 68.24887458548251}, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "keep"}, {"channel": "00.paid_display", "name": "meta", "recent": {"cost": 173518633.0, "view": 7381.0, "apply": 594.0, "rev": 100766358.28999999, "cac": 23508.82441403604, "rate": 8.047690014903129, "roas": 58.07235600455658, "profit_rate": -41.92764399544342}, "prior": {"cost": 498079241.0, "view": 19881.0, "apply": 1470.0, "rev": 229456662.435, "cac": 25053.027564005835, "rate": 7.393994265881998, "roas": 46.068304708768224, "profit_rate": -53.93169529123178}, "yoy": {"cost": 72156310.0, "view": 1506.0, "apply": 161.0, "rev": 27311890.19, "cac": 47912.556440903056, "rate": 10.690571049136786, "roas": 37.851007333939336, "profit_rate": -62.14899266606068}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "shinhancardlms", "recent": {"cost": 99000000.0, "view": 7276.0, "apply": 659.0, "rev": 122552116.96000001, "cac": 13606.377130291368, "rate": 9.057174271577791, "roas": 123.79001713131315, "profit_rate": 23.790017131313135}, "prior": {"cost": 77000000.0, "view": 6023.0, "apply": 660.0, "rev": 117184050.42500001, "cac": 12784.32674746804, "rate": 10.957994354972605, "roas": 152.18707847402598, "profit_rate": 52.18707847402598}, "yoy": {"cost": 11000000.0, "view": 317.0, "apply": 52.0, "rev": 20861897.875, "cac": 34700.31545741325, "rate": 16.40378548895899, "roas": 189.65361704545452, "profit_rate": 89.65361704545455}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "keep"}, {"channel": "00.paid_display", "name": "google_demandgen", "recent": {"cost": 93724769.0, "view": 3499.0, "apply": 349.0, "rev": 57945726.02, "cac": 26786.15861674764, "rate": 9.974278365247214, "roas": 61.825413536095255, "profit_rate": -38.17458646390475}, "prior": {"cost": 151351473.0, "view": 6113.0, "apply": 576.0, "rev": 98083390.21, "cac": 24758.95190577458, "rate": 9.422542123343694, "roas": 64.80504501598078, "profit_rate": -35.19495498401922}, "yoy": {"cost": 1897472.0, "view": 6.0, "apply": 1.0, "rev": 159830.45, "cac": 316245.3333333333, "rate": 16.666666666666664, "roas": 8.423336418139504, "profit_rate": -91.5766635818605}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "00.paid_display", "name": "kakaobank", "recent": {"cost": 91153331.0, "view": 5779.0, "apply": 424.0, "rev": 75047106.61500001, "cac": 15773.20141893061, "rate": 7.33690949991348, "roas": 82.33062444530964, "profit_rate": -17.66937555469037}, "prior": {"cost": 123329814.0, "view": 6673.0, "apply": 592.0, "rev": 130425042.34500001, "cac": 18481.91428143264, "rate": 8.871572006593736, "roas": 105.7530520114139, "profit_rate": 5.753052011413887}, "yoy": {"cost": 55366664.0, "view": 7582.0, "apply": 632.0, "rev": 102053369.08000001, "cac": 7302.382484832498, "rate": 8.33553152202585, "roas": 184.32277061157237, "profit_rate": 84.32277061157237}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "kbcardlms", "recent": {"cost": 70400000.0, "view": 5828.0, "apply": 551.0, "rev": 141335797.91500002, "cac": 12079.615648592999, "rate": 9.454358270418668, "roas": 200.76107658380687, "profit_rate": 100.76107658380681}, "prior": {"cost": 80300000.0, "view": 7855.0, "apply": 916.0, "rev": 238408202.825, "cac": 10222.788033099936, "rate": 11.661362189688097, "roas": 296.89689019302614, "profit_rate": 196.89689019302614}, "yoy": {"cost": 44000000.0, "view": 6487.0, "apply": 870.0, "rev": 179103171.845, "cac": 6782.796361954679, "rate": 13.41143826113766, "roas": 407.05266328409084, "profit_rate": 307.0526632840909}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "keep"}, {"channel": "00.paid_display", "name": "google_pmax", "recent": {"cost": 44676259.0, "view": 1898.0, "apply": 188.0, "rev": 35199047.650000006, "cac": 23538.597997892517, "rate": 9.905163329820864, "roas": 78.78691823771548, "profit_rate": -21.21308176228453}, "prior": {"cost": 124847303.0, "view": 4557.0, "apply": 379.0, "rev": 58259361.81, "cac": 27396.818740399387, "rate": 8.316875137151634, "roas": 46.66449367352373, "profit_rate": -53.33550632647627}, "yoy": {"cost": 103860795.0, "view": 4845.0, "apply": 598.0, "rev": 118520124.97000001, "cac": 21436.696594427245, "rate": 12.342621259029928, "roas": 114.11440184912894, "profit_rate": 14.114401849128924}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "hanacardlms", "recent": {"cost": 39600000.0, "view": 2367.0, "apply": 178.0, "rev": 31324191.34, "cac": 16730.03802281369, "rate": 7.520067596113224, "roas": 79.10149328282829, "profit_rate": -20.898506717171717}, "prior": {"cost": 71500000.0, "view": 4130.0, "apply": 402.0, "rev": 105618649.89000002, "cac": 17312.348668280873, "rate": 9.73365617433414, "roas": 147.7183914545455, "profit_rate": 47.71839145454547}, "yoy": {"cost": 33000000.0, "view": 3348.0, "apply": 411.0, "rev": 73485782.5, "cac": 9856.63082437276, "rate": 12.275985663082437, "roas": 222.6841893939394, "profit_rate": 122.68418939393936}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_search", "name": "sa_naver", "recent": {"cost": 17866050.0, "view": 888.0, "apply": 92.0, "rev": 19321347.5, "cac": 20119.425675675677, "rate": 10.36036036036036, "roas": 108.14560297323695, "profit_rate": 8.145602973236954}, "prior": {"cost": 15764277.0, "view": 893.0, "apply": 123.0, "rev": 21958820.195, "cac": 17653.16573348264, "rate": 13.773796192609183, "roas": 139.29481317157774, "profit_rate": 39.29481317157775}, "yoy": {"cost": 16884692.0, "view": 559.0, "apply": 65.0, "rev": 25475959.990000002, "cac": 30205.17352415027, "rate": 11.627906976744185, "roas": 150.88199411632738, "profit_rate": 50.88199411632739}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "hyundaicardlms", "recent": {"cost": 15799630.0, "view": 1305.0, "apply": 115.0, "rev": 24242317.06, "cac": 12106.996168582375, "rate": 8.812260536398467, "roas": 153.4359795767369, "profit_rate": 53.43597957673691}, "prior": null, "yoy": null, "is_new": true, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "keep"}, {"channel": "00.paid_display", "name": "cashnote", "recent": {"cost": 14483328.0, "view": 797.0, "apply": 105.0, "rev": 24965269.81, "cac": 18172.306148055206, "rate": 13.174404015056462, "roas": 172.37246722576467, "profit_rate": 72.3724672257647}, "prior": {"cost": 31664288.0, "view": 1198.0, "apply": 145.0, "rev": 27034602.075, "cac": 26430.958263772955, "rate": 12.103505843071787, "roas": 85.37884090430204, "profit_rate": -14.621159095697966}, "yoy": {"cost": 16794327.0, "view": 857.0, "apply": 94.0, "rev": 13717907.905000001, "cac": 19596.647607934658, "rate": 10.968494749124854, "roas": 81.68179591239351, "profit_rate": -18.318204087606485}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_search", "name": "sa_google", "recent": {"cost": 14426817.0, "view": 384.0, "apply": 40.0, "rev": 6529278.145000001, "cac": 37569.8359375, "rate": 10.416666666666668, "roas": 45.257925882057016, "profit_rate": -54.742074117943}, "prior": {"cost": 12208581.0, "view": 312.0, "apply": 43.0, "rev": 10236623.280000001, "cac": 39130.067307692305, "rate": 13.782051282051283, "roas": 83.84777297214148, "profit_rate": -16.15222702785852}, "yoy": {"cost": 2723065.0, "view": 128.0, "apply": 25.0, "rev": 4341289.420000001, "cac": 21273.9453125, "rate": 19.53125, "roas": 159.42658070960482, "profit_rate": 59.42658070960481}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "cashnote", "recent": {"cost": 13200000.0, "view": 128.0, "apply": 34.0, "rev": 10299860.024999999, "cac": 103125.0, "rate": 26.5625, "roas": 78.02924261363636, "profit_rate": -21.970757386363633}, "prior": {"cost": 19800000.0, "view": 498.0, "apply": 105.0, "rev": 26337095.785, "cac": 39759.03614457831, "rate": 21.084337349397593, "roas": 133.0156352777778, "profit_rate": 33.015635277777776}, "yoy": {"cost": 0.0, "view": 178.0, "apply": 24.0, "rev": 1331219.695, "cac": 0.0, "rate": 13.48314606741573, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "baeminmartlms", "recent": {"cost": 12650000.0, "view": 254.0, "apply": 44.0, "rev": 6014984.82, "cac": 49803.149606299216, "rate": 17.322834645669293, "roas": 47.549287114624505, "profit_rate": -52.450712885375495}, "prior": {"cost": 22000000.0, "view": 1134.0, "apply": 181.0, "rev": 25486279.259999998, "cac": 19400.352733686068, "rate": 15.961199294532626, "roas": 115.8467239090909, "profit_rate": 65.84672390909093}, "yoy": null, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_cpa", "name": "refund_pincrux", "recent": {"cost": 11246950.0, "view": 1488.0, "apply": 105.0, "rev": 31194043.269999996, "cac": 7558.434139784947, "rate": 7.056451612903227, "roas": 277.3555788013639, "profit_rate": 177.35557880136392}, "prior": {"cost": 13902900.0, "view": 1990.0, "apply": 128.0, "rev": 17831330.529999997, "cac": 6986.381909547738, "rate": 6.432160804020101, "roas": 128.25619496651777, "profit_rate": 28.25619496651778}, "yoy": {"cost": 2509584.0, "view": 1114.0, "apply": 48.0, "rev": 4717917.1, "cac": 2252.7684021543987, "rate": 4.308797127468582, "roas": 187.9959826011004, "profit_rate": 87.99598260110042}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_search", "name": "bs_naver", "recent": {"cost": 7604668.0, "view": 2526.0, "apply": 400.0, "rev": 104174664.88000003, "cac": 3010.5574030087096, "rate": 15.83531274742676, "roas": 1369.877881322367, "profit_rate": 1269.8778813223669}, "prior": {"cost": 11220000.0, "view": 3503.0, "apply": 484.0, "rev": 126588989.41, "cac": 3202.9688838138736, "rate": 13.816728518412788, "roas": 1128.2441123885917, "profit_rate": 1028.2441123885917}, "yoy": {"cost": 3519999.0, "view": 943.0, "apply": 191.0, "rev": 52302756.545, "cac": 3732.766702014846, "rate": 20.254506892895016, "roas": 1485.8741876063034, "profit_rate": 1385.8741876063034}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "scale"}, {"channel": "01.paid_msg", "name": "okpos", "recent": {"cost": 6600000.0, "view": 251.0, "apply": 24.0, "rev": 4767293.57, "cac": 26294.820717131475, "rate": 9.56175298804781, "roas": 72.23172075757576, "profit_rate": -27.76827924242423}, "prior": {"cost": 0.0, "view": 4.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "yoy": {"cost": 2750000.0, "view": 151.0, "apply": 18.0, "rev": 2735679.505, "cac": 18211.920529801326, "rate": 11.920529801324504, "roas": 99.47925472727273, "profit_rate": -0.5207452727272726}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "00.paid_display", "name": "okpos", "recent": {"cost": 5089695.0, "view": 114.0, "apply": 18.0, "rev": 6385904.655, "cac": 44646.44736842105, "rate": 15.789473684210526, "roas": 125.46733458488181, "profit_rate": 25.467334584881808}, "prior": {"cost": 118670345.0, "view": 8573.0, "apply": 956.0, "rev": 246935430.365, "cac": 13842.33582176601, "rate": 11.151288930362767, "roas": 208.0852047451282, "profit_rate": 108.0852047451282}, "yoy": {"cost": 29800100.0, "view": 1273.0, "apply": 182.0, "rev": 52759106.53, "cac": 23409.347996857818, "rate": 14.29693637077769, "roas": 177.043387538968, "profit_rate": 77.043387538968}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "00.paid_dooh", "name": "gvalleytv", "recent": {"cost": 3300000.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": 0.0, "profit_rate": -100.0}, "prior": {"cost": 6600000.000000001, "view": 7.0, "apply": 1.0, "rev": 41519.14, "cac": 942857.142857143, "rate": 14.285714285714285, "roas": 0.6290778787878787, "profit_rate": -99.37092212121212}, "yoy": null, "is_new": false, "is_paused": false, "is_dooh": true, "is_single": false, "code": "brand"}, {"channel": "01.paid_msg", "name": "smartbill", "recent": {"cost": 3300000.0, "view": 151.0, "apply": 27.0, "rev": 11170333.98, "cac": 21854.30463576159, "rate": 17.880794701986755, "roas": 338.4949690909091, "profit_rate": 238.4949690909091}, "prior": {"cost": 3300000.0, "view": 213.0, "apply": 48.0, "rev": 18649428.979999997, "cac": 15492.957746478873, "rate": 22.535211267605636, "roas": 565.1342115151514, "profit_rate": 465.1342115151515}, "yoy": {"cost": 3300000.0000000005, "view": 92.0, "apply": 17.0, "rev": 7306800.6049999995, "cac": 35869.56521739131, "rate": 18.478260869565215, "roas": 221.41820015151512, "profit_rate": 121.41820015151512}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "tmaplms", "recent": {"cost": 3300000.0, "view": 146.0, "apply": 25.0, "rev": 2018547.375, "cac": 22602.739726027397, "rate": 17.123287671232877, "roas": 61.168102272727275, "profit_rate": -38.83189772727273}, "prior": null, "yoy": null, "is_new": true, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "paysam", "recent": {"cost": 2811145.0, "view": 1052.0, "apply": 53.0, "rev": 10361972.66, "cac": 2672.1910646387832, "rate": 5.038022813688213, "roas": 368.6032794466312, "profit_rate": 268.6032794466312}, "prior": null, "yoy": null, "is_new": true, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "00.paid_display", "name": "docple", "recent": {"cost": 1885716.0, "view": 4.0, "apply": 2.0, "rev": 1336669.815, "cac": 471429.0, "rate": 50.0, "roas": 70.88394090096281, "profit_rate": -29.116059099037177}, "prior": {"cost": 4400000.0, "view": 47.0, "apply": 15.0, "rev": 13356363.215, "cac": 93617.02127659574, "rate": 31.914893617021278, "roas": 303.55370943181816, "profit_rate": 203.5537094318182}, "yoy": null, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "00.paid_display", "name": "navergfa", "recent": {"cost": 1272067.0, "view": 24.0, "apply": 1.0, "rev": 287953.51, "cac": 53002.791666666664, "rate": 4.166666666666666, "roas": 22.636662219835905, "profit_rate": -77.3633377801641}, "prior": {"cost": 3215436.0, "view": 43.0, "apply": 4.0, "rev": 790899.8500000001, "cac": 74777.58139534884, "rate": 9.30232558139535, "roas": 24.596970675205483, "profit_rate": -75.40302932479452}, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "off"}, {"channel": "01.paid_cpa", "name": "buzzvil", "recent": {"cost": 664400.0, "view": 345.0, "apply": 17.0, "rev": 1362970.44, "cac": 1925.7971014492753, "rate": 4.9275362318840585, "roas": 205.14305237808549, "profit_rate": 105.1430523780855}, "prior": {"cost": 1408000.0, "view": 684.0, "apply": 32.0, "rev": 2197997.49, "cac": 2058.4795321637425, "rate": 4.678362573099415, "roas": 156.10777627840912, "profit_rate": 56.10777627840909}, "yoy": null, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_cpa", "name": "adison.offerwall", "recent": {"cost": 481803.0, "view": 280.0, "apply": 15.0, "rev": 1527266.585, "cac": 1720.725, "rate": 5.357142857142857, "roas": 316.98984543475234, "profit_rate": 216.98984543475234}, "prior": {"cost": 2813955.0, "view": 127.0, "apply": 2.0, "rev": 214805.17500000002, "cac": 22157.12598425197, "rate": 1.574803149606299, "roas": 7.633568234033595, "profit_rate": -92.3664317659664}, "yoy": null, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "kakaopay", "recent": {"cost": 0.0, "view": 4.0, "apply": 1.0, "rev": 817881.805, "cac": 0.0, "rate": 25.0, "roas": null, "profit_rate": null}, "prior": {"cost": 121000000.0, "view": 6053.0, "apply": 662.0, "rev": 164655153.195, "cac": 19990.08755988766, "rate": 10.936725590616224, "roas": 136.0786390041322, "profit_rate": 36.07863900413224}, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "scale"}, {"channel": "00.paid_display", "name": "dabangpro", "recent": {"cost": 0.0, "view": 24.0, "apply": 1.0, "rev": 143400.4, "cac": 0.0, "rate": 4.166666666666666, "roas": null, "profit_rate": null}, "prior": {"cost": 3300000.0, "view": 41.0, "apply": 1.0, "rev": 63723.335, "cac": 80487.80487804877, "rate": 2.4390243902439024, "roas": 1.9310101515151514, "profit_rate": -98.06898984848485}, "yoy": null, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "00.paid_display", "name": "cafe_naver", "recent": {"cost": 0.0, "view": 7.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "prior": {"cost": 0.0, "view": 10.0, "apply": 1.0, "rev": 948839.5800000001, "cac": 0.0, "rate": 10.0, "roas": null, "profit_rate": null}, "yoy": {"cost": 0.0, "view": 33.0, "apply": 6.0, "rev": 1870898.445, "cac": 0.0, "rate": 18.181818181818183, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "kakaobrandmsg", "recent": {"cost": 0.0, "view": 145.0, "apply": 16.0, "rev": 1014367.9649999999, "cac": 0.0, "rate": 11.03448275862069, "roas": null, "profit_rate": null}, "prior": {"cost": 0.0, "view": 87.0, "apply": 23.0, "rev": 2492852.7, "cac": 0.0, "rate": 26.436781609195403, "roas": null, "profit_rate": null}, "yoy": null, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "scale"}, {"channel": "01.paid_msg", "name": "marketboro", "recent": {"cost": 0.0, "view": 1.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "prior": {"cost": 0.0, "view": 2.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "yoy": null, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "ktlms", "recent": {"cost": 0.0, "view": 1.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "prior": {"cost": 0.0, "view": 9.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "yoy": null, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "wooricardlms", "recent": {"cost": 0.0, "view": 6.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "prior": {"cost": 0.0, "view": 16.0, "apply": 2.0, "rev": 72662.98000000001, "cac": 0.0, "rate": 12.5, "roas": null, "profit_rate": null}, "yoy": {"cost": 22000000.0, "view": 1586.0, "apply": 182.0, "rev": 47022874.535000004, "cac": 13871.374527112232, "rate": 11.475409836065573, "roas": 213.7403387954546, "profit_rate": 113.74033879545455}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "00.paid_display", "name": "baeminceo", "recent": {"cost": 0.0, "view": 6.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "prior": {"cost": 0.0, "view": 5.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "yoy": null, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "joongnaapppush", "recent": {"cost": 0.0, "view": 4.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "prior": null, "yoy": null, "is_new": true, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "00.paid_display", "name": "google", "recent": {"cost": 0.0, "view": 1.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "prior": null, "yoy": {"cost": 0.0, "view": 5.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "is_new": true, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "hanacardapppush", "recent": {"cost": 0.0, "view": 142.0, "apply": 16.0, "rev": 5228912.0, "cac": 0.0, "rate": 11.267605633802818, "roas": null, "profit_rate": null}, "prior": null, "yoy": null, "is_new": true, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "scale"}, {"channel": "01.paid_msg", "name": "joongna_lms", "recent": {"cost": 0.0, "view": 9.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "prior": null, "yoy": null, "is_new": true, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "00.paid_display", "name": "kakaopay", "recent": null, "prior": {"cost": 18913290.0, "view": 570.0, "apply": 69.0, "rev": 24682440.64, "cac": 33181.21052631579, "rate": 12.105263157894736, "roas": 130.50315751516527, "profit_rate": 30.503157515165263}, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "hogangnono", "recent": null, "prior": {"cost": 5500000.0, "view": 6.0, "apply": 0.0, "rev": 0.0, "cac": 916666.6666666666, "rate": 0.0, "roas": 0.0, "profit_rate": -100.0}, "yoy": null, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "aptner", "recent": null, "prior": {"cost": 3300000.0, "view": 4.0, "apply": 0.0, "rev": 0.0, "cac": 825000.0, "rate": 0.0, "roas": 0.0, "profit_rate": -100.0}, "yoy": null, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_cpa", "name": "tnk", "recent": null, "prior": {"cost": 290400.0, "view": 61.0, "apply": 1.0, "rev": 70917.405, "cac": 4760.6557377049185, "rate": 1.639344262295082, "roas": 24.420594008264462, "profit_rate": -75.57940599173554}, "yoy": null, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "hpointlms", "recent": null, "prior": {"cost": 0.0, "view": 3.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "yoy": null, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "07.paid_blog", "name": "naverblog", "recent": null, "prior": {"cost": 0.0, "view": 2.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "yoy": {"cost": 0.0, "view": 6.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": false, "code": "paused"}, {"channel": "01.paid_msg", "name": "okcashbaglms", "recent": null, "prior": {"cost": 0.0, "view": 29.0, "apply": 1.0, "rev": 75666.63, "cac": 0.0, "rate": 3.4482758620689653, "roas": null, "profit_rate": null}, "yoy": null, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "lgupluslms", "recent": null, "prior": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "hogangnono", "recent": null, "prior": {"cost": 0.0, "view": 38.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "yoy": null, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "nicelms", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "innoforest", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "cauly", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "atlantruck", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "v3", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "theshoplms", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "remember", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "lottememberslms", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 1.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "tiktok", "recent": null, "prior": null, "yoy": {"cost": 41972818.0, "view": 1447.0, "apply": 195.0, "rev": 21423273.625000004, "cac": 29006.785072563925, "rate": 13.476157567380787, "roas": 51.04082748268177, "profit_rate": -48.95917251731822}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "tiktok_junseconomylab", "recent": null, "prior": null, "yoy": {"cost": 154395.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": 0.0, "profit_rate": -100.0}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "kakaobank", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "buzzvil", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "sktlms", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "cafe24", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 3.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "shinhancardpush", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "golfzon", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "toss", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "medigate", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "smartbill", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "youtuber_junseconomylab", "recent": null, "prior": null, "yoy": {"cost": 21560000.000000004, "view": 1.0, "apply": 2.0, "rev": 168123.696, "cac": 21560000.000000004, "rate": 200.0, "roas": 0.7797945083487939, "profit_rate": -99.22020549165119}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "lpoint", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "meta_junseconomylab", "recent": null, "prior": null, "yoy": {"cost": 724342.0, "view": 8.0, "apply": 2.0, "rev": 365122.004, "cac": 90542.75, "rate": 25.0, "roas": 50.4074047894503, "profit_rate": -49.59259521054971}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "payhere", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 2.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "barogo", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "atlantruck", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 7.0, "apply": 1.0, "rev": 9085.960000000001, "cac": 0.0, "rate": 14.285714285714285, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "samsungcard", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "bccardlms", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "asum", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "moneyquiz", "recent": null, "prior": null, "yoy": {"cost": 2640000.0, "view": 53.0, "apply": 3.0, "rev": 2862073.7600000002, "cac": 49811.32075471698, "rate": 5.660377358490567, "roas": 108.41188484848485, "profit_rate": 8.411884848484858}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "ymyd", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}], "known_issues": [{"id": 1, "date": "2024.11.02 ~ 11.03", "name": "홈택스 서비스 변경 이슈", "impact": "전반", "in_period": []}, {"id": 2, "date": "2025.05.01 ~ 05.17", "name": "5월 연휴 + 홈택스 이슈", "impact": "전반", "in_period": ["yoy"]}, {"id": 3, "date": "2026.02.11", "name": "홈택스 이슈", "impact": "전반", "in_period": ["prior"]}, {"id": 4, "date": "2026.04.01 ~ 04.14", "name": "자필서명 퍼널 이슈", "impact": "신청율", "in_period": ["recent"]}, {"id": 5, "date": "2026.04.16", "name": "자필서명 퍼널 제거", "impact": "신청율", "in_period": ["recent"]}, {"id": 6, "date": "2026.04.26 ~ 04.27", "name": "카카오인증서 이슈", "impact": "조회완료율", "in_period": ["recent"]}, {"id": 7, "date": "2026.05.01 ~ 05.31", "name": "5월 홈택스 간헐적 이슈", "impact": "전반", "in_period": ["recent"]}, {"id": 8, "date": "2026.05.11 ~ 05.31", "name": "조회 로딩 지연 이슈", "impact": "신청율", "in_period": ["recent"]}]};
+const DATA = {"periods": {"recent": {"start": "2026-04-12", "end": "2026-06-10", "days": 60}, "prior": {"start": "2026-02-08", "end": "2026-04-08", "days": 60}, "yoy": {"start": "2025-04-13", "end": "2025-06-11", "days": 60}}, "integrated": {"recent": {"cost": 1688388511.0, "view": 124782.0, "apply": 11323.0, "rev": 2391565140.9, "profit": 703176629.9000001, "cac": 13530.705638633777, "rate": 9.074225449183377, "roas": 141.6477976081182, "profit_rate": 41.647797608118175}, "prior": {"cost": 1685493004.0, "view": 93934.0, "apply": 8957.0, "rev": 1902747287.025, "profit": 228254283.02500004, "cac": 17943.37517831669, "rate": 9.53541848531948, "roas": 112.8896579522676, "profit_rate": 13.5422859948578}, "yoy": {"cost": 489318342.0, "view": 34136.0, "apply": 4099.0, "rev": 804013857.6860001, "profit": 314695515.68600005, "cac": 14334.378427466605, "rate": 12.007850949144599, "roas": 164.31304299768107, "profit_rate": 64.31304299768105}}, "may": {"raw": {"cost": 809210635.0, "view": 56285.0, "apply": 4859.0, "rev": 1079073443.435, "profit": 269862808.43500006, "cac": 14377.021142400285, "rate": 8.632850670693792, "roas": 133.3488954251077, "profit_rate": 33.34889542510771}, "days_total": 31, "start": "2026-05-01", "end": "2026-05-31"}, "june": {"raw": {"cost": 288011688.0, "view": 27799.0, "apply": 2521.0, "rev": 467394340.14000005, "profit": 179382652.14000005, "cac": 10360.505341918773, "rate": 9.0686715349473, "roas": 162.2831154477314, "profit_rate": 62.28311544773143}, "days_total": 10, "start": "2026-06-01", "end": "2026-06-10"}, "ten_day_compare": {"may": {"cost": 184687324.0, "view": 13759.0, "apply": 1076.0, "rev": 229314102.81, "profit": 44626778.81, "cac": 13423.019405480049, "rate": 7.820335780216585, "roas": 124.16342272087932, "profit_rate": 24.163422720879318}, "june": {"cost": 288011688.0, "view": 27799.0, "apply": 2521.0, "rev": 467394340.14000005, "profit": 179382652.14000005, "cac": 10360.505341918773, "rate": 9.0686715349473, "roas": 162.2831154477314, "profit_rate": 62.28311544773143}, "may_range": "2026-05-04 ~ 2026-05-13", "june_range": "2026-06-01 ~ 2026-06-10", "days": 10, "per_media": {"media_list": ["kakaomoment", "meta", "kakaobank", "kbcardlms", "google_demandgen", "shinhancardlms", "google_pmax", "sa_naver", "sa_google", "refund_pincrux", "cashnote", "tiktok", "bs_naver", "buzzvil", "adison.offerwall"], "data": {"kakaomoment": {"may": {"cost": 129167168.0, "view": 10563.0, "apply": 855.0, "rev": 185161004.275, "profit": 55993836.275000006, "cac": 12228.26545488971, "rate": 8.094291394490202, "roas": 143.3498985400067}, "june": {"cost": 198705314.0, "view": 19703.0, "apply": 1641.0, "rev": 303720480.37500006, "profit": 105015166.37500001, "cac": 10085.028371314012, "rate": 8.328680911536313, "roas": 152.8497020341389}}, "meta": {"may": {"cost": 0.0, "view": 6.0, "apply": 2.0, "rev": 50065.925, "profit": 50065.925, "cac": 0.0, "rate": 33.33333333333333, "roas": null}, "june": {"cost": 41806616.0, "view": 2821.0, "apply": 269.0, "rev": 43805649.16, "profit": 1999033.1600000015, "cac": 14819.785891527827, "rate": 9.535625664657923, "roas": 104.78161915807776}}, "kakaobank": {"may": {"cost": 24750000.0, "view": 1188.0, "apply": 56.0, "rev": 5486263.705, "profit": -19263736.295, "cac": 20833.333333333332, "rate": 4.713804713804714, "roas": 22.16672204040404}, "june": {"cost": 2933330.0, "view": 382.0, "apply": 38.0, "rev": 6859568.625, "profit": 3926238.625, "cac": 7678.874345549738, "rate": 9.947643979057592, "roas": 233.84919613545017}}, "kbcardlms": {"may": {"cost": 22000000.0, "view": 1203.0, "apply": 79.0, "rev": 13000355.745000001, "profit": -8999644.254999999, "cac": 18287.61429758936, "rate": 6.56691604322527, "roas": 59.09252611363637}, "june": {"cost": 0.0, "view": 84.0, "apply": 2.0, "rev": 735861.23, "profit": 735861.23, "cac": 0.0, "rate": 2.380952380952381, "roas": null}}, "google_demandgen": {"may": {"cost": 0.0, "view": 1.0, "apply": 0.0, "rev": 0.0, "profit": 0.0, "cac": 0.0, "rate": 0.0, "roas": null}, "june": {"cost": 12015718.0, "view": 273.0, "apply": 30.0, "rev": 5127183.815, "profit": -6888534.185, "cac": 44013.619047619046, "rate": 10.989010989010989, "roas": 42.67064036456249}}, "shinhancardlms": {"may": {"cost": 0.0, "view": 66.0, "apply": 4.0, "rev": 391578.72000000003, "profit": 391578.72000000003, "cac": 0.0, "rate": 6.0606060606060606, "roas": null}, "june": {"cost": 11000000.0, "view": 2388.0, "apply": 285.0, "rev": 45855452.825, "profit": 34855452.825, "cac": 4606.365159128978, "rate": 11.934673366834172, "roas": 416.8677529545455}}, "google_pmax": {"may": null, "june": {"cost": 7415749.0, "view": 166.0, "apply": 14.0, "rev": 3092148.6050000004, "profit": -4323600.395, "cac": 44673.18674698795, "rate": 8.433734939759036, "roas": 41.69705049348354}}, "sa_naver": {"may": {"cost": 3573092.0, "view": 94.0, "apply": 9.0, "rev": 1250784.6, "profit": -2322307.4, "cac": 38011.617021276594, "rate": 9.574468085106384, "roas": 35.005664561673754}, "june": {"cost": 2009815.0, "view": 139.0, "apply": 21.0, "rev": 5964917.205, "profit": 3955102.2050000005, "cac": 14459.100719424461, "rate": 15.107913669064748, "roas": 296.78936643422406}}, "sa_google": {"may": {"cost": 2448124.0, "view": 50.0, "apply": 6.0, "rev": 261857.44, "profit": -2186266.56, "cac": 48962.48, "rate": 12.0, "roas": 10.696249046208443}, "june": {"cost": 1854962.0, "view": 40.0, "apply": 5.0, "rev": 391281.605, "profit": -1463680.395, "cac": 46374.05, "rate": 12.5, "roas": 21.09378008821744}}, "refund_pincrux": {"may": {"cost": 1399970.0, "view": 172.0, "apply": 9.0, "rev": 1978893.6700000002, "profit": 578923.67, "cac": 8139.360465116279, "rate": 5.232558139534884, "roas": 141.35257684093233}, "june": {"cost": 2280850.0, "view": 446.0, "apply": 34.0, "rev": 12610597.674999999, "profit": 10329747.674999999, "cac": 5114.013452914798, "rate": 7.623318385650224, "roas": 552.8902678825876}}, "cashnote": {"may": null, "june": {"cost": 3666660.0, "view": 402.0, "apply": 61.0, "rev": 12483383.445, "profit": 8816723.445, "cac": 9121.044776119403, "rate": 15.17412935323383, "roas": 340.45653114823847}}, "tiktok": {"may": null, "june": {"cost": 3076004.0, "view": 322.0, "apply": 26.0, "rev": 2761951.9850000003, "profit": -314052.0149999998, "cac": 9552.80745341615, "rate": 8.074534161490684, "roas": 89.79025986312112}}, "bs_naver": {"may": {"cost": 1246670.0, "view": 269.0, "apply": 43.0, "rev": 19672251.625, "profit": 18425581.625, "cac": 4634.460966542751, "rate": 15.985130111524162, "roas": 1577.9838790537995}, "june": {"cost": 1246670.0, "view": 333.0, "apply": 72.0, "rev": 17561520.47, "profit": 16314850.469999999, "cac": 3743.7537537537537, "rate": 21.62162162162162, "roas": 1408.6743460578982}}, "buzzvil": {"may": {"cost": 52800.0, "view": 53.0, "apply": 4.0, "rev": 583242.53, "profit": 530442.53, "cac": 996.2264150943396, "rate": 7.547169811320755, "roas": 1104.6260037878787}, "june": null}, "adison.offerwall": {"may": {"cost": 49500.0, "view": 37.0, "apply": 3.0, "rev": 660645.115, "profit": 611145.115, "cac": 1337.837837837838, "rate": 8.108108108108109, "roas": 1334.636595959596}, "june": null}}}}, "budget": {"jan_may": {"total": {"budget": 5366646350.318259, "view_target": 478122.6949534537, "revenue_target": 9770071980.625042, "actual_cost": 5404500734.06978, "actual_view": 549804.0, "actual_rev": 12558973791.474}, "paid": {"budget": 4248601773.0704355, "view_target": 235131.61290651915, "revenue_target": 4452029190.370027, "actual_cost": 4344373388.0, "actual_view": 264373.0, "actual_rev": 5206296375.475}}, "june_mtd": {"days_elapsed": 10, "days_total": 30, "total": {"budget": 1434047015.7077594, "view_target": 129479.02774858406, "revenue_target": 2768023862.740074, "actual_cost": 429496488.3675734, "actual_view": 77271.0, "actual_rev": 1004417342.9096001}, "paid": {"budget": 1135516440.5627797, "view_target": 62247.53855268394, "revenue_target": 1213092595.0121937, "actual_cost": 288011688.0, "actual_view": 27799.0, "actual_rev": 467394340.14000005}}}, "cac_cap": 35000, "channels": [{"name": "00.paid_display", "media_count": 14, "recent": {"cost": 1357516916.0, "view": 97897.0, "apply": 8647.0, "rev": 1818896078.7400002, "cac": 13866.787705445518, "rate": 8.832752791198912, "roas": 133.9869917864066, "profit_rate": 33.9869917864066}, "prior": {"cost": 1212190851.0, "view": 58527.0, "apply": 5201.0, "rev": 1059820192.7300001, "cac": 20711.65190424932, "rate": 8.886496830522665, "roas": 87.43014285710032, "profit_rate": -12.569857142899682}, "yoy": {"cost": 335360370.0, "view": 18214.0, "apply": 2030.0, "rev": 360415778.411, "cac": 18412.230701658063, "rate": 11.145272867025364, "roas": 107.47118939873546, "profit_rate": 7.471189398735461}}, {"name": "00.paid_dooh", "media_count": 1, "recent": {"cost": 2200000.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": 0.0, "profit_rate": -100.0}, "prior": {"cost": 7700000.000000002, "view": 7.0, "apply": 1.0, "rev": 41519.14, "cac": 1100000.0000000002, "rate": 14.285714285714285, "roas": 0.5392096103896102, "profit_rate": -99.4607903896104}, "yoy": null}, {"name": "01.paid_cpa", "media_count": 3, "recent": {"cost": 12176673.0, "view": 2090.0, "apply": 138.0, "rev": 33698485.99, "cac": 5826.1593301435405, "rate": 6.6028708133971294, "roas": 276.74625072053755, "profit_rate": 176.74625072053755}, "prior": {"cost": 19411037.0, "view": 2842.0, "apply": 156.0, "rev": 23030366.905, "cac": 6830.062280084448, "rate": 5.489092188599578, "roas": 118.64573183287426, "profit_rate": 18.64573183287426}, "yoy": {"cost": 2642640.0, "view": 1179.0, "apply": 54.0, "rev": 5379243.869999999, "cac": 2241.4249363867684, "rate": 4.580152671755725, "roas": 203.5556818181818, "profit_rate": 103.55568181818182}}, {"name": "01.paid_msg", "media_count": 18, "recent": {"cost": 277660775.0, "view": 21145.0, "apply": 2005.0, "rev": 413672356.24, "cac": 13131.273350673919, "rate": 9.48214707968787, "roas": 148.98480213490726, "profit_rate": 48.98480213490725}, "prior": {"cost": 405900000.0, "view": 27777.0, "apply": 2955.0, "rev": 656463024.88, "cac": 14612.809158656442, "rate": 10.638297872340425, "roas": 161.73023525006158, "profit_rate": 64.4402623503326}, "yoy": {"cost": 127050000.0, "view": 13018.0, "apply": 1711.0, "rev": 350226571.89, "cac": 9759.563681056998, "rate": 13.143339990781994, "roas": 275.6604265171192, "profit_rate": 175.66042651711928}}, {"name": "01.paid_search", "media_count": 3, "recent": {"cost": 38834147.0, "view": 3650.0, "apply": 533.0, "rev": 125298219.93, "cac": 10639.492328767123, "rate": 14.602739726027398, "roas": 322.6495999255501, "profit_rate": 222.6495999255501}, "prior": {"cost": 40291116.0, "view": 4779.0, "apply": 644.0, "rev": 163392183.37, "cac": 8430.867545511614, "rate": 13.475622515170539, "roas": 405.52905849021414, "profit_rate": 305.5290584902141}, "yoy": {"cost": 24265332.0, "view": 1722.0, "apply": 304.0, "rev": 87992263.515, "cac": 14091.365853658537, "rate": 17.653890824622533, "roas": 362.62542591628255, "profit_rate": 262.62542591628255}}, {"name": "07.paid_blog", "media_count": 0, "recent": null, "prior": {"cost": 0.0, "view": 2.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "yoy": {"cost": 0.0, "view": 3.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}}], "media": [{"channel": "00.paid_display", "name": "kakaomoment", "recent": {"cost": 938385705.0, "view": 78315.0, "apply": 6926.0, "rev": 1514038330.2199998, "cac": 11982.196322543574, "rate": 8.843771946625806, "roas": 161.34499088730254, "profit_rate": 61.34499088730257}, "prior": {"cost": 170581350.0, "view": 13122.0, "apply": 1249.0, "rev": 279360534.96, "cac": 12999.645633287608, "rate": 9.518366102728242, "roas": 163.76968230114252, "profit_rate": 63.76968230114255}, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "keep"}, {"channel": "00.paid_display", "name": "meta", "recent": {"cost": 174104506.0, "view": 7398.0, "apply": 611.0, "rev": 101570583.66000001, "cac": 23533.99648553663, "rate": 8.258988915923222, "roas": 58.33885979952754, "profit_rate": -41.66114020047246}, "prior": {"cost": 468376604.0, "view": 18331.0, "apply": 1340.0, "rev": 209913359.37, "cac": 25551.06671758224, "rate": 7.310021275435055, "roas": 44.81721708072336, "profit_rate": -55.18278291927664}, "yoy": {"cost": 64145260.0, "view": 1505.0, "apply": 170.0, "rev": 29354545.545000006, "cac": 42621.43521594685, "rate": 11.295681063122924, "roas": 45.762610588841646, "profit_rate": -54.23738941115837}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "shinhancardlms", "recent": {"cost": 110000000.0, "view": 9428.0, "apply": 923.0, "rev": 164850565.75, "cac": 11667.373780229105, "rate": 9.789987271955876, "roas": 149.8641506818182, "profit_rate": 49.86415068181819}, "prior": {"cost": 99000000.0, "view": 7739.0, "apply": 786.0, "rev": 133155945.845, "cac": 12792.350432872465, "rate": 10.156350949735108, "roas": 134.5009553989899, "profit_rate": 34.50095539898991}, "yoy": {"cost": 11000000.0, "view": 322.0, "apply": 53.0, "rev": 20878333.905, "cac": 34161.490683229815, "rate": 16.459627329192546, "roas": 189.80303550000002, "profit_rate": 89.8030355}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "keep"}, {"channel": "00.paid_display", "name": "kakaobank", "recent": {"cost": 92033330.0, "view": 5905.0, "apply": 440.0, "rev": 78340105.87, "cac": 15585.661303979678, "rate": 7.451312447078746, "roas": 85.12145096781786, "profit_rate": -14.878549032182143}, "prior": {"cost": 119537889.0, "view": 6455.0, "apply": 574.0, "rev": 124021446.11999999, "cac": 18518.65050348567, "rate": 8.892331525948876, "roas": 103.75074142391789, "profit_rate": 3.750741423917905}, "yoy": {"cost": 55916663.0, "view": 7658.0, "apply": 647.0, "rev": 103375812.73500001, "cac": 7301.731914337947, "rate": 8.448681117785323, "roas": 184.8747889962604, "profit_rate": 84.87478899626039}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "00.paid_display", "name": "google_demandgen", "recent": {"cost": 86854843.0, "view": 3153.0, "apply": 322.0, "rev": 53190057.309999995, "cac": 27546.73104979385, "rate": 10.212496035521726, "roas": 61.24017437922258, "profit_rate": -38.759825620777406}, "prior": {"cost": 148654970.0, "view": 6184.0, "apply": 570.0, "rev": 99816295.67, "cac": 24038.643272962483, "rate": 9.217335058214749, "roas": 67.14628893336025, "profit_rate": -32.85371106663975}, "yoy": {"cost": 1897472.0, "view": 6.0, "apply": 1.0, "rev": 159830.45, "cac": 316245.3333333333, "rate": 16.666666666666664, "roas": 8.423336418139504, "profit_rate": -91.5766635818605}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "kbcardlms", "recent": {"cost": 70400000.0, "view": 5706.0, "apply": 545.0, "rev": 139216413.70000002, "cac": 12337.8899404136, "rate": 9.551349456712233, "roas": 197.75058764204547, "profit_rate": 97.75058764204546}, "prior": {"cost": 107800000.0, "view": 10758.0, "apply": 1056.0, "rev": 266926042.11, "cac": 10020.449897750512, "rate": 9.815950920245399, "roas": 247.61228396103897, "profit_rate": 147.61228396103897}, "yoy": {"cost": 44000000.0, "view": 6504.0, "apply": 872.0, "rev": 179029419.92000002, "cac": 6765.067650676507, "rate": 13.407134071340712, "roas": 406.88504527272727, "profit_rate": 306.8850452727273}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "keep"}, {"channel": "00.paid_display", "name": "google_pmax", "recent": {"cost": 42112674.0, "view": 1762.0, "apply": 179.0, "rev": 33960520.685, "cac": 23900.49602724177, "rate": 10.158910329171396, "roas": 80.64204302248773, "profit_rate": -19.357956977512274}, "prior": {"cost": 119851249.0, "view": 4529.0, "apply": 360.0, "rev": 55490462.17, "cac": 26463.07109737249, "rate": 7.948774563921396, "roas": 46.29944421355175, "profit_rate": -53.70055578644825}, "yoy": {"cost": 109692908.0, "view": 5239.0, "apply": 662.0, "rev": 127041405.46499999, "cac": 20937.75682382134, "rate": 12.635999236495515, "roas": 115.81551422175806, "profit_rate": 15.815514221758079}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "hanacardlms", "recent": {"cost": 39600000.0, "view": 2385.0, "apply": 179.0, "rev": 31341735.945, "cac": 16603.77358490566, "rate": 7.505241090146751, "roas": 79.1457978409091, "profit_rate": -20.85420215909091}, "prior": {"cost": 60500000.0, "view": 3441.0, "apply": 340.0, "rev": 94306044.56, "cac": 17582.098227259517, "rate": 9.88084859052601, "roas": 155.87775960330578, "profit_rate": 55.87775960330579}, "yoy": {"cost": 33000000.0, "view": 3383.0, "apply": 418.0, "rev": 76346491.715, "cac": 9754.655631096659, "rate": 12.355897132722436, "roas": 231.35300519696972, "profit_rate": 131.3530051969697}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_search", "name": "sa_naver", "recent": {"cost": 17842151.0, "view": 861.0, "apply": 93.0, "rev": 22024225.340000004, "cac": 20722.59117305459, "rate": 10.801393728222997, "roas": 123.43929462316514, "profit_rate": 23.439294623165114}, "prior": {"cost": 15990384.0, "view": 942.0, "apply": 129.0, "rev": 24297380.380000003, "cac": 16974.929936305733, "rate": 13.694267515923567, "roas": 151.94994929452602, "profit_rate": 51.94994929452601}, "yoy": {"cost": 17824378.0, "view": 599.0, "apply": 73.0, "rev": 26309704.979999997, "cac": 29756.891485809683, "rate": 12.186978297161936, "roas": 147.60517859304824, "profit_rate": 47.605178593048244}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "hyundaicardlms", "recent": {"cost": 15799630.0, "view": 1321.0, "apply": 116.0, "rev": 24560626.48, "cac": 11960.355791067374, "rate": 8.781226343679032, "roas": 155.45064333785032, "profit_rate": 55.4506433378503}, "prior": null, "yoy": null, "is_new": true, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "keep"}, {"channel": "00.paid_display", "name": "cashnote", "recent": {"cost": 14116660.0, "view": 865.0, "apply": 122.0, "rev": 28171797.225, "cac": 16319.838150289017, "rate": 14.104046242774567, "roas": 199.56418320622583, "profit_rate": 99.56418320622585}, "prior": {"cost": 31075004.0, "view": 1167.0, "apply": 142.0, "rev": 27693793.400000006, "cac": 26628.10968294773, "rate": 12.16795201371037, "roas": 89.11919496454452, "profit_rate": -10.880805035455506}, "yoy": {"cost": 13391983.0, "view": 718.0, "apply": 92.0, "rev": 12622304.89, "cac": 18651.786908077993, "rate": 12.813370473537605, "roas": 94.25269498923349, "profit_rate": -5.747305010766515}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "keep"}, {"channel": "01.paid_search", "name": "sa_google", "recent": {"cost": 13511994.0, "view": 358.0, "apply": 36.0, "rev": 5964853.8950000005, "cac": 37743.0, "rate": 10.05586592178771, "roas": 44.14488265018472, "profit_rate": -55.85511734981527}, "prior": {"cost": 13080732.0, "view": 319.0, "apply": 45.0, "rev": 12598861.470000003, "cac": 41005.42946708464, "rate": 14.106583072100312, "roas": 96.3161806999792, "profit_rate": -3.68381930002082}, "yoy": {"cost": 2920955.0, "view": 136.0, "apply": 30.0, "rev": 5275545.1450000005, "cac": 21477.610294117647, "rate": 22.058823529411764, "roas": 180.61028482123143, "profit_rate": 80.61028482123142}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "off"}, {"channel": "01.paid_msg", "name": "cashnote", "recent": {"cost": 13200000.0, "view": 127.0, "apply": 33.0, "rev": 9746773.985, "cac": 103937.00787401575, "rate": 25.984251968503933, "roas": 73.8391968560606, "profit_rate": -26.160803143939393}, "prior": {"cost": 19800000.0, "view": 497.0, "apply": 105.0, "rev": 26337095.785, "cac": 39839.034205231386, "rate": 21.12676056338028, "roas": 133.0156352777778, "profit_rate": 33.015635277777776}, "yoy": {"cost": 0.0, "view": 178.0, "apply": 24.0, "rev": 1331219.695, "cac": 0.0, "rate": 13.48314606741573, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "baeminmartlms", "recent": {"cost": 12650000.0, "view": 255.0, "apply": 45.0, "rev": 6047586.87, "cac": 49607.8431372549, "rate": 17.647058823529413, "roas": 47.80701083003952, "profit_rate": -52.19298916996047}, "prior": {"cost": 22000000.0, "view": 1129.0, "apply": 181.0, "rev": 25486279.26, "cac": 19486.271036315324, "rate": 16.031886625332152, "roas": 115.84672390909093, "profit_rate": 65.84672390909093}, "yoy": null, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_cpa", "name": "refund_pincrux", "recent": {"cost": 11152570.0, "view": 1518.0, "apply": 108.0, "rev": 30999395.505000003, "cac": 7346.884057971014, "rate": 7.114624505928854, "roas": 277.95741703481804, "profit_rate": 177.957417034818}, "prior": {"cost": 13944040.0, "view": 1960.0, "apply": 121.0, "rev": 20558296.590000004, "cac": 7114.306122448979, "rate": 6.173469387755102, "roas": 147.4342915682973, "profit_rate": 47.434291568297276}, "yoy": {"cost": 2642640.0, "view": 1179.0, "apply": 54.0, "rev": 5379243.869999999, "cac": 2241.4249363867684, "rate": 4.580152671755725, "roas": 203.5556818181818, "profit_rate": 103.55568181818182}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_search", "name": "bs_naver", "recent": {"cost": 7480002.0, "view": 2431.0, "apply": 404.0, "rev": 97309140.69500002, "cac": 3076.9238996297818, "rate": 16.618675442204854, "roas": 1300.9239930016065, "profit_rate": 1200.9239930016065}, "prior": {"cost": 11220000.0, "view": 3518.0, "apply": 470.0, "rev": 126495941.52000001, "cac": 3189.312109152928, "rate": 13.359863558840251, "roas": 1127.4148085561499, "profit_rate": 1027.4148085561499}, "yoy": {"cost": 3519999.0, "view": 986.0, "apply": 201.0, "rev": 56407013.390000015, "cac": 3569.978701825558, "rate": 20.385395537525355, "roas": 1602.472426554667, "profit_rate": 1502.4724265546668}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "scale"}, {"channel": "01.paid_msg", "name": "okpos", "recent": {"cost": 6600000.0, "view": 251.0, "apply": 24.0, "rev": 4767293.57, "cac": 26294.820717131475, "rate": 9.56175298804781, "roas": 72.23172075757576, "profit_rate": -27.76827924242423}, "prior": {"cost": 0.0, "view": 5.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "yoy": {"cost": 2750000.0, "view": 134.0, "apply": 16.0, "rev": 2282833.41, "cac": 20522.388059701494, "rate": 11.940298507462686, "roas": 83.01212400000001, "profit_rate": -16.987876}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "00.paid_display", "name": "okpos", "recent": {"cost": 5089695.0, "view": 114.0, "apply": 18.0, "rev": 6385904.655, "cac": 44646.44736842105, "rate": 15.789473684210526, "roas": 125.46733458488181, "profit_rate": 25.467334584881808}, "prior": {"cost": 115686125.0, "view": 8053.0, "apply": 878.0, "rev": 222936118.40500003, "cac": 14365.593567614553, "rate": 10.902769154352415, "roas": 192.70774123085204, "profit_rate": 92.70774123085201}, "yoy": {"cost": 28659400.0, "view": 1394.0, "apply": 207.0, "rev": 57605354.495, "cac": 20559.110473457677, "rate": 14.8493543758967, "roas": 200.99986215691885, "profit_rate": 100.99986215691888}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "smartbill", "recent": {"cost": 3300000.0, "view": 152.0, "apply": 27.0, "rev": 11170333.98, "cac": 21710.526315789473, "rate": 17.763157894736842, "roas": 338.4949690909091, "profit_rate": 238.4949690909091}, "prior": {"cost": 3300000.0, "view": 215.0, "apply": 48.0, "rev": 18649428.98, "cac": 15348.837209302326, "rate": 22.325581395348838, "roas": 565.1342115151516, "profit_rate": 465.1342115151515}, "yoy": {"cost": 3300000.0000000005, "view": 118.0, "apply": 20.0, "rev": 6838256.555, "cac": 27966.101694915258, "rate": 16.94915254237288, "roas": 207.21989560606056, "profit_rate": 107.21989560606058}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "tmaplms", "recent": {"cost": 3300000.0, "view": 146.0, "apply": 25.0, "rev": 2018547.375, "cac": 22602.739726027397, "rate": 17.123287671232877, "roas": 61.168102272727275, "profit_rate": -38.83189772727273}, "prior": null, "yoy": null, "is_new": true, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "00.paid_display", "name": "tiktok", "recent": {"cost": 3076004.0, "view": 322.0, "apply": 26.0, "rev": 2761951.9850000003, "cac": 9552.80745341615, "rate": 8.074534161490684, "roas": 89.79025986312112, "profit_rate": -10.209740136878878}, "prior": null, "yoy": {"cost": 40335601.0, "view": 1598.0, "apply": 240.0, "rev": 25355428.930000003, "cac": 25241.30225281602, "rate": 15.018773466833544, "roas": 62.86116557430247, "profit_rate": -37.13883442569753}, "is_new": true, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "keep"}, {"channel": "01.paid_msg", "name": "paysam", "recent": {"cost": 2811145.0, "view": 1052.0, "apply": 53.0, "rev": 10361972.66, "cac": 2672.1910646387832, "rate": 5.038022813688213, "roas": 368.6032794466312, "profit_rate": 268.6032794466312}, "prior": null, "yoy": null, "is_new": true, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "00.paid_dooh", "name": "gvalleytv", "recent": {"cost": 2200000.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": 0.0, "profit_rate": -100.0}, "prior": {"cost": 7700000.000000002, "view": 7.0, "apply": 1.0, "rev": 41519.14, "cac": 1100000.0000000002, "rate": 14.285714285714285, "roas": 0.5392096103896102, "profit_rate": -99.4607903896104}, "yoy": null, "is_new": false, "is_paused": false, "is_dooh": true, "is_single": false, "code": "brand"}, {"channel": "00.paid_display", "name": "navergfa", "recent": {"cost": 1272067.0, "view": 24.0, "apply": 1.0, "rev": 287953.51, "cac": 53002.791666666664, "rate": 4.166666666666666, "roas": 22.636662219835905, "profit_rate": -77.3633377801641}, "prior": {"cost": 3215436.0, "view": 43.0, "apply": 4.0, "rev": 790899.8500000001, "cac": 74777.58139534884, "rate": 9.30232558139535, "roas": 24.596970675205483, "profit_rate": -75.40302932479452}, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "off"}, {"channel": "01.paid_cpa", "name": "buzzvil", "recent": {"cost": 578600.0, "view": 318.0, "apply": 16.0, "rev": 1301479.92, "cac": 1819.4968553459119, "rate": 5.031446540880504, "roas": 224.93603871413757, "profit_rate": 124.93603871413757}, "prior": {"cost": 1365100.0, "view": 671.0, "apply": 32.0, "rev": 2186347.735, "cac": 2034.4262295081967, "rate": 4.769001490312966, "roas": 160.16026188557615, "profit_rate": 60.16026188557616}, "yoy": null, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "00.paid_display", "name": "docple", "recent": {"cost": 471432.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": 0.0, "profit_rate": -100.0}, "prior": {"cost": 5814284.0, "view": 55.0, "apply": 17.0, "rev": 14553160.57, "cac": 105714.25454545455, "rate": 30.909090909090907, "roas": 250.3001327420539, "profit_rate": 150.3001327420539}, "yoy": null, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "gray"}, {"channel": "01.paid_cpa", "name": "adison.offerwall", "recent": {"cost": 445503.0, "view": 254.0, "apply": 14.0, "rev": 1397610.565, "cac": 1753.9488188976377, "rate": 5.511811023622047, "roas": 313.71518598079024, "profit_rate": 213.71518598079024}, "prior": {"cost": 3903897.0, "view": 166.0, "apply": 2.0, "rev": 214805.17500000002, "cac": 23517.451807228917, "rate": 1.2048192771084338, "roas": 5.502326905653505, "profit_rate": -94.4976730943465}, "yoy": null, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "kakaopay", "recent": {"cost": 0.0, "view": 3.0, "apply": 1.0, "rev": 817881.805, "cac": 0.0, "rate": 33.33333333333333, "roas": null, "profit_rate": null}, "prior": {"cost": 93500000.0, "view": 3834.0, "apply": 418.0, "rev": 89291821.775, "cac": 24387.063119457485, "rate": 10.90245174752217, "roas": 95.49927462566845, "profit_rate": -4.50072537433155}, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "scale"}, {"channel": "00.paid_display", "name": "dabangpro", "recent": {"cost": 0.0, "view": 24.0, "apply": 1.0, "rev": 143400.4, "cac": 0.0, "rate": 4.166666666666666, "roas": null, "profit_rate": null}, "prior": {"cost": 3300000.0, "view": 41.0, "apply": 1.0, "rev": 63723.335, "cac": 80487.80487804877, "rate": 2.4390243902439024, "roas": 1.9310101515151514, "profit_rate": -98.06898984848485}, "yoy": null, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "ktlms", "recent": {"cost": 0.0, "view": 1.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "prior": {"cost": 0.0, "view": 9.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "yoy": null, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "00.paid_display", "name": "baeminceo", "recent": {"cost": 0.0, "view": 6.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "prior": {"cost": 0.0, "view": 6.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "yoy": null, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "00.paid_display", "name": "cafe_naver", "recent": {"cost": 0.0, "view": 8.0, "apply": 1.0, "rev": 45473.22, "cac": 0.0, "rate": 12.5, "roas": null, "profit_rate": null}, "prior": {"cost": 0.0, "view": 12.0, "apply": 1.0, "rev": 948839.5800000001, "cac": 0.0, "rate": 8.333333333333332, "roas": null, "profit_rate": null}, "yoy": {"cost": 0.0, "view": 31.0, "apply": 6.0, "rev": 1870898.4450000003, "cac": 0.0, "rate": 19.35483870967742, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "scale"}, {"channel": "01.paid_msg", "name": "wooricardlms", "recent": {"cost": 0.0, "view": 5.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "prior": {"cost": 0.0, "view": 17.0, "apply": 2.0, "rev": 72662.98000000001, "cac": 0.0, "rate": 11.76470588235294, "roas": null, "profit_rate": null}, "yoy": {"cost": 33000000.0, "view": 2371.0, "apply": 307.0, "rev": 63510930.730000004, "cac": 13918.177983973008, "rate": 12.948123154787009, "roas": 192.45736584848484, "profit_rate": 92.45736584848487}, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "kakaobrandmsg", "recent": {"cost": 0.0, "view": 157.0, "apply": 18.0, "rev": 3543712.12, "cac": 0.0, "rate": 11.464968152866243, "roas": null, "profit_rate": null}, "prior": {"cost": 0.0, "view": 80.0, "apply": 18.0, "rev": 2162036.955, "cac": 0.0, "rate": 22.5, "roas": null, "profit_rate": null}, "yoy": null, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "scale"}, {"channel": "01.paid_msg", "name": "marketboro", "recent": {"cost": 0.0, "view": 1.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "prior": {"cost": 0.0, "view": 1.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "yoy": null, "is_new": false, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "00.paid_display", "name": "google", "recent": {"cost": 0.0, "view": 1.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "prior": null, "yoy": {"cost": 0.0, "view": 5.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "is_new": true, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "joongna_lms", "recent": {"cost": 0.0, "view": 9.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "prior": null, "yoy": null, "is_new": true, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "joongnaapppush", "recent": {"cost": 0.0, "view": 4.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "prior": null, "yoy": null, "is_new": true, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "opt"}, {"channel": "01.paid_msg", "name": "hanacardapppush", "recent": {"cost": 0.0, "view": 142.0, "apply": 16.0, "rev": 5228912.0, "cac": 0.0, "rate": 11.267605633802818, "roas": null, "profit_rate": null}, "prior": null, "yoy": null, "is_new": true, "is_paused": false, "is_dooh": false, "is_single": "False", "code": "scale"}, {"channel": "00.paid_display", "name": "kakaopay", "recent": null, "prior": {"cost": 17297940.0, "view": 519.0, "apply": 65.0, "rev": 24231559.3, "cac": 33329.36416184971, "rate": 12.524084778420038, "roas": 140.0834972256812, "profit_rate": 40.08349722568121}, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "hogangnono", "recent": null, "prior": {"cost": 5500000.0, "view": 6.0, "apply": 0.0, "rev": 0.0, "cac": 916666.6666666666, "rate": 0.0, "roas": 0.0, "profit_rate": -100.0}, "yoy": null, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "aptner", "recent": null, "prior": {"cost": 3300000.0, "view": 4.0, "apply": 0.0, "rev": 0.0, "cac": 825000.0, "rate": 0.0, "roas": 0.0, "profit_rate": -100.0}, "yoy": null, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_cpa", "name": "tnk", "recent": null, "prior": {"cost": 198000.0, "view": 45.0, "apply": 1.0, "rev": 70917.405, "cac": 4400.0, "rate": 2.2222222222222223, "roas": 35.81687121212121, "profit_rate": -64.18312878787879}, "yoy": null, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "hogangnono", "recent": null, "prior": {"cost": 0.0, "view": 38.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "yoy": null, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "hpointlms", "recent": null, "prior": {"cost": 0.0, "view": 3.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "yoy": null, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "lgupluslms", "recent": null, "prior": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "07.paid_blog", "name": "naverblog", "recent": null, "prior": {"cost": 0.0, "view": 2.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "yoy": {"cost": 0.0, "view": 3.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": false, "code": "paused"}, {"channel": "01.paid_msg", "name": "okcashbaglms", "recent": null, "prior": {"cost": 0.0, "view": 11.0, "apply": 1.0, "rev": 75666.63, "cac": 0.0, "rate": 9.090909090909092, "roas": null, "profit_rate": null}, "yoy": null, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "samsungcard", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "kakaobank", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "cauly", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "remember", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "ymyd", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "shinhancardpush", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_search", "name": "sa_kakao", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 1.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "sktlms", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "atlantruck", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 7.0, "apply": 1.0, "rev": 9085.960000000001, "cac": 0.0, "rate": 14.285714285714285, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "youtuber_junseconomylab", "recent": null, "prior": null, "yoy": {"cost": 18480000.0, "view": 1.0, "apply": 2.0, "rev": 168123.696, "cac": 18480000.0, "rate": 200.0, "roas": 0.9097602597402598, "profit_rate": -99.09023974025972}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "v3", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "medigate", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "bccardlms", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "buzzvil", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "asum", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "barogo", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "meta_junseconomylab", "recent": null, "prior": null, "yoy": {"cost": 125012.0, "view": 1.0, "apply": 0.0, "rev": 0.0, "cac": 125012.0, "rate": 0.0, "roas": 0.0, "profit_rate": -100.0}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "smartbill", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "tiktok_junseconomylab", "recent": null, "prior": null, "yoy": {"cost": 76071.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": 0.0, "profit_rate": -100.0}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "atlantruck", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "cafe24", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 3.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "innoforest", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "moneyquiz", "recent": null, "prior": null, "yoy": {"cost": 2640000.0, "view": 53.0, "apply": 3.0, "rev": 2862073.7600000002, "cac": 49811.32075471698, "rate": 5.660377358490567, "roas": 108.41188484848485, "profit_rate": 8.411884848484858}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "golfzon", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "theshoplms", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "lpoint", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "toss", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "lottememberslms", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 1.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "01.paid_msg", "name": "nicelms", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 0.0, "apply": 0.0, "rev": 0.0, "cac": null, "rate": null, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}, {"channel": "00.paid_display", "name": "payhere", "recent": null, "prior": null, "yoy": {"cost": 0.0, "view": 2.0, "apply": 0.0, "rev": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "profit_rate": null}, "is_new": false, "is_paused": true, "is_dooh": false, "is_single": "False", "code": "paused"}], "known_issues": [{"id": 1, "date": "2024.11.02 ~ 11.03", "name": "홈택스 서비스 변경 이슈", "impact": "전반", "in_period": []}, {"id": 2, "date": "2025.05.01 ~ 05.17", "name": "5월 연휴 + 홈택스 이슈", "impact": "전반", "in_period": ["yoy"]}, {"id": 3, "date": "2026.02.11", "name": "홈택스 이슈", "impact": "전반", "in_period": ["prior"]}, {"id": 4, "date": "2026.04.01 ~ 04.14", "name": "자필서명 퍼널 이슈", "impact": "신청율", "in_period": ["recent"]}, {"id": 5, "date": "2026.04.16", "name": "자필서명 퍼널 제거", "impact": "신청율", "in_period": ["recent"]}, {"id": 6, "date": "2026.04.26 ~ 04.27", "name": "카카오인증서 이슈", "impact": "조회완료율", "in_period": ["recent"]}, {"id": 7, "date": "2026.05.01 ~ 05.31", "name": "5월 홈택스 간헐적 이슈", "impact": "전반", "in_period": ["recent"]}, {"id": 8, "date": "2026.05.11 ~ 05.31", "name": "조회 로딩 지연 이슈", "impact": "신청율", "in_period": ["recent"]}], "june_media": [{"channel": "00.paid_display", "name": "kakaomoment", "cost": 198705314.0, "view": 19703.0, "apply": 1641.0, "rev": 303720480.37500006, "profit": 105015166.37500001, "cac": 10085.028371314012, "rate": 8.328680911536313, "roas": 152.8497020341389, "code": "scale", "is_dooh": false}, {"channel": "00.paid_display", "name": "meta", "cost": 41806616.0, "view": 2821.0, "apply": 269.0, "rev": 43805649.16, "profit": 1999033.1600000015, "cac": 14819.785891527827, "rate": 9.535625664657923, "roas": 104.78161915807776, "code": "opt", "is_dooh": false}, {"channel": "00.paid_display", "name": "google_demandgen", "cost": 12015718.0, "view": 273.0, "apply": 30.0, "rev": 5127183.815, "profit": -6888534.185, "cac": 44013.619047619046, "rate": 10.989010989010989, "roas": 42.67064036456249, "code": "opt", "is_dooh": false}, {"channel": "01.paid_msg", "name": "shinhancardlms", "cost": 11000000.0, "view": 2388.0, "apply": 285.0, "rev": 45855452.825, "profit": 34855452.825, "cac": 4606.365159128978, "rate": 11.934673366834172, "roas": 416.8677529545455, "code": "keep", "is_dooh": false}, {"channel": "00.paid_display", "name": "google_pmax", "cost": 7415749.0, "view": 166.0, "apply": 14.0, "rev": 3092148.6050000004, "profit": -4323600.395, "cac": 44673.18674698795, "rate": 8.433734939759036, "roas": 41.69705049348354, "code": "opt", "is_dooh": false}, {"channel": "00.paid_display", "name": "cashnote", "cost": 3666660.0, "view": 399.0, "apply": 61.0, "rev": 12483383.445, "profit": 8816723.445, "cac": 9189.624060150376, "rate": 15.288220551378446, "roas": 340.45653114823847, "code": "keep", "is_dooh": false}, {"channel": "00.paid_display", "name": "tiktok", "cost": 3076004.0, "view": 322.0, "apply": 26.0, "rev": 2761951.9850000003, "profit": -314052.0149999998, "cac": 9552.80745341615, "rate": 8.074534161490684, "roas": 89.79025986312112, "code": "keep", "is_dooh": false}, {"channel": "00.paid_display", "name": "kakaobank", "cost": 2933330.0, "view": 382.0, "apply": 38.0, "rev": 6859568.625, "profit": 3926238.625, "cac": 7678.874345549738, "rate": 9.947643979057592, "roas": 233.84919613545017, "code": "scale", "is_dooh": false}, {"channel": "01.paid_cpa", "name": "refund_pincrux", "cost": 2280850.0, "view": 446.0, "apply": 34.0, "rev": 12610597.674999999, "profit": 10329747.674999999, "cac": 5114.013452914798, "rate": 7.623318385650224, "roas": 552.8902678825876, "code": "opt", "is_dooh": false}, {"channel": "01.paid_search", "name": "sa_naver", "cost": 2009815.0, "view": 139.0, "apply": 21.0, "rev": 5964917.205, "profit": 3955102.2050000005, "cac": 14459.100719424461, "rate": 15.107913669064748, "roas": 296.78936643422406, "code": "opt", "is_dooh": false}, {"channel": "01.paid_search", "name": "sa_google", "cost": 1854962.0, "view": 40.0, "apply": 5.0, "rev": 391281.605, "profit": -1463680.395, "cac": 46374.05, "rate": 12.5, "roas": 21.09378008821744, "code": "off", "is_dooh": false}, {"channel": "01.paid_search", "name": "bs_naver", "cost": 1246670.0, "view": 333.0, "apply": 72.0, "rev": 17561520.47, "profit": 16314850.469999999, "cac": 3743.7537537537537, "rate": 21.62162162162162, "roas": 1408.6743460578982, "code": "scale", "is_dooh": false}, {"channel": "00.paid_display", "name": "baeminceo", "cost": 0.0, "view": 1.0, "apply": 0.0, "rev": 0.0, "profit": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "code": "opt", "is_dooh": false}, {"channel": "00.paid_display", "name": "cafe_naver", "cost": 0.0, "view": 2.0, "apply": 1.0, "rev": 45473.22, "profit": 45473.22, "cac": 0.0, "rate": 50.0, "roas": null, "code": "scale", "is_dooh": false}, {"channel": "00.paid_display", "name": "google", "cost": 0.0, "view": 1.0, "apply": 0.0, "rev": 0.0, "profit": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "code": "opt", "is_dooh": false}, {"channel": "01.paid_msg", "name": "baeminmartlms", "cost": 0.0, "view": 7.0, "apply": 1.0, "rev": 32602.050000000003, "profit": 32602.050000000003, "cac": 0.0, "rate": 14.285714285714285, "roas": null, "code": "scale", "is_dooh": false}, {"channel": "01.paid_msg", "name": "cashnote", "cost": 0.0, "view": 3.0, "apply": 0.0, "rev": 0.0, "profit": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "code": "opt", "is_dooh": false}, {"channel": "01.paid_msg", "name": "hanacardapppush", "cost": 0.0, "view": 2.0, "apply": 0.0, "rev": 0.0, "profit": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "code": "opt", "is_dooh": false}, {"channel": "01.paid_msg", "name": "hanacardlms", "cost": 0.0, "view": 83.0, "apply": 7.0, "rev": 980076.565, "profit": 980076.565, "cac": 0.0, "rate": 8.433734939759036, "roas": null, "code": "opt", "is_dooh": false}, {"channel": "01.paid_msg", "name": "hyundaicardlms", "cost": 0.0, "view": 76.0, "apply": 5.0, "rev": 1425912.735, "profit": 1425912.735, "cac": 0.0, "rate": 6.578947368421052, "roas": null, "code": "opt", "is_dooh": false}, {"channel": "01.paid_msg", "name": "joongnaapppush", "cost": 0.0, "view": 1.0, "apply": 0.0, "rev": 0.0, "profit": 0.0, "cac": 0.0, "rate": 0.0, "roas": null, "code": "opt", "is_dooh": false}, {"channel": "01.paid_msg", "name": "kakaobrandmsg", "cost": 0.0, "view": 120.0, "apply": 7.0, "rev": 2956764.265, "profit": 2956764.265, "cac": 0.0, "rate": 5.833333333333333, "roas": null, "code": "opt", "is_dooh": false}, {"channel": "01.paid_msg", "name": "kakaopay", "cost": 0.0, "view": 1.0, "apply": 1.0, "rev": 817881.805, "profit": 817881.805, "cac": 0.0, "rate": 100.0, "roas": null, "code": "scale", "is_dooh": false}, {"channel": "01.paid_msg", "name": "kbcardlms", "cost": 0.0, "view": 84.0, "apply": 2.0, "rev": 735861.23, "profit": 735861.23, "cac": 0.0, "rate": 2.380952380952381, "roas": null, "code": "opt", "is_dooh": false}, {"channel": "01.paid_msg", "name": "smartbill", "cost": 0.0, "view": 6.0, "apply": 1.0, "rev": 165632.48, "profit": 165632.48, "cac": 0.0, "rate": 16.666666666666664, "roas": null, "code": "scale", "is_dooh": false}], "june_integrated": {"cost": 288011688.0, "view": 27799.0, "apply": 2521.0, "rev": 467394340.14000005, "profit": 179382652.14000005, "cac": 10360.505341918773, "rate": 9.0686715349473, "roas": 162.2831154477314}};
 
 const fmt = (n) => n == null ? '-' : Math.round(n).toLocaleString('ko-KR');
 const fmtKR = (n) => {
@@ -1127,7 +1417,7 @@ const mayKmShare = (kmCh && kmCh.recent && may.cost > 0)
 
 // Kakaomoment share (from user-verified data)
 const mayKakaoShare = 65.0;
-const juneKakaoShare = 67.0;
+const juneKakaoShare = 69.0;
 
 const mayCells = [
   { k: '광고비', v: fmtKR(may.cost), unit: '원' },
@@ -1176,10 +1466,10 @@ mayPanel.innerHTML = `
     <div class="may-panel-header">
       <div class="may-panel-title">
         <span class="badge">6월 진행중</span>
-        <span><span class="accent">6월</span> 누적 (6/1 ~ 6/7, MTD)</span>
+        <span><span class="accent">6월</span> 누적</span>
       </div>
       <div class="may-panel-meta">
-        <span class="num">2026.06.01 — 06.07</span> · <span class="num">${DATA.june.days_total}일</span> 데이터
+        <span class="num">2026.06.01 — 06.10</span> · <span class="num">${DATA.june.days_total}일</span> 데이터
       </div>
     </div>
     <div class="may-grid">
@@ -1195,7 +1485,7 @@ mayPanel.innerHTML = `
       🥇 <strong>kakaomoment</strong> <strong>paid 전체 광고비의 ${juneKakaoShare.toFixed(1)}%</strong> 운영 (5월 ${mayKakaoShare.toFixed(1)}% → 6월 ${juneKakaoShare.toFixed(1)}%, 비중 확대) — <span style="color:var(--scale);font-weight:700;">SCALE 매체로 지속 확장</span>. 단일 채널 의존도 높아 분산 리스크 모니터링 필요.
     </div>
     <div class="may-note" style="margin-top:8px;background:linear-gradient(135deg, rgba(16,185,129,.06), var(--bg-card));border:1px solid var(--scale-border);border-left:3px solid var(--scale);padding:14px 18px;border-radius:10px;color:var(--ink-soft);font-size:12.5px;line-height:1.7;">
-      📈 <strong style="color:var(--scale);">Meta CAC 개선 추세:</strong> 5월 <span class="num" style="color:var(--ink);">37,584원</span> (절대 상한 35,000원 초과) → 6월 <span class="num" style="color:var(--ink);">13,208원</span>으로 <strong style="color:var(--scale);">-64.9% 급감</strong>. 신청율 6.60% → 9.97% (+3.37pt), ROAS 29.7% → 122.0% (+92.3pt) 동반 개선. 6월 들어 본격 최적화 효과 가시화 — 추세 지속 시 OPTIMIZE → KEEP 상향 검토 가능.
+      📈 <strong style="color:var(--scale);">Meta CAC 개선 추세:</strong> 5월 <span class="num" style="color:var(--ink);">37,584원</span> (절대 상한 35,000원 초과) → 6월 <span class="num" style="color:var(--ink);">15,293원</span>으로 <strong style="color:var(--scale);">-59.3% 감소</strong>. 신청율 6.60% → 9.54% (+2.94pt), ROAS 29.7% → 101.5% (+71.8pt) 동반 개선. 6월 들어 본격 최적화 효과 가시화 — 추세 지속 시 OPTIMIZE → KEEP 상향 검토 가능.
     </div>
   </div>
 `;
@@ -1203,6 +1493,145 @@ mayPanel.innerHTML = `
 // Force kakaomoment diagnosis to SCALE (user override)
 const kakaoMomentMedia = DATA.media.find(m => m.name === 'kakaomoment');
 if (kakaoMomentMedia) kakaoMomentMedia.code = 'scale';
+
+// === BUDGET PROGRESS PANEL ===
+const budgetPanel = document.getElementById('budgetPanel');
+const bd = DATA.budget;
+
+function progressFill(pct, isCost, timeElapsed) {
+  // For 광고비: above 100% = over-spend (warn), under 100% = under-spend (warn if << time elapsed)
+  // For view/revenue: above 100% = great (above), at ~100% = on, below = warn/under
+  if (isCost) {
+    if (pct >= 95 && pct <= 110) return 'on';
+    if (pct > 110) return 'warn';  // over-spend
+    if (timeElapsed && pct < timeElapsed - 5) return 'under';
+    return 'under';
+  } else {
+    if (pct >= 100) return 'above';
+    if (timeElapsed) {
+      if (pct >= timeElapsed - 3) return 'on';
+      return 'under';
+    }
+    if (pct >= 90) return 'on';
+    return 'under';
+  }
+}
+
+function arrowFor(pct, isCost) {
+  if (isCost) {
+    if (pct >= 95 && pct <= 110) return { cls: 'on', sym: '≈' };
+    if (pct > 110) return { cls: 'under', sym: '↑' };
+    return { cls: 'on', sym: '↓' };
+  } else {
+    if (pct >= 100) return { cls: 'above', sym: '↑' };
+    return { cls: 'under', sym: '—' };
+  }
+}
+
+// Signed absolute delta formatter: amount unit (cost/revenue → 억; view → 건)
+function fmtDelta(actual, target, isView) {
+  const diff = actual - target;
+  const sign = diff > 0 ? '+' : '';
+  if (isView) {
+    // Format 건 with comma; very large → use 만건
+    const absV = Math.abs(diff);
+    if (absV >= 10000) {
+      return `${sign}${(diff/10000).toFixed(1)}만건`;
+    }
+    return `${sign}${Math.round(diff).toLocaleString()}건`;
+  }
+  // Currency: format in 억
+  return `${sign}${(diff/100000000).toFixed(2)}억`;
+}
+
+function budgetCell(actual, target, isCost, fmtFn, unit, timeElapsed) {
+  const pct = target > 0 ? (actual / target * 100) : 0;
+  const fill = progressFill(pct, isCost, timeElapsed);
+  const arr = arrowFor(pct, isCost);
+  const barWidth = Math.min(pct, 150);
+  const isView = unit === '건';
+  const delta = fmtDelta(actual, target, isView);
+  const deltaSign = (actual - target) > 0 ? 'pos' : ((actual - target) < 0 ? 'neg' : 'flat');
+  return `
+    <div class="budget-cell">
+      <div class="bvals">
+        <span><span class="lab">목표</span> <span class="val">${fmtFn(target)}${unit}</span></span>
+        <span><span class="lab">실적</span> <span class="val">${fmtFn(actual)}${unit}</span></span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill ${fill}" style="width:${barWidth}%;"></div></div>
+      <div class="progress-pct">${pct.toFixed(1)}% <span class="arr ${arr.cls}">${arr.sym}</span> <span class="delta-abs ${deltaSign}">${delta}</span></div>
+    </div>
+  `;
+}
+
+function budgetRow(label, sublabel, actual, target_obj, time) {
+  return `
+    <div class="br-label">${label}<span class="sub">${sublabel}</span></div>
+    ${budgetCell(actual.cost, target_obj.budget,         true,  fmtKR, '원', time)}
+    ${budgetCell(actual.view, target_obj.view_target,    false, fmt,   '건', time)}
+    ${budgetCell(actual.rev,  target_obj.revenue_target, false, fmtKR, '원', time)}
+  `;
+}
+
+// Construct budget panel
+const jm = bd.jan_may; const jn = bd.june_mtd;
+const jmTotalActual = { cost: jm.total.actual_cost, view: jm.total.actual_view, rev: jm.total.actual_rev };
+const jmPaidActual  = { cost: jm.paid.actual_cost,  view: jm.paid.actual_view,  rev: jm.paid.actual_rev };
+const jnTotalActual = { cost: jn.total.actual_cost, view: jn.total.actual_view, rev: jn.total.actual_rev };
+const jnPaidActual  = { cost: jn.paid.actual_cost,  view: jn.paid.actual_view,  rev: jn.paid.actual_rev };
+const timePct = jn.days_elapsed / jn.days_total * 100;
+
+budgetPanel.innerHTML = `
+  <div class="budget-panel-header">
+    <div class="budget-panel-title">
+      <span class="badge">예산 진척</span>
+      <span><span class="accent">FY2026 사업계획</span> 대비 실적</span>
+    </div>
+    <div class="budget-panel-meta">
+      파일: <span class="num">FY2026_사업계획_사업전략그룹_2602_v3_5</span><br/>
+      기준: 광고비 · 조회완료 · 결제액 (예상결제액)
+    </div>
+  </div>
+
+  <div class="budget-block">
+    <div class="budget-block-header">
+      <div class="budget-block-title">
+        <span class="b-chip">5개월 완료</span>
+        <span>1~5월 누적 진척율</span>
+      </div>
+      <div class="budget-block-meta">기간: 2026.01.01 — 05.31 · <span class="num">100%</span> 시간 경과</div>
+    </div>
+    <div class="budget-grid">
+      <div class="bh">구분</div>
+      <div class="bh" style="text-align:left;">광고비 (예산)</div>
+      <div class="bh" style="text-align:left;">조회완료 (목표)</div>
+      <div class="bh" style="text-align:left;">결제액 (목표)</div>
+      ${budgetRow('Total', '전 채널 합산', jmTotalActual, jm.total)}
+      ${budgetRow('Paid', 'paid% (content 제외)', jmPaidActual, jm.paid)}
+    </div>
+  </div>
+
+  <div class="budget-block">
+    <div class="budget-block-header">
+      <div class="budget-block-title">
+        <span class="b-chip partial">진행중 ${jn.days_elapsed}/${jn.days_total}일</span>
+        <span>6월 MTD vs 월 목표</span>
+      </div>
+      <div class="budget-block-meta">기간: 2026.06.01 — 06.10 · <span class="num">${timePct.toFixed(1)}%</span> 시간 경과</div>
+    </div>
+    <div class="budget-grid">
+      <div class="bh">구분</div>
+      <div class="bh" style="text-align:left;">광고비 (예산)</div>
+      <div class="bh" style="text-align:left;">조회완료 (목표)</div>
+      <div class="bh" style="text-align:left;">결제액 (목표)</div>
+      ${budgetRow('Total', '전 채널 합산', jnTotalActual, jn.total, timePct)}
+      ${budgetRow('Paid', 'paid% (content 제외)', jnPaidActual, jn.paid, timePct)}
+    </div>
+    <div class="may-note" style="border-top:1px dashed var(--brand-pale);">
+      <strong>※ 6월 페이스 가이드:</strong> 시간 경과 <strong>${timePct.toFixed(1)}%</strong> 시점 기준. 광고비는 시간 경과 보다 낮으면 under-spend (월말 가속 또는 효율로 절감 중), 조회/결제는 시간 경과 이상이면 페이스 양호. 60일 평균 CAC <span class="num">${fmt(ri.cac)}원</span> 대비 6월 1~10일 CAC <span class="num">${june.cac.toFixed(0)}원</span> 로 큰 폭 개선되어 동일 광고비 대비 더 많은 조회/신청을 만들어내는 상황.
+    </div>
+  </div>
+`;
 
 // Thresholds
 const intCac = ri.cac;
@@ -1406,132 +1835,175 @@ mFilter.querySelectorAll('.filter-btn').forEach(btn => {
 });
 renderMediaCmp();
 
-// Matrix
-const matrix = [
-  ['Case 1','green','≤ -20%','green','≥ +10%','green','≥ 3억','green','≥ 200%','SCALE','+30%','핵심 성장 매체 (절대 CAC ≤ 35K 전제)'],
-  ['Case 2','green','≤ -20%','green','≥ +10%','blue','1~3억','blue','100~200%','SCALE','+20%','효율 우수 / 볼륨 확장 여지'],
-  ['Case 3','blue','±20%','blue','±10%','blue','1~3억','blue','100~200%','KEEP','±5%','안정 운영 (CAC ≤ 35K)'],
-  ['Case 4','yellow','+20~50%','blue','±10%','blue','1~3억','yellow','80~100%','OPTIMIZE','-15%','입찰·타겟 정밀화'],
-  ['Case 5','red','CAC > 35K (절대)','blue','±10%','blue','1~3억','blue','100~200%','OPTIMIZE','-10%','신 룰: 절대 상한 단독 트리거'],
-  ['Case 6','red','≥ +50%','yellow','-10~30%','yellow','3천~1억','red','< 80%','OFF 후보','-50%','2주 모니터 후 OFF'],
-  ['Case 7','red','> 35K + ≥ +50%','red','≤ -30%','red','≤ 3천만','red','< 80%','OFF','0','즉시 중단 (절대+상대 모두 미달)'],
-  ['Case 8','red','≥ +50% (≤ 35K)','green','≥ +10%','green','≥ 3억','blue','100~200%','KEEP','±5%','절대 CAC ≤ 35K면 비율 무관 KEEP'],
-];
-const verdictClass = (v) => v.includes('SCALE') ? 'scale' : v.includes('OFF') ? 'off' : v.includes('OPTIMIZE') ? 'opt' : v.includes('KEEP') ? 'keep' : '';
-const matBody = document.getElementById('matrixBody');
-matrix.forEach(r => {
-  matBody.insertAdjacentHTML('beforeend', `
-    <tr>
-      <td class="case-id">${r[0]}</td>
-      <td><span class="sig ${r[1]}">${r[2]}</span></td>
-      <td><span class="sig ${r[3]}">${r[4]}</span></td>
-      <td><span class="sig ${r[5]}">${r[6]}</span></td>
-      <td><span class="sig ${r[7]}">${r[8]}</span></td>
-      <td><span class="verdict-chip ${verdictClass(r[9])}">${r[9]}</span></td>
-      <td class="verdict">${r[10]}</td>
-      <td style="color:var(--ink-soft);font-size:12px;">${r[11]}</td>
-    </tr>
-  `);
-});
+// === 10-day same-weekday compare ===
+let tenSelectedMedia = '__total__';  // __total__ = aggregate paid, otherwise media name
 
-// Diagnosis
-const codeLabel = { scale:'SCALE', keep:'KEEP', opt:'OPTIMIZE', off:'OFF', brand:'브랜딩', gray:'데이터 부족', paused:'중단' };
-const actionMsg = {
-  scale: '예산 확대 + 유사 매체/소재 확장',
-  keep:  '유지 + 입찰 미세조정 (±5%) + A/B 소재',
-  opt:   '소재·타겟·랜딩 개선 + 광고비 -10~20% (CAC>35K 또는 비율 악화)',
-  off:   '즉시 중단 검토 (CAC > 35K + 비율 모두 미달)',
-  brand: '브랜딩 채널 — 인지도·노출 기반 별도 평가',
-  gray:  '데이터 누적 후 재진단',
-  paused: '중단 상태 — 재진입 검토 시 신규 학습기 적용',
-};
-let activeFilter = 'all', sortKey = 'cost', sortDir = -1;
+function renderTenCompare() {
+  const tc = DATA.ten_day_compare;
+  const tcBlock = document.getElementById('tenCompareBlock');
+  const mediaList = (tc.per_media && tc.per_media.media_list) || [];
 
-function diagDeltaCell(actual, bench, invert) {
-  if (actual == null || bench == null || bench === 0) return '<td class="num delta-flat">-</td>';
-  const ratio = (actual / bench - 1) * 100;
-  let cls;
-  if (invert) cls = ratio < -10 ? 'delta-down' : (ratio > 10 ? 'delta-up' : 'delta-flat');
-  else cls = ratio > 10 ? 'delta-down' : (ratio < -10 ? 'delta-up' : 'delta-flat');
-  return `<td class="num ${cls}">${ratio >= 0 ? '+' : ''}${ratio.toFixed(0)}%</td>`;
-}
+  // Cost shares for buttons (helps identify dominant media)
+  const totalMayCost = tc.may.cost || 0;
+  const totalJuneCost = tc.june.cost || 0;
+  const totalCostSum = totalMayCost + totalJuneCost;
 
-function renderDiag() {
-  let list = DATA.media.filter(m => m.recent && !m.is_paused);
-  if (activeFilter !== 'all') list = list.filter(m => m.code === activeFilter);
-  list.sort((a,b) => {
-    let av, bv;
-    const ar = a.recent, br = b.recent;
-    if (sortKey === 'cac_diff') {
-      const aCh = DATA.channels.find(c => c.name === a.channel);
-      const bCh = DATA.channels.find(c => c.name === b.channel);
-      av = (ar.cac && aCh?.recent?.cac) ? ar.cac/aCh.recent.cac : 0;
-      bv = (br.cac && bCh?.recent?.cac) ? br.cac/bCh.recent.cac : 0;
-    } else if (sortKey === 'rate_diff') {
-      const aCh = DATA.channels.find(c => c.name === a.channel);
-      const bCh = DATA.channels.find(c => c.name === b.channel);
-      av = (ar.rate && aCh?.recent?.rate) ? ar.rate/aCh.recent.rate : 0;
-      bv = (br.rate && bCh?.recent?.rate) ? br.rate/bCh.recent.rate : 0;
-    } else if (sortKey === 'code') {
-      const o = {off:0, opt:1, keep:2, scale:3, brand:4, gray:5};
-      av = o[a.code] ?? 6; bv = o[b.code] ?? 6;
-    } else if (sortKey === 'channel' || sortKey === 'name') {
-      av = a[sortKey] || ''; bv = b[sortKey] || '';
-      return av.localeCompare(bv) * sortDir;
-    } else {
-      av = ar[sortKey] ?? 0; bv = br[sortKey] ?? 0;
-    }
-    return (av - bv) * sortDir;
+  // Build button bar
+  let btnHtml = `<button class="ten-fbtn total ${tenSelectedMedia==='__total__'?'active':''}" data-mid="__total__">전체 (paid total) <span class="pill">15</span></button>`;
+  for (const m of mediaList) {
+    const md = (tc.per_media.data || {})[m] || {};
+    const mc = (md.may && md.may.cost) || 0;
+    const jc = (md.june && md.june.cost) || 0;
+    const share = totalCostSum > 0 ? ((mc + jc) / totalCostSum * 100).toFixed(0) : 0;
+    btnHtml += `<button class="ten-fbtn ${tenSelectedMedia===m?'active':''}" data-mid="${m}">${m} <span class="pill">${share}%</span></button>`;
+  }
+
+  // Pick the source data (m: 5월, j: 6월)
+  let m, j, scopeLabel;
+  if (tenSelectedMedia === '__total__') {
+    m = tc.may; j = tc.june;
+    scopeLabel = '<span class="num">paid% (paid_content 제외)</span> 전체 합산';
+  } else {
+    const md = (tc.per_media.data || {})[tenSelectedMedia] || {};
+    m = md.may || null;
+    j = md.june || null;
+    scopeLabel = `매체 <span class="num">${tenSelectedMedia}</span> 단독`;
+  }
+
+  function deltaStr(a, b, isPt, lowerBetter) {
+    if (a == null || b == null || (!isPt && a === 0)) return '<div class="td delta flat">—</div>';
+    const change = isPt ? (b - a) : ((b - a) / a * 100);
+    const isUp = change > 0;
+    const good = lowerBetter ? !isUp : isUp;
+    const flat = Math.abs(change) < (isPt ? 0.2 : 1.5);
+    const cls = flat ? 'flat' : (good ? 'up' : 'down');
+    const sign = isUp ? '+' : '';
+    return `<div class="td delta ${cls}">${sign}${change.toFixed(1)}${isPt ? 'pt' : '%'}</div>`;
+  }
+
+  let tableHtml = '';
+  if (!m && !j) {
+    tableHtml = `<div class="ten-no-data">선택된 매체는 5월·6월 두 기간 모두 활동이 없습니다.</div>`;
+  } else {
+    const safe = (o, k) => (o && o[k] != null) ? o[k] : null;
+    const rows = [
+      { label: '광고비',     m: safe(m,'cost'),  j: safe(j,'cost'),  fmt: x => fmtKR(x)+'원',     lower: false, isPt: false },
+      { label: '조회완료',   m: safe(m,'view'),  j: safe(j,'view'),  fmt: x => fmt(x)+'건',       lower: false, isPt: false },
+      { label: '신청완료',   m: safe(m,'apply'), j: safe(j,'apply'), fmt: x => fmt(x)+'건',       lower: false, isPt: false },
+      { label: '예상결제액', m: safe(m,'rev'),   j: safe(j,'rev'),   fmt: x => fmtKR(x)+'원',     lower: false, isPt: false },
+      { label: 'CAC',       m: safe(m,'cac'),   j: safe(j,'cac'),   fmt: x => fmt(x)+'원',       lower: true,  isPt: false },
+      { label: '신청율',     m: safe(m,'rate'),  j: safe(j,'rate'),  fmt: x => x.toFixed(2)+'%', lower: false, isPt: true  },
+      { label: 'ROAS',      m: safe(m,'roas'),  j: safe(j,'roas'),  fmt: x => x.toFixed(1)+'%', lower: false, isPt: true  },
+      { label: '공헌이익',   m: safe(m,'profit'),j: safe(j,'profit'),fmt: x => fmtKR(x)+'원',     lower: false, isPt: false },
+    ];
+    tableHtml = `
+      <div class="ten-grid">
+        <div class="th first">지표</div>
+        <div class="th">5월 (5/4 ~ 5/13)</div>
+        <div class="th">6월 (6/1 ~ 6/10)</div>
+        <div class="th">△ 변화</div>
+        ${rows.map(r => `
+          <div class="td label">${r.label}</div>
+          <div class="td row-may">${r.m != null ? r.fmt(r.m) : '<span style="color:var(--ink-mute);">미운영</span>'}</div>
+          <div class="td row-june">${r.j != null ? r.fmt(r.j) : '<span style="color:var(--ink-mute);">미운영</span>'}</div>
+          ${deltaStr(r.m, r.j, r.isPt, r.lower)}
+        `).join('')}
+      </div>
+    `;
+  }
+
+  tcBlock.innerHTML = `
+    <div class="ten-header">
+      <div class="ten-title">
+        <span class="b-chip">10일 동요일</span>
+        <span>5월 초 vs 6월 초 10일 비교</span>
+      </div>
+      <div class="ten-meta">
+        DoW 분포 동일: <span class="num">Mon=2, Tue=2, Wed=2, Thu=1, Fri=1, Sat=1, Sun=1</span><br/>
+        대상: ${scopeLabel}
+      </div>
+    </div>
+    <div class="ten-filter-bar">${btnHtml}</div>
+    ${tableHtml}
+  `;
+
+  // Bind click handlers
+  tcBlock.querySelectorAll('.ten-fbtn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      tenSelectedMedia = btn.dataset.mid;
+      renderTenCompare();
+    });
   });
-
-  document.getElementById('diagBody').innerHTML = list.map(m => {
-    const r = m.recent;
-    const ch = DATA.channels.find(c => c.name === m.channel);
-    const cacBench = m.is_single ? DATA.integrated.recent.cac : ch?.recent?.cac;
-    const rateBench = m.is_single ? DATA.integrated.recent.rate : ch?.recent?.rate;
-    return `
-    <tr>
-      <td class="num">${fmtKRwon(r.cost)}</td>
-      <td><span class="ch-chip">${m.channel}</span></td>
-      <td class="media-name">${m.name}</td>
-      <td class="num">${r.cac != null ? fmt(r.cac) + '원' : '-'}</td>
-      ${diagDeltaCell(r.cac, cacBench, true)}
-      <td class="num">${r.rate != null ? r.rate.toFixed(2) + '%' : '-'}</td>
-      ${diagDeltaCell(r.rate, rateBench, false)}
-      <td class="num" style="color:${r.roas >= 100 ? 'var(--scale)' : (r.roas >= 80 ? 'var(--ink)' : 'var(--off)')};font-weight:700;">${r.roas != null ? r.roas.toFixed(1) + '%' : '-'}</td>
-      <td><span class="verdict-chip ${m.code}">${codeLabel[m.code] || '-'}</span></td>
-      <td class="action-cell">${actionMsg[m.code] || '-'}</td>
-    </tr>`;
-  }).join('');
 }
-const activeList = DATA.media.filter(m => m.recent && !m.is_paused);
-const counts = { all: activeList.length };
-['scale','keep','opt','off','brand'].forEach(c => counts[c] = activeList.filter(m => m.code === c).length);
-const filterBar = document.getElementById('filterBar');
-[['all','전체','all'], ['off','OFF','off'], ['opt','OPTIMIZE','opt'], ['keep','KEEP','keep'], ['scale','SCALE','scale'], ['brand','브랜딩','brand']].forEach(([code, label, cls]) => {
-  filterBar.insertAdjacentHTML('beforeend', `
-    <button class="filter-btn ${cls} ${code === 'all' ? 'active' : ''}" data-filter="${code}">
-      ${label}<span class="count">${counts[code] || 0}</span>
-    </button>
-  `);
-});
-filterBar.querySelectorAll('.filter-btn').forEach(btn => {
+renderTenCompare();
+
+// === June Media Diagnosis (current month, paid 6/1~6/10) ===
+function renderJuneDiag() {
+  const ABS_CAP = 35000;
+  const list = (DATA.june_media || []).filter(m => (m.cost || 0) > 0 || (m.view || 0) > 0);
+  list.sort((a, b) => (b.cost || 0) - (a.cost || 0));
+
+  // Determine display code: priority OFF > OFF 제안 > existing
+  function displayCode(m) {
+    if (m.code === 'off') return { cls: 'off', label: 'OFF', action: '즉시 중단 — 절대 상한 초과 + 비율 모두 미달' };
+    if (m.cac != null && m.cac >= ABS_CAC_CAP) return { cls: 'off-proposal', label: 'OFF 제안', action: 'CAC 35,000원 상한 초과 — 중단 검토 권고' };
+    if (m.code === 'scale') return { cls: 'scale', label: 'SCALE',    action: '예산 확대 + 유사 확장' };
+    if (m.code === 'keep')  return { cls: 'keep',  label: 'KEEP',     action: '유지 + 미세조정' };
+    if (m.code === 'opt')   return { cls: 'opt',   label: 'OPTIMIZE', action: '소재·타겟·랜딩 개선' };
+    if (m.code === 'brand') return { cls: 'brand', label: '브랜딩',   action: '인지 채널 — 별도 평가' };
+    return { cls: 'gray', label: '데이터 부족', action: '데이터 누적 후 재진단' };
+  }
+
+  const tbl = document.getElementById('juneDiagTable');
+  tbl.innerHTML = `
+    <thead>
+      <tr>
+        <th class="left">채널</th>
+        <th class="left">매체</th>
+        <th>광고비</th>
+        <th>조회완료</th>
+        <th>신청완료</th>
+        <th>예상결제액</th>
+        <th>CAC (조회)</th>
+        <th>신청율</th>
+        <th>ROAS</th>
+        <th class="left">진단</th>
+        <th class="left">권고 액션</th>
+      </tr>
+    </thead>
+    <tbody>
+    ${list.map(m => {
+      const dc = displayCode(m);
+      const overCap = m.cac != null && m.cac >= ABS_CAP;
+      return `
+      <tr>
+        <td class="left"><span class="ch-chip">${m.channel}</span></td>
+        <td class="left label">${m.name}</td>
+        <td>${fmtKR(m.cost || 0)}원</td>
+        <td>${fmt(m.view || 0)}</td>
+        <td>${fmt(m.apply || 0)}</td>
+        <td>${fmtKR(m.rev || 0)}원</td>
+        <td style="${overCap ? 'color:var(--off);font-weight:800;' : ''}">${m.cac != null ? fmt(m.cac)+'원' : '-'}</td>
+        <td>${m.rate != null ? m.rate.toFixed(2)+'%' : '-'}</td>
+        <td style="color:${(m.roas||0) >= 100 ? 'var(--scale)' : ((m.roas||0) >= 80 ? 'var(--ink)' : 'var(--off)')};font-weight:700;">${m.roas != null ? m.roas.toFixed(1)+'%' : '-'}</td>
+        <td class="left"><span class="verdict-chip ${dc.cls}">${dc.label}</span></td>
+        <td class="left action-cell" style="font-size:11.5px;">${dc.action}</td>
+      </tr>`;
+    }).join('')}
+    </tbody>
+  `;
+}
+renderJuneDiag();
+
+// === Tab Switching ===
+document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    filterBar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    activeFilter = btn.dataset.filter;
-    renderDiag();
+    const targetTab = btn.dataset.tab;
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === targetTab));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.toggle('active', c.dataset.tab === targetTab));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 });
-document.querySelectorAll('#diagTable th[data-sort]').forEach(th => {
-  th.addEventListener('click', () => {
-    const k = th.dataset.sort;
-    if (sortKey === k) sortDir = -sortDir;
-    else { sortKey = k; sortDir = -1; }
-    renderDiag();
-  });
-});
-renderDiag();
 </script>
 </body>
 </html>
