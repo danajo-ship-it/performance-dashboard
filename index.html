@@ -1946,7 +1946,7 @@ function renderJuneDiag() {
   // Determine display code: priority OFF > OFF 제안 > existing
   function displayCode(m) {
     if (m.code === 'off') return { cls: 'off', label: 'OFF', action: '즉시 중단 — 절대 상한 초과 + 비율 모두 미달' };
-    if (m.cac != null && m.cac >= ABS_CAC_CAP) return { cls: 'off-proposal', label: 'OFF 제안', action: 'CAC 35,000원 상한 초과 — 중단 검토 권고' };
+    if (m.cac != null && m.cac >= ABS_CAP) return { cls: 'off-proposal', label: 'OFF 제안', action: 'CAC 35,000원 상한 초과 — 중단 검토 권고' };
     if (m.code === 'scale') return { cls: 'scale', label: 'SCALE',    action: '예산 확대 + 유사 확장' };
     if (m.code === 'keep')  return { cls: 'keep',  label: 'KEEP',     action: '유지 + 미세조정' };
     if (m.code === 'opt')   return { cls: 'opt',   label: 'OPTIMIZE', action: '소재·타겟·랜딩 개선' };
