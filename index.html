@@ -1594,22 +1594,24 @@ mayPanel.innerHTML = `
     <div class="may-note" style="background:linear-gradient(135deg, rgba(16,185,129,.07), var(--bg-card));border:1px solid var(--scale-border);border-left:3px solid var(--scale);padding:14px 18px;border-radius:10px;color:var(--ink-soft);font-size:12.5px;line-height:1.75;">
       ⭐ <strong style="color:var(--scale);">HIGHLIGHT — 전월 비교 (21일 동요일, 4채널):</strong>
       통합 CAC ${fmt(DATA.month_cmp.cac_may)}원 → <strong style="color:var(--ink);">${fmt(DATA.month_cmp.cac_jun)}원 (-${((DATA.month_cmp.cac_may-DATA.month_cmp.cac_jun)/DATA.month_cmp.cac_may*100).toFixed(1)}%)</strong> · 신청율 <strong style="color:var(--ink);">+${(DATA.month_cmp.rate_jun-DATA.month_cmp.rate_may).toFixed(2)}pt</strong> · ROAS <strong style="color:var(--ink);">+${(DATA.month_cmp.roas_jun-DATA.month_cmp.roas_may).toFixed(1)}pt</strong>.
-      <br/>
+      <br/><br/>
       <span style="color:var(--ink);font-weight:700;">📌 매체별 핵심 개선:</span>
-      <strong>kakaobank</strong> CAC 8,450 → 6,023원 <span style="color:var(--scale);font-weight:800;">-28.7%</span> + 광고비 3.6배 확대 ·
-      <strong>kbcardlms</strong> 신규 가동 (22M, CAC 6,748원 매우 효율) ·
-      <strong>kakaomoment</strong> SCALE 매체 (광고비 의 ${juneKakaoShare.toFixed(1)}%) 안정 운영 중.
+      <br/>
+      • <strong>kakaobank</strong> <strong style="color:var(--brand);">[mybusiness] 지면 6/15 시작</strong> — 성과 우수하게 발생하며 paid 전반에 <strong style="color:var(--scale);">긍정적 영향</strong> (CAC 8,450 → 6,023원 -28.7%, 광고비 3.6배 확대)
+      <br/>
+      • <strong>kbcardlms</strong> 6월 첫 발송 <strong style="color:var(--brand);">[신규환급금] 소구 소재</strong> — 성과 우수 발생, CAC <strong style="color:var(--scale);">6,557원대</strong>로 전월 첫 발송 대비 <strong style="color:var(--scale);">약 3배 효율 개선</strong>
     </div>
     <div class="may-note" style="margin-top:8px;background:linear-gradient(135deg, rgba(220,38,38,.06), var(--bg-card));border:1px solid var(--off-border);border-left:3px solid var(--off);padding:14px 18px;border-radius:10px;color:var(--ink-soft);font-size:12.5px;line-height:1.75;">
       ⚠️ <strong style="color:var(--off);">LOWLIGHT — 최근 7일 (6/15~6/21 vs 6/8~6/14, 4채널):</strong>
       통합 CAC ${fmt(DATA.last7_cmp.cac_pre)}원 → <strong style="color:var(--ink);">${fmt(DATA.last7_cmp.cac_now)}원 (+${((DATA.last7_cmp.cac_now-DATA.last7_cmp.cac_pre)/DATA.last7_cmp.cac_pre*100).toFixed(1)}%)</strong> · 신청율 <strong style="color:var(--ink);">${(DATA.last7_cmp.rate_now-DATA.last7_cmp.rate_pre).toFixed(2)}pt</strong> · ROAS <strong style="color:var(--ink);">${(DATA.last7_cmp.roas_now-DATA.last7_cmp.roas_pre).toFixed(1)}pt</strong>.
-      <br/>
+      <br/><br/>
       <span style="color:var(--ink);font-weight:700;">📌 매체별 핵심 악화:</span>
-      <strong>tiktok</strong> CAC 11,645 → 20,362원 <span style="color:var(--off);font-weight:800;">+74.9%</span> 급격 악화 — 즉시 검토 필요 ·
-      <strong>cashnote</strong> CAC 8,556 → 10,235원 <span style="color:var(--off);font-weight:800;">+19.6%</span> ·
-      <strong>Meta</strong> 6/19 메인 ASC 캠페인 OFF (광고비 -11%) — 재게 논의 중.
       <br/>
-      <strong>shinhancardlms · hanacardlms</strong> 효율 우수 매체 일시 중단 (LMS 발송 패턴) — kbcardlms / hyundaicardlms로 대체 가동.
+      • <strong>meta</strong> non-폐업자 <strong style="color:var(--brand);">메인 ASC 캠페인 조회완료 CAC 3~4만원대 급증</strong>으로 성과에 <strong style="color:var(--off);">부정적 영향</strong> → 6/19 <strong>현재 OFF</strong> (TOP1 소재 피로도 증가와 함께 큰 폭으로 성과 감소)
+      <br/>
+      • <strong>tiktok</strong> CAC 11,645 → 20,362원 <span style="color:var(--off);font-weight:800;">+74.9% 급격 악화</span> — 즉시 검토 필요
+      <br/>
+      • <strong>cashnote</strong> CAC 8,556 → 10,235원 <span style="color:var(--off);font-weight:800;">+19.6%</span> 상승 추이 — 모니터링 필요
     </div>
     <div class="may-note" style="margin-top:8px;">
       🥇 <strong>kakaomoment</strong> <strong>paid 4채널 광고비의 ${juneKakaoShare.toFixed(1)}%</strong> 운영 (5월 ${mayKakaoShare.toFixed(1)}% → 6월 ${juneKakaoShare.toFixed(1)}%, <strong>${(juneKakaoShare-mayKakaoShare).toFixed(1)}pt</strong> 변화) — <span style="color:var(--scale);font-weight:700;">SCALE 매체 유지</span>. paid 4채널 (display·cpa·msg·search) 풀 기준 — 5월과 거의 동일 수준 유지.
@@ -2217,7 +2219,7 @@ function renderIMC() {
     </div>
 
     <div class="imc-cards">
-      <!-- Organic Lift Card -->
+      <!-- Organic Lift Card (organic lift + app install nested inside) -->
       <div class="imc-card organic">
         <div class="imc-card-title">📊 Organic 채널 lift <span class="chip">캠페인 효과</span></div>
         <div class="imc-card-sub">IMC 시작 전 7일 (6/12~6/18) vs 시작 후 3일 (6/19~6/21) · 일평균 비교</div>
@@ -2242,6 +2244,50 @@ function renderIMC() {
           ⭐ <strong>organic 일평균 조회 +${oc.daily_view_lift.toFixed(0)}% / 신청 +${oc.daily_apply_lift.toFixed(0)}% 증가</strong> — IMC 캠페인 시작 후 organic 트래픽 큰 폭 상승.
           브랜드 인지 캠페인의 직접 효과 가시화 (검색 + 직접 진입 추정). <strong>3일 데이터로 잠정, 1~2주 트렌드 지속 여부 모니터링 필요.</strong>
         </div>
+
+        ${ai ? `
+        <!-- App Install Table (nested below organic lift) -->
+        <div style="margin-top:16px;padding-top:16px;border-top:1px dashed var(--line);">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+            <div style="font-size:13px;font-weight:800;color:var(--ink);">📱 앱설치(수) <span style="background:rgba(139,92,246,.12);color:#8B5CF6;border:1px solid rgba(139,92,246,.25);font-size:9.5px;font-weight:800;padding:3px 8px;border-radius:5px;letter-spacing:0.06em;text-transform:uppercase;">광고 통한 설치수</span></div>
+            <span style="font-size:10.5px;color:var(--ink-mute);font-weight:600;">일평균 비교</span>
+          </div>
+          <table style="width:100%;border-collapse:collapse;font-size:11.5px;margin-top:10px;">
+            <thead>
+              <tr style="background:var(--bg-elev);">
+                <th style="padding:8px 10px;text-align:left;font-size:10px;font-weight:800;color:var(--ink-mute);text-transform:uppercase;letter-spacing:0.06em;border-bottom:1.5px solid var(--line-strong);">구분</th>
+                <th style="padding:8px 10px;text-align:right;font-size:10px;font-weight:800;color:var(--ink-mute);text-transform:uppercase;letter-spacing:0.06em;border-bottom:1.5px solid var(--line-strong);">Installs</th>
+                <th style="padding:8px 10px;text-align:right;font-size:10px;font-weight:800;color:var(--ink-mute);text-transform:uppercase;letter-spacing:0.06em;border-bottom:1.5px solid var(--line-strong);">First Installs</th>
+                <th style="padding:8px 10px;text-align:right;font-size:10px;font-weight:800;color:var(--ink-mute);text-transform:uppercase;letter-spacing:0.06em;border-bottom:1.5px solid var(--line-strong);">Attributed Install</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding:9px 10px;font-weight:700;color:var(--ink-soft);border-bottom:1px solid var(--line);">6월 동기간 평균</td>
+                <td style="padding:9px 10px;text-align:right;font-weight:700;color:var(--ink-soft);border-bottom:1px solid var(--line);">${ai.june_avg.installs}</td>
+                <td style="padding:9px 10px;text-align:right;font-weight:700;color:var(--ink-soft);border-bottom:1px solid var(--line);">${ai.june_avg.first_installs}</td>
+                <td style="padding:9px 10px;text-align:right;font-weight:700;color:var(--ink-soft);border-bottom:1px solid var(--line);">${ai.june_avg.attributed}</td>
+              </tr>
+              <tr style="background:rgba(241,235,254,.4);">
+                <td style="padding:9px 10px;font-weight:700;color:#8B5CF6;border-bottom:1px solid var(--line);">6/19 ~ 6/21 평균</td>
+                <td style="padding:9px 10px;text-align:right;font-weight:800;color:var(--ink);border-bottom:1px solid var(--line);">${ai.imc_avg.installs}</td>
+                <td style="padding:9px 10px;text-align:right;font-weight:800;color:var(--ink);border-bottom:1px solid var(--line);">${ai.imc_avg.first_installs}</td>
+                <td style="padding:9px 10px;text-align:right;font-weight:800;color:var(--ink);border-bottom:1px solid var(--line);">${ai.imc_avg.attributed}</td>
+              </tr>
+              <tr style="background:linear-gradient(180deg, rgba(16,185,129,.08) 0%, transparent 100%);">
+                <td style="padding:9px 10px;font-weight:800;color:var(--scale);border-bottom:1.5px solid var(--line-strong);">IMC 이후 증가율</td>
+                <td style="padding:9px 10px;text-align:right;font-weight:800;font-size:13px;color:var(--scale);border-bottom:1.5px solid var(--line-strong);">+${ai.lift.installs}%</td>
+                <td style="padding:9px 10px;text-align:right;font-weight:800;font-size:13px;color:var(--scale);border-bottom:1.5px solid var(--line-strong);">+${ai.lift.first_installs}%</td>
+                <td style="padding:9px 10px;text-align:right;font-weight:800;font-size:13px;color:var(--scale);border-bottom:1.5px solid var(--line-strong);">+${ai.lift.attributed}%</td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="margin-top:10px;font-size:11.5px;line-height:1.6;color:var(--ink-soft);">
+            ⭐ <strong style="color:var(--ink);">Attributed Install +${ai.lift.attributed}%</strong> 폭증 (3 → 49건/일) — IMC 광고 통한 직접 앱설치 attribution 대폭 증가.
+            전체 Installs +${ai.lift.installs}%, First Installs +${ai.lift.first_installs}% — 캠페인이 앱설치 funnel에 강하게 작용 중.
+          </div>
+        </div>
+        ` : ''}
       </div>
 
       <!-- IMC Channels Card -->
